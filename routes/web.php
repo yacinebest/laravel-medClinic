@@ -27,6 +27,17 @@ Route::post('register','Auth\RegisterController@register');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//
+// Route::resource('clinic', 'ClinicController');
+// Route::resource('doctor', 'DoctorController');
+// Route::resource('secretary', 'SecretaryController');
+// Route::resource('patient', 'PatientController');
+// Route::resource('appointment', 'AppointmentController');
+// Route::resource('prescription', 'PrescriptionController');
+// Route::resource('prescriptionline', 'PrescriptionLineController');
+// Route::resource('orientationletter', 'OrientationLetterController');
+// Route::resource('imagery', 'ImageryController');
+//
 
 //generating when using Auth::routes() but don't needed instead i just define the needed route
 //GET|HEAD|login                 |login           |Auth\LoginController@showLoginForm
