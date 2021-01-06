@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Base\BaseModel;
+
 class Patient extends BaseModel
 {
-    //protected $guarded = array('email');
-    //protected $fillable = array('first_name', 'last_name', 'social_security_number', 'birth_date', 'phone_number', 'address', 'chronic_diseases', 'allergies', 'antecedents', 'comments');
-    //protected $visible = array('first_name', 'last_name', 'social_security_number', 'birth_date', 'phone_number', 'address', 'email', 'chronic_diseases', 'allergies', 'antecedents', 'comments');
 
     public function appointments()
     {

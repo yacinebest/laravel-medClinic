@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-class Doctor extends BaseModel
-{
-    //protected $guarded = array('username', 'password', 'email');
-    //protected $fillable = array('first_name', 'last_name', 'is_admin', 'specialty');
-    //protected $visible = array('first_name', 'last_name', 'username', 'email', 'is_admin', 'specialty');
-    //protected $hidden = array('password');
+use App\Models\Base\AuthEntity;
 
+class Doctor extends AuthEntity
+{
     public function orientationLetters()
     {
         return $this->hasMany('App\Models\OrientationLetter');

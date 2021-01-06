@@ -46,6 +46,17 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'doctor' => [
+            'redirectTo' => 'doctor.home',
+            'driver' => 'session',
+            'provider'=>'doctors'
+        ],
+        'secretary' => [
+            'redirectTo' => 'secretary.home',
+            'driver' => 'session',
+            'provider'=>'secretaries'
+        ]
     ],
 
     /*
@@ -70,6 +81,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'doctors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Doctor::class,
+        ],
+        'secretaries' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Secretary::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -93,12 +112,12 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
+        // 'users' => [
+        //     'provider' => 'users',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        //     'throttle' => 60,
+        // ],
     ],
 
     /*

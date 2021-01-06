@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Base\BaseModel;
+
 class Prescription extends BaseModel
 {
-    //protected $fillable = array('date');
-    //protected $visible = array('date');
 
     public function prescriptionLines()
     {

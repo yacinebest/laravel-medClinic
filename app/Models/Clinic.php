@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Base\BaseModel;
+
 class Clinic extends BaseModel
 {
-    //protected $fillable = array('name', 'address', 'phone_number');
-    //protected $visible = array('name', 'address', 'phone_number');
 
 }

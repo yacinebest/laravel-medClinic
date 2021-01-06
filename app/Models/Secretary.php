@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-class Secretary extends BaseModel
+use App\Models\Base\AuthEntity;
+
+class Secretary extends AuthEntity
 {
-    //protected $guarded = array('password', 'username', 'email');
-    //protected $fillable = array('first_name', 'last_name');
-    //protected $visible = array('first_name', 'last_name', 'username', 'email');
-    //protected $hidden = array('password');
 
     public function appointments()
     {

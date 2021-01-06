@@ -6,6 +6,17 @@ use Illuminate\Http\Request;
 
 class SecretaryController extends Controller
 {
+
+    /**
+     * Display a dome page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function home()
+    {
+        return view('secretary.home');
+    }
+
     /**
      * Display a listing of the resource.
      *

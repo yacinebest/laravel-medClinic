@@ -39,34 +39,48 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
+                        @if(Auth::guard('doctor')->check() || Auth::guard('secretary')->check())
+
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    @if(Auth::guard('doctor')->check())
+                                        {{ "Dr." . Auth::guard('doctor')->user()->first_name . " " . Auth::guard('doctor')->user()->last_name }}
+                                    @elseif(Auth::guard('secretary')->check())
+                                        {{ "Sc." . Auth::guard('secretary')->user()->first_name . " " . Auth::guard('secretary')->user()->last_name }}
+                                    @endif
+
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{
+                                        Auth::guard('doctor')->check() ? route('doctorLogout') : (Auth::guard('secretary')->check() ? route('secretaryLogout') : '#' )
+                                        }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{
+                                        Auth::guard('doctor')->check() ? route('doctorLogout') : (Auth::guard('secretary')->check() ? route('secretaryLogout') : '#')
+                                        }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                        @else
+                            {{-- <li class="nav-item">
+                                <a class="nav-link" href="{{ route('doctorLogin') }}">Login Doctor</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('secretaryLogin') }}">Login Secretary</a>
+                            </li> --}}
+                            {{-- @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                            @endif --}}
+                        @endif
                     </ul>
                 </div>
             </div>

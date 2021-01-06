@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Base\BaseModel;
+
 class OrientationLetter extends BaseModel
 {
-    //protected $fillable = array('date', 'content');
-    //protected $visible = array('date', 'content');
 
     public function doctor()
     {

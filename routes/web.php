@@ -14,18 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@welcome')->name('welcome');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix'=>'doctor'], function () {
+    Route::get('/login','Auth\Login\DoctorLoginController@showLoginForm')->name('doctorLogin');
+    Route::post('/login','Auth\Login\DoctorLoginController@login')->name('doctorLogin');
+    Route::post('/logout','Auth\Login\DoctorLoginController@logout')->name('doctorLogout');
+
+    Route::get('/home','DoctorController@home')->middleware('auth:doctor')->name('doctorHome');
 });
 
-Route::get('login','Auth\LoginController@showLoginForm')->name('login');
-Route::post('login','Auth\LoginController@login');
-Route::post('logout','Auth\LoginController@logout')->name('logout');
-Route::get('register','Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register','Auth\RegisterController@register');
+Route::group(['prefix'=>'secretary'], function () {
+    Route::get('/login','Auth\Login\SecretaryLoginController@showLoginForm')->name('secretaryLogin');
+    Route::post('/login','Auth\Login\SecretaryLoginController@login')->name('secretaryLogin');
+    Route::post('/logout','Auth\Login\SecretaryLoginController@logout')->name('secretaryLogout');
 
-
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home','SecretaryController@home')->middleware('auth:secretary')->name('secretaryHome');
+});
 
 //
 // Route::resource('clinic', 'ClinicController');
@@ -40,6 +46,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 //
 
 //generating when using Auth::routes() but don't needed instead i just define the needed route
+//for registration
+// Route::get('register','Auth\RegisterController@showRegistrationForm')->name('register');
+// Route::post('register','Auth\RegisterController@register');
+//for login
+// Route::get('login','Auth\LoginController@showLoginForm')->name('login');
+// Route::post('login','Auth\LoginController@login');
+// Route::post('logout','Auth\LoginController@logout')->name('logout');
 //GET|HEAD|login                 |login           |Auth\LoginController@showLoginForm
 //POST    |login                 |                |Auth\LoginController@login
 //POST    |logout                |logout          |Auth\LoginController@logout
