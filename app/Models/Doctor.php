@@ -18,7 +18,7 @@ class Doctor extends AuthEntity
 
     public function appointments()
     {
-        return $this->morphMany('App\Models\Appointment','appointmentable');
+        return $this->hasMany('App\Models\Appointment');
     }
 
 

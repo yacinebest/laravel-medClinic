@@ -12,9 +12,9 @@ class Appointment extends BaseModel
         return $this->belongsTo('App\Models\Patient');
     }
 
-    public function appointmentable()
+    public function doctor()
     {
-        return $this->morphTo();
+        return $this->belongsTo('App\Models\Doctor');
     }
 
 }
