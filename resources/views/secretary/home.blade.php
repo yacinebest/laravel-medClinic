@@ -1,1 +1,1 @@
-<h1>home secretary</h1>
+@extends('layouts.master')
