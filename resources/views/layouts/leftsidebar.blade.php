@@ -25,19 +25,21 @@
                     <ul class="collapse show" id="documentation" data-parent="#sidebar-menu">
                         <div class="sub-menu">
                             <li class="section-title">
-                                Début
+                                Utilisateur
                             </li>
                             @if(Auth::guard('doctor')->check())
-                            <li>
-                                <a class="sidenav-item-link" href="#">
-                                    <span class="nav-text">Médcins</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidenav-item-link" href="#">
-                                    <span class="nav-text">Secretaire</span>
-                                </a>
-                            </li>
+                                @if(Auth::guard('doctor')->user()->is_admin)
+                                    <li>
+                                        <a class="sidenav-item-link" href="#">
+                                            <span class="nav-text">Médcins</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sidenav-item-link" href="#">
+                                            <span class="nav-text">Secretaire</span>
+                                        </a>
+                                    </li>
+                                @endif
                             @endif
                             <li>
                                 <a class="sidenav-item-link" href="#">
@@ -56,12 +58,22 @@
                                 </a>
                             </li>
                             @if(Auth::guard('doctor')->check())
-                            <li>
-                                <a class="sidenav-item-link" href="#">
-                                    <span class="nav-text">Prescriptions</span>
+                                <li>
+                                    <a class="sidenav-item-link" href="#">
+                                        <span class="nav-text">Prescriptions</span>
 
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+                                @if(Auth::guard('doctor')->user()->is_admin)
+                                    <li class="section-title">
+                                        Autre
+                                    </li>
+                                    <li>
+                                        <a class="sidenav-item-link" href="#">
+                                            <span class="nav-text">Clinique</span>
+                                        </a>
+                                    </li>
+                                @endif
                             @endif
                         </div>
                     </ul>
