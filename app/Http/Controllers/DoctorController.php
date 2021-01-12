@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
 {
@@ -24,7 +26,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        return view('doctor.index');
+        $doctors = Doctor::paginate(10);
+        return view('doctor.index',['doctors'=>$doctors]);
     }
 
     /**
@@ -34,7 +37,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        return view('doctor.create');
     }
 
     /**
@@ -45,7 +48,9 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request['password'] = Hash::make($request->input('password'));
+        Doctor::create($request->except('_token'));
+        return redirect(route('doctor.index'));
     }
 
     /**
