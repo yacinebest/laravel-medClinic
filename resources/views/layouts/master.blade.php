@@ -1,5 +1,5 @@
-@extends('layouts.header')
-<body class="sidebar-fixed sidebar-dark header-light header-fixed" id="body">
+@extends('layouts.appMaster')
+@section('appMasterContent')
     {{-- <script>
         NProgress.configure({showSpinner: false
         });
@@ -164,6 +164,12 @@
             </footer>
         </div>
     </div>
-    @extends('layouts.scripts')
-</body>
-</html>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('assets/plugins/jekyll-search.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/sleek.js') }}"></script>
+
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+@endsection
