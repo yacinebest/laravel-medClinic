@@ -126,7 +126,7 @@
                                         <a class="dropdown-item" href="{{
                                         Auth::guard('doctor')->check() ? route('doctorLogout') : (Auth::guard('secretary')->check() ? route('secretaryLogout') : '#' )
                                         }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                    document.getElementById('logout-form').submit();">
                                             <i class="mdi mdi-logout"></i>{{ __('Log Out') }}
                                         </a>
                                     </li>

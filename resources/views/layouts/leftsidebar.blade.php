@@ -30,7 +30,7 @@
                             @if(Auth::guard('doctor')->check())
                                 @if(Auth::guard('doctor')->user()->is_admin)
                                     <li>
-                                        <a class="sidenav-item-link" href="#">
+                                        <a class="sidenav-item-link" href="{{ route('doctor.index') }}">
                                             <span class="nav-text">Médcins</span>
                                         </a>
                                     </li>

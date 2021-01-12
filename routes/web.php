@@ -35,7 +35,7 @@ Route::group(['prefix'=>'secretary'], function () {
 
 //
 // Route::resource('clinic', 'ClinicController');
-// Route::resource('doctor', 'DoctorController');
+Route::resource('management/doctor', 'DoctorController');
 // Route::resource('secretary', 'SecretaryController');
 // Route::resource('patient', 'PatientController');
 // Route::resource('appointment', 'AppointmentController');
