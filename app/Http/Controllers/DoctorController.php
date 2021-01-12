@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -72,7 +73,13 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Auth::guard('doctor')->user()->id == $id)
+            return redirect(route('doctor.profile'));
+        else
+        {
+            $doctor = Doctor::find($id);
+            return view('doctor.edit',['doctor'=>$doctor]);
+        }
     }
 
     /**
@@ -84,7 +91,9 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $doctor = Doctor::find($id);
+        $doctor->update($request->except('_token'));
+        return redirect(route('doctor.index'));
     }
 
     /**
@@ -95,6 +104,12 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Doctor::find($id)->delete();
+        return redirect(route('doctor.index'));
+    }
+
+    public function profile()
+    {
+        return view('doctor.profile');
     }
 }

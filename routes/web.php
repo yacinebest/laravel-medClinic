@@ -33,6 +33,7 @@ Route::group(['prefix'=>'secretary'], function () {
     Route::get('/home','SecretaryController@home')->middleware('auth:secretary')->name('secretaryHome');
 });
 
+Route::get('/management/doctor/profile', 'DoctorController@profile')->name('doctor.profile');
 //
 // Route::resource('clinic', 'ClinicController');
 Route::resource('management/doctor', 'DoctorController');

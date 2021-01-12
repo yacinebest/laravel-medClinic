@@ -33,7 +33,7 @@
                             </thead>
                             <tbody>
                                 @foreach($doctors as $doctor)
-                                    <tr>
+                                <tr>
                                     <td>{{ $doctor->id }}</td>
                                     <td>
                                         <p class="text-dark">{{ $doctor->last_name }}</p>
@@ -52,9 +52,9 @@
                                     </td>
                                     <td>
                                         @if($doctor->is_admin)
-                                             <span class="badge badge-success">Admin</span>
+                                        <span class="badge badge-success">Admin</span>
                                         @else
-                                            <span class="badge badge-secondary">Docteur</span>
+                                        <span class="badge badge-secondary">Docteur</span>
                                         @endif
                                     </td>
                                     <td class="text-right">
@@ -62,10 +62,14 @@
                                             <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
                                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
                                                 <li class="dropdown-item">
-                                                    <a href="#">Voir profile</a>
+                                                    <a href="{{ route('doctor.edit', ['doctor' =>$doctor->id]) }}">Modifier</a>
                                                 </li>
                                                 <li class="dropdown-item">
-                                                    <a href="#">Supprimer</a>
+                                                    <a href="#" onclick="event.preventDefault(); document.getElementById('destroy-form').submit();">Supprimer</a>
+                                                    <form id="destroy-form" action="{{ route('doctor.destroy',['doctor'=>$doctor->id]) }}" method="POST" class="d-none">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                    </form>
                                                 </li>
                                             </ul>
                                         </div>
