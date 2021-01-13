@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Doctor\DoctorStoreRequest;
+use App\Http\Requests\Doctor\DoctorUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use Illuminate\Contracts\Session\Session;
@@ -98,15 +99,28 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Doctor\DoctorUpdateRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DoctorUpdateRequest $request, $id)
     {
         $doctor = Doctor::find($id);
-        $doctor->update($request->except('_token'));
-        return redirect(route('doctor.index'));
+        //verify if he has changed the first_name last_name and that the combination of them are steel unique if not he redirect back
+        if(
+            (($doctor->last_name .' '. $doctor->first_name ) == ($request['last_name'] .' '. $request['first_name'] ))
+            ||
+            (count(Doctor::where('last_name',$request['last_name'])->where('first_name',$request['first_name'] )->get())==0)
+        ){
+            $array_request = $this->processUpdateRequest($request);
+            $doctor->update($array_request);
+
+            $request->session()->flash('update_doctor',$doctor->last_name .' ' . $doctor->first_name .' a été Mise a Jour.');
+            return redirect(route('doctor.index'));
+        }else{
+            $request->session()->flash('first_name_last_name_exist',$request->first_name_last_name_exist_msg);
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -148,6 +162,21 @@ class DoctorController extends Controller
     public function processStoreRequest(DoctorStoreRequest $request)
     {
         $request['password'] = Hash::make($request->input('password'));
+        $array_except= ['_token'];
+        if($request['specialty']==null)
+            array_push($array_except,'specialty');
+
+        return $request->except($array_except);
+    }
+
+     /**
+     * Process the Update Request
+     *
+     * @param  mixed $request
+     * @return array
+     */
+    public function processUpdateRequest(DoctorUpdateRequest $request)
+    {
         $array_except= ['_token'];
         if($request['specialty']==null)
             array_push($array_except,'specialty');

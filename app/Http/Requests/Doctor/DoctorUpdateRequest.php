@@ -3,11 +3,10 @@
 namespace App\Http\Requests\Doctor;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class DoctorStoreRequest extends FormRequest
+class DoctorUpdateRequest extends FormRequest
 {
-    /**
+     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -27,13 +26,12 @@ class DoctorStoreRequest extends FormRequest
         return [
             'first_name'=>'required',
             'last_name'=>'required',
-            'username'=>'required|unique:doctors',
-            'email'=>'required|email|unique:doctors',
-            'password' => 'min:6|required|confirmed',
+            'username'=>'required|unique:doctors,username,'.$this->route()->doctor.',id',
+            'email'=>'required|email|unique:doctors,email,'.$this->route()->doctor.',id'
         ];
     }
 
-    public $first_name_last_name_unique_msg =  "Un Docteur avec le meme Nom et Prénom existe deja!";
+    public $first_name_last_name_exist_msg =  "Un Docteur avec le meme Nom et Prénom Entrée existe deja!";
 
     /**
      * Get the error messages for the defined validation rules.
@@ -47,16 +45,11 @@ class DoctorStoreRequest extends FormRequest
             'last_name.required' => 'Le Nom est obligatoire.',
             'username.required' => 'Le Username est obligatoire.',
             'email.required' => 'L\'Adresse E-mail est obligatoire.',
-            'password.required' => 'Le Mot de passe est obligatoire.',
 
             'username.unique' => 'Ce Username est déjà utilisée!',
             'email.unique' => 'Cette Adresse E-mail est déjà utilisée!',
 
-            'password.min' => 'Le Mot de passe doit avoir plus de 6 caractéres.',
-
-            'password.confirmed' => 'La confirmation du mot de passe ne correspond pas..',
-
-            'email.email' => 'L`\'Adresse E-mail être une adresse e-mail valide.',
+            'email.email' => 'L`\'Adresse E-mail n\'est pas valide.'
         ];
     }
 }
