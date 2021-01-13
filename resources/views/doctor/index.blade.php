@@ -18,6 +18,11 @@
                         </div> --}}
                     </div>
                     <div class="card-body pt-0 pb-5">
+                        @if(Session::has('store_doctor'))
+                            <div class="col-md-12">
+                                <div class="alert alert-success alert-highlighted">{{ Session::get('store_doctor') }}</div>
+                            </div>
+                        @endif
                         <table class="table card-table table-responsive table-responsive-large" style="width:100%">
                             <thead>
                                 <tr>

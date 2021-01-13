@@ -6,7 +6,7 @@ use App\Models\Base\AuthEntity;
 
 class Doctor extends AuthEntity
 {
-    public $fillable=['last_name','first_name','username','email','specialty','password'];
+    public $fillable=['last_name','first_name','username','email','specialty','password','is_admin'];
     public function orientationLetters()
     {
         return $this->hasMany('App\Models\OrientationLetter');

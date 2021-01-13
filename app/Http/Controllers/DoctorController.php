@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Doctor\DoctorStoreRequest;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +29,9 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = Doctor::paginate(10);
+        $doctors = Doctor::orderBy('last_name', 'Asc')
+                        ->orderBy('first_name', 'Asc')
+                        ->paginate(10);
         return view('doctor.index',['doctors'=>$doctors]);
     }
 
@@ -44,14 +48,23 @@ class DoctorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Doctor\DoctorStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DoctorStoreRequest $request)
     {
-        $request['password'] = Hash::make($request->input('password'));
-        Doctor::create($request->except('_token'));
-        return redirect(route('doctor.index'));
+        if(Doctor::where('last_name',$request['last_name'])
+            ->where('first_name',$request['first_name'] )->first()==null){
+
+            $array_request = $this->processStoreRequest($request);
+            $doc = Doctor::create($array_request);
+            $request->session()->flash('store_doctor',$doc->last_name .' ' . $doc->first_name .' a été Ajouté a la liste des médecin.');
+            return redirect(route('doctor.index'));
+        }
+        else{
+            $request->session()->flash('first_name_last_name_unique',$request->first_name_last_name_unique_msg);
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -108,8 +121,36 @@ class DoctorController extends Controller
         return redirect(route('doctor.index'));
     }
 
+
+    /**
+     * Show the Profile Of Auth Doctor.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function profile()
     {
         return view('doctor.profile');
+    }
+
+    /*
+    |---------------------------------------------------------------------------|
+    | CUSTOM FUNCTION                                                           |
+    |---------------------------------------------------------------------------|
+    */
+
+    /**
+     * Process the Store Request
+     *
+     * @param  mixed $request
+     * @return array
+     */
+    public function processStoreRequest(DoctorStoreRequest $request)
+    {
+        $request['password'] = Hash::make($request->input('password'));
+        $array_except= ['_token'];
+        if($request['specialty']==null)
+            array_push($array_except,'specialty');
+
+        return $request->except($array_except);
     }
 }

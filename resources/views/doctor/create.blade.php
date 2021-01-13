@@ -25,28 +25,80 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input name="last_name" type="text" class="form-control" placeholder="Nom">
+                                    <input name="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" value="{{ old('last_name') }}" placeholder="Nom">
                                 </div>
+                                @error('last_name')
+                                    <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input name="first_name" type="text" class="form-control" placeholder="Prénom">
+                                    <input name="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" value="{{ old('first_name') }}" placeholder="Prénom">
+                                </div>
+                                @error('first_name')
+                                    <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            @if(Session::has('first_name_last_name_unique'))
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger alert-highlighted">{{ Session::get('first_name_last_name_unique') }}</div>
+                                </div>
+                            @endif
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" placeholder="Username">
+                                </div>
+                                @error('username')
+                                    <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email">
+                                </div>
+                                @error('email')
+                                    <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input name="specialty" type="text" class="form-control @error('specialty') is-invalid @enderror" value="{{ old('specialty') }}" placeholder="Specialité">
+                                </div>
+                                @error('specialty')
+                                    <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="align-items-sm-center d-flex form-group">
+                                    <div class="col-md-2">
+                                        <label for="Radios" class="text-dark font-weight-medium mb-3">Role :</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <label class="control control-radio">Docteur
+                                            <input type="radio" name="is_admin" value="0" checked="checked">
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                        <label class="control control-radio">Administrateur
+                                            <input type="radio" name="is_admin" value="1" >
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12 mb-4">
-                                <input name="username" type="text" class="form-control input-lg" placeholder="Username">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input name="password" type="password" class="form-control @error('password') is-invalid @enderror"  placeholder="Mot de passe">
+                                </div>
+                                @error('password')
+                                    <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="form-group col-md-12 mb-4">
-                                <input name="email" type="email" class="form-control input-lg" placeholder="Email">
-                            </div>
-                            <div class="form-group col-md-12 ">
-                                <input name="specialty" type="text" class="form-control input-lg" placeholder="Specialité">
-                            </div>
-                            <div class="form-group col-md-12 ">
-                                <input name="password" type="password" class="form-control input-lg" placeholder="Mot de passe">
-                            </div>
-                            <div class="form-group col-md-12 ">
-                                <input type="password" class="form-control input-lg" id="cpassword" placeholder="Confirmez le mot de passe">
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <input type="password" class="form-control" name="password_confirmation" placeholder="Confirmez le mot de passe">
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Créer Médecin</button>
