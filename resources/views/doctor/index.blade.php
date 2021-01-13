@@ -23,6 +23,11 @@
                                 <div class="alert alert-success alert-highlighted">{{ Session::get('store_doctor') }}</div>
                             </div>
                         @endif
+                         @if(Session::has('destroy_doctor'))
+                            <div class="col-md-12">
+                                <div class="alert alert-warning alert-highlighted">{{ Session::get('destroy_doctor') }}</div>
+                            </div>
+                        @endif
                         <table class="table card-table table-responsive table-responsive-large" style="width:100%">
                             <thead>
                                 <tr>
@@ -67,14 +72,22 @@
                                             <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
                                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
                                                 <li class="dropdown-item">
-                                                    <a href="{{ route('doctor.edit', ['doctor' =>$doctor->id]) }}">Modifier</a>
+                                                    <a href="{{ route('doctor.edit', ['doctor' =>$doctor->id]) }}">
+                                                        <i class="mdi mdi-square-edit-outline mr-1"></i>
+                                                        Modifier
+                                                    </a>
                                                 </li>
                                                 <li class="dropdown-item">
-                                                    <a href="#" onclick="event.preventDefault(); document.getElementById('destroy-form').submit();">Supprimer</a>
-                                                    <form id="destroy-form" action="{{ route('doctor.destroy',['doctor'=>$doctor->id]) }}" method="POST" class="d-none">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                    </form>
+                                                    @if(Auth::guard('doctor')->user()->id!=$doctor->id)
+                                                        <a href="#" onclick="event.preventDefault(); document.getElementById('{{ 'destroy-form-'.$doctor->id }}').submit();">
+                                                            <i class="mdi mdi-delete mr-1"></i>
+                                                            Supprimer
+                                                        </a>
+                                                        <form id="{{ 'destroy-form-'.$doctor->id }}" action="{{ route('doctor.destroy',['doctor'=>$doctor->id]) }}" method="POST" class="d-none">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                        </form>
+                                                    @endif
                                                 </li>
                                             </ul>
                                         </div>
