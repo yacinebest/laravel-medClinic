@@ -28,6 +28,11 @@
                                 <div class="alert alert-warning alert-highlighted">{{ Session::get('destroy_doctor') }}</div>
                             </div>
                         @endif
+                        @if(Session::has('update_doctor'))
+                            <div class="col-md-12">
+                                <div class="alert alert-primary alert-highlighted">{{ Session::get('update_doctor') }}</div>
+                            </div>
+                        @endif
                         <table class="table card-table table-responsive table-responsive-large" style="width:100%">
                             <thead>
                                 <tr>
