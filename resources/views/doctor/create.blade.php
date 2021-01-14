@@ -19,11 +19,6 @@
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
         @enderror
     </div>
-    @if(Session::has('first_name_last_name_unique'))
-        <div class="col-md-12">
-            <div class="alert alert-danger alert-highlighted">{{ Session::get('first_name_last_name_unique') }}</div>
-        </div>
-    @endif
     <div class="col-md-12">
         <div class="form-group">
             <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" placeholder="Username">

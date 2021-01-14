@@ -54,18 +54,10 @@ class DoctorController extends Controller
      */
     public function store(DoctorStoreRequest $request)
     {
-        if(Doctor::where('last_name',$request['last_name'])
-            ->where('first_name',$request['first_name'] )->first()==null){
-
-            $array_request = $this->processStoreRequest($request);
-            $doc = Doctor::create($array_request);
-            $request->session()->flash('store_doctor',$doc->last_name .' ' . $doc->first_name .' a été Ajouté a la liste des médecin.');
-            return redirect(route('doctor.index'));
-        }
-        else{
-            $request->session()->flash('first_name_last_name_unique',$request->first_name_last_name_unique_msg);
-            return redirect()->back()->withInput();
-        }
+        $array_request = $this->processStoreRequest($request);
+        $doc = Doctor::create($array_request);
+        $request->session()->flash('store_doctor',$doc->last_name .' ' . $doc->first_name .' a été Ajouté a la liste des médecin.');
+        return redirect(route('doctor.index'));
     }
 
     /**
@@ -106,21 +98,12 @@ class DoctorController extends Controller
     public function update(DoctorUpdateRequest $request, $id)
     {
         $doctor = Doctor::find($id);
-        //verify if he has changed the first_name last_name and that the combination of them are steel unique if not he redirect back
-        if(
-            (($doctor->last_name .' '. $doctor->first_name ) == ($request['last_name'] .' '. $request['first_name'] ))
-            ||
-            (count(Doctor::where('last_name',$request['last_name'])->where('first_name',$request['first_name'] )->get())==0)
-        ){
-            $array_request = $this->processUpdateRequest($request);
-            $doctor->update($array_request);
 
-            $request->session()->flash('update_doctor',$doctor->last_name .' ' . $doctor->first_name .' a été Mise a Jour.');
-            return redirect(route('doctor.index'));
-        }else{
-            $request->session()->flash('first_name_last_name_exist',$request->first_name_last_name_exist_msg);
-            return redirect()->back()->withInput();
-        }
+        $array_request = $this->processUpdateRequest($request);
+        $doctor->update($array_request);
+
+        $request->session()->flash('update_doctor',$doctor->last_name .' ' . $doctor->first_name .' a été Mise a Jour.');
+        return redirect(route('doctor.index'));
     }
 
     /**

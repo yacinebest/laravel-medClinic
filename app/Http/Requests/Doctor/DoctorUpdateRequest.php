@@ -26,12 +26,11 @@ class DoctorUpdateRequest extends FormRequest
         return [
             'first_name'=>'required',
             'last_name'=>'required',
-            'username'=>'required|unique:doctors,username,'.$this->route()->doctor.',id',
-            'email'=>'required|email|unique:doctors,email,'.$this->route()->doctor.',id'
+            'username'=>'required',
+            'email'=>'required|email'
         ];
     }
 
-    public $first_name_last_name_exist_msg =  "Un Docteur avec le meme Nom et Prénom Entrée existe deja!";
 
     /**
      * Get the error messages for the defined validation rules.

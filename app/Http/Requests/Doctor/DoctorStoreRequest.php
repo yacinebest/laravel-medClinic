@@ -33,7 +33,6 @@ class DoctorStoreRequest extends FormRequest
         ];
     }
 
-    public $first_name_last_name_unique_msg =  "Un Docteur avec le meme Nom et Prénom existe deja!";
 
     /**
      * Get the error messages for the defined validation rules.

@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <li class="dropdown-item">
-                            @if(Auth::guard('doctor')->user()->id!=$doctor->id)
+                            @if( Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id!=$doctor->id)
                                 <a href="#"
                                     onclick="event.preventDefault(); document.getElementById('{{ 'destroy-form-'.$doctor->id }}').submit();">
                                     <i class="mdi mdi-delete mr-1"></i>
