@@ -56,7 +56,7 @@ class DoctorStoreRequest extends FormRequest
 
             'password.confirmed' => 'La confirmation du mot de passe ne correspond pas..',
 
-            'email.email' => 'L`\'Adresse E-mail être une adresse e-mail valide.',
+            'email.email' => 'L`\'Adresse E-mail n\'est pas valide.',
         ];
     }
 }
