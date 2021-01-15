@@ -35,7 +35,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="sidenav-item-link" href="#">
+                                        <a class="sidenav-item-link" href="{{ route('secretary.index') }}">
                                             <span class="nav-text">Secretaire</span>
                                         </a>
                                     </li>

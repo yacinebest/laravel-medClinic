@@ -1,5 +1,5 @@
 @extends('layouts.templates.edit',[
-'part_name'=>'Modifier Médecins','update_route_name'=>'doctor.update']
+'part_name'=>'Modifier Médecins','update_route_name'=>'doctor.update','entity_name'=>'doctor','entity'=>$doctor]
 )
 
 @section('UpdateFormElements')

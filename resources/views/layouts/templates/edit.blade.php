@@ -3,6 +3,8 @@
 
     $part_name
     $update_route_name
+    $entity_name
+    $entity
 
     @yield('UpdateFormElements')
 --}}
@@ -27,7 +29,8 @@
                 </div>
                 <div class="card-body p-5">
                     {{-- <h4 class="text-dark mb-5"></h4> --}}
-                    <form method="POST" action="{{ route($update_route_name,['doctor'=>$doctor->id]) }}">
+                    <form method="POST" action="{{ route($update_route_name,[$entity_name=>$entity->id]) }}">
+                    {{-- <form method="POST" action="{{ route($update_route_name,['doctor'=>$doctor->id]) }}"> --}}
                     @method('PUT')
                     @csrf
                         <div class="row">
