@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body p-5">
                     {{-- <h4 class="text-dark mb-5"></h4> --}}
-                    <form method="POST" action="{{ route($update_route_name,[$entity_name=>$entity->id]) }}">
+                    <form method="POST" action="{{ route($update_route_name,[$entity_name=>$entity->id]) }}" id="update-form">
                     {{-- <form method="POST" action="{{ route($update_route_name,['doctor'=>$doctor->id]) }}"> --}}
                     @method('PUT')
                     @csrf
@@ -38,7 +38,7 @@
                             @yield('UpdateFormElements')
 
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Soumettre</button>
+                                <button id="update-button" type="submit" class="btn btn-lg btn-primary btn-block mb-4">Soumettre</button>
                             </div>
                         </div>
                     </form>
@@ -47,4 +47,24 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+$("#update-button").on("click", function(){
+    event.preventDefault();
+    swal({
+        title: "Êtes-vous sûr de appliquer ces modification?",
+        icon: "warning",
+        buttons: ["Annuler", true],
+        dangerMode: true,
+    }
+    ).then((value) => {
+        if(value){
+            document.getElementById('update-form').submit();
+            return ;
+        }
+    });
+});
+</script>
 @endsection

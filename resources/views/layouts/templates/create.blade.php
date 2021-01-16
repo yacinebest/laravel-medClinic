@@ -27,13 +27,13 @@
                 </div>
                 <div class="card-body p-5">
                     {{-- <h4 class="text-dark mb-5"></h4> --}}
-                    <form method="POST" action="{{ route($store_route_name) }}">
+                    <form method="POST" action="{{ route($store_route_name) }}" id="store-form">
                     @csrf
                         <div class="row">
                             @yield('CreateFormElements')
 
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">{{ $action_name }}</button>
+                                <button id="store-button" type="submit" class="btn btn-lg btn-primary btn-block mb-4">{{ $action_name }}</button>
                             </div>
                         </div>
                     </form>
@@ -43,4 +43,24 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+$("#store-button").on("click", function(){
+    event.preventDefault();
+    swal({
+        title: "Êtes-vous sûr de vouloir faire ça?",
+        icon: "warning",
+        buttons: ["Annuler", true],
+        dangerMode: true,
+    }
+    ).then((value) => {
+        if(value){
+            document.getElementById('store-form').submit();
+            return ;
+        }
+    });
+});
+</script>
 @endsection

@@ -48,3 +48,23 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script type="text/javascript">
+$(".a-delete-entity").on("click", function(){
+    event.preventDefault();
+    swal({
+        title: "Êtes-vous sûr de vouloir faire ça?",
+        icon: "warning",
+        buttons: ["Annuler", true],
+        dangerMode: true,
+    }
+    ).then((value) => {
+        if(value){
+            document.getElementById('destroy-form-'+ $(this).data('entityid')).submit();
+            return ;
+        }
+    });
+});
+</script>
+@endsection

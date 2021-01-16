@@ -53,7 +53,8 @@
                         </li>
                         <li class="dropdown-item">
                                 <a href="#"
-                                    onclick="event.preventDefault(); document.getElementById('{{ 'destroy-form-'.$secretary->id }}').submit();">
+                                    {{-- entityid and .a-delete-entity are used for popup alert --}}
+                                    data-entityid="{{ $secretary->id }}" class="a-delete-entity">
                                     <i class="mdi mdi-delete mr-1"></i>
                                     Supprimer
                                 </a>

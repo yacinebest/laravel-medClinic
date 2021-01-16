@@ -66,7 +66,8 @@
                         <li class="dropdown-item">
                             @if( Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id!=$doctor->id)
                                 <a href="#"
-                                    onclick="event.preventDefault(); document.getElementById('{{ 'destroy-form-'.$doctor->id }}').submit();">
+                                    {{-- entityid and .a-delete-entity are used for popup alert --}}
+                                    data-entityid="{{ $doctor->id }}" class="a-delete-entity">
                                     <i class="mdi mdi-delete mr-1"></i>
                                     Supprimer
                                 </a>

@@ -17,4 +17,6 @@
 <script src="{{ asset('assets/js/map.js') }}"></script>
 {{-- For Later --}}
 {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+{{-- For Alert And Confirmation Modal Check https://sweetalert.js.org/ --}}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @yield('scripts')
