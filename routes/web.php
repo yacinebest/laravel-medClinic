@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'doctor'], function () {
     Route::get('/login','Auth\Login\DoctorLoginController@showLoginForm')->name('doctorLogin');

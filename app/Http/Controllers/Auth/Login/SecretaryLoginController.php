@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Auth\Login;
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Auth\LoginController as DefaultLoginController;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
-class SecretaryLoginController extends DefaultLoginController
+class SecretaryLoginController extends Controller
 {
-    protected $redirectTo = '/secretary/home';
-    protected $redirectAfterLogout = '/';
+    use AuthenticatesUsers;
+
+    public function redirectTo()
+    {
+        return route('secretaryHome');
+    }
+    protected function loggedOut(Request $request) {
+        return redirect(route('welcome'));
+    }
 
     public function __construct()
     {

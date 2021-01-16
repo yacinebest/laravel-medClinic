@@ -67,10 +67,11 @@
         <div class="flex-center position-ref full-height">
 
             <div class="top-right links">
-
-                <a href="{{ route('home') }}">Home</a>
-
-                @if(!Auth::guard('doctor')->check() && !Auth::guard('secretary')->check())
+                @if(Auth::guard('doctor')->check())
+                    <a href="{{ route('doctorHome') }}">Home Doctor</a>
+                @elseif(Auth::guard('secretary')->check())
+                    <a href="{{ route('secretaryHome') }}">Home Secretary</a>
+                @else
                     <a href="{{ route('doctorLogin') }}">Login Doctor</a>
                     <a href="{{ route('secretaryLogin') }}">Login Secretary</a>
                     {{-- @if (Route::has('register'))
