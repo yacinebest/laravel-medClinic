@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Auth;
 class DoctorController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('doctor.auth');
+        $this->middleware('admin.auth', ['except' => ['home','profile','show']]);
+    }
+
     /**
      * Display a dome page
      *

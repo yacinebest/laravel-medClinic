@@ -21,7 +21,7 @@ Route::group(['prefix'=>'doctor'], function () {
     Route::post('/login','Auth\Login\DoctorLoginController@login')->name('doctorLogin');
     Route::post('/logout','Auth\Login\DoctorLoginController@logout')->name('doctorLogout');
 
-    Route::get('/home','DoctorController@home')->middleware('auth:doctor')->name('doctorHome');
+    Route::get('/home','DoctorController@home')->name('doctorHome');
 });
 
 Route::group(['prefix'=>'secretary'], function () {
@@ -29,7 +29,7 @@ Route::group(['prefix'=>'secretary'], function () {
     Route::post('/login','Auth\Login\SecretaryLoginController@login')->name('secretaryLogin');
     Route::post('/logout','Auth\Login\SecretaryLoginController@logout')->name('secretaryLogout');
 
-    Route::get('/home','SecretaryController@home')->middleware('auth:secretary')->name('secretaryHome');
+    Route::get('/home','SecretaryController@home')->name('secretaryHome');
 });
 
 Route::get('/management/doctor/profile', 'DoctorController@profile')->name('doctor.profile');
