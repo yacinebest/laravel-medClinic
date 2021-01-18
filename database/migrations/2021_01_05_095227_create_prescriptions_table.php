@@ -16,6 +16,8 @@ class CreatePrescriptionsTable extends Migration {
 		Schema::create('prescriptions', function(Blueprint $table) {
 			$table->id();
             $table->date('date');
+            $table->integer('patient_id')->index()->unsigned();
+            $table->integer('doctor_id')->index()->unsigned();
             $table->timestamps();
 		});
 	}
