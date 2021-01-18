@@ -19,8 +19,8 @@ class CreateAppointmentsTable extends Migration {
             $table->string('reason')->default('');
             $table->timestamp('start_at')->useCurrent();
             $table->timestamp('end_at')->useCurrent();
-            $table->integer('patient_id')->index()->unsigned();
-            $table->integer('doctor_id')->index()->unsigned();
+            $table->integer('patient_id')->index()->unsigned()->nullable();
+            $table->integer('doctor_id')->index()->unsigned()->nullable();
             $table->timestamps();
 		});
 	}

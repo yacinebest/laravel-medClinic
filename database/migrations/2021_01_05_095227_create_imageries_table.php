@@ -16,7 +16,7 @@ class CreateImageriesTable extends Migration {
 		Schema::create('imageries', function(Blueprint $table) {
 			$table->id();
             $table->string('file');
-            $table->integer('patient_id')->index()->unsigned();
+            $table->integer('patient_id')->index()->unsigned()->nullable();
             $table->timestamps();
 		});
 	}

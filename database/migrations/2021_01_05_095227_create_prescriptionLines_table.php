@@ -19,7 +19,7 @@ class CreatePrescriptionLinesTable extends Migration {
 			$table->string('dose');
 			$table->string('time_taken');
             $table->string('duration');
-            $table->integer('prescription_id')->index()->unsigned();
+            $table->integer('prescription_id')->index()->unsigned()->nullable();
             $table->timestamps();
 		});
 	}

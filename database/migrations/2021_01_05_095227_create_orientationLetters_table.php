@@ -17,8 +17,8 @@ class CreateOrientationLettersTable extends Migration {
             $table->id();
 			$table->date('date');
             $table->text('content');
-            $table->integer('patient_id')->index()->unsigned();
-            $table->integer('doctor_id')->index()->unsigned();
+            $table->integer('patient_id')->index()->unsigned()->nullable();
+            $table->integer('doctor_id')->index()->unsigned()->nullable();
             $table->timestamps();
 		});
 	}
