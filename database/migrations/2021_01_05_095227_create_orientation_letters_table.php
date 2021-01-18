@@ -13,7 +13,7 @@ class CreateOrientationLettersTable extends Migration {
      */
     public function up()
 	{
-		Schema::create('orientationLetters', function(Blueprint $table) {
+		Schema::create('orientation_letters', function(Blueprint $table) {
             $table->id();
 			$table->date('date');
             $table->text('content');
@@ -30,6 +30,6 @@ class CreateOrientationLettersTable extends Migration {
      */
     public function down()
 	{
-		Schema::dropIfExists('orientationLetters');
+		Schema::dropIfExists('orientation_letters');
 	}
 }

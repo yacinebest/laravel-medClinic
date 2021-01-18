@@ -13,7 +13,7 @@ class CreatePrescriptionLinesTable extends Migration {
      */
     public function up()
 	{
-		Schema::create('prescriptionLines', function(Blueprint $table) {
+		Schema::create('prescription_lines', function(Blueprint $table) {
 			$table->id();
 			$table->string('medicine');
 			$table->string('dose');
@@ -31,6 +31,6 @@ class CreatePrescriptionLinesTable extends Migration {
      */
     public function down()
 	{
-		Schema::dropIfExists('prescriptionLines');
+		Schema::dropIfExists('prescription_lines');
 	}
 }
