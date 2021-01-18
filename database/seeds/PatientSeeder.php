@@ -19,5 +19,7 @@ class PatientSeeder extends Seeder
             'email'=>'pat2@gmail.com'
         ]);
 
+        factory(\App\Models\Patient::class,10)->create();
+
     }
 }
