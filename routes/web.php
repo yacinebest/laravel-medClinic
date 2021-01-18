@@ -37,6 +37,8 @@ Route::get('/management/secretary/profile', 'SecretaryController@profile')->name
 //
 // Route::resource('clinic', 'ClinicController');
 Route::resource('management/doctor', 'DoctorController');
+Route::get('/ajax/doctor/getAllAppointments','DoctorController@getAllAppointments')->name('doctor.ajax.getAllAppointments');
+
 Route::resource('management/secretary', 'SecretaryController');
 // Route::resource('patient', 'PatientController');
 // Route::resource('appointment', 'AppointmentController');

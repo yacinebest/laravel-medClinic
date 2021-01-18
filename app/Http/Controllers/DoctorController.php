@@ -13,13 +13,15 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Comment\Doc;
+use Yajra\Datatables\DataTables;
 
 class DoctorController extends Controller
 {
 
     public function __construct() {
         $this->middleware('doctor.auth');
-        $this->middleware('admin.auth', ['except' => ['home','profile','show']]);
+        $this->middleware('admin.auth', ['except' => ['home','profile','show'
+                                                    ,'getAllAppointments']]);
     }
 
     /**
@@ -80,6 +82,29 @@ class DoctorController extends Controller
         $doctor = Doctor::find($id);
         return view('doctor.show',['doctor'=>$doctor]);
     }
+    //Ajax
+    public function getAllAppointments(Request $request){
+        if ($request->ajax()) {
+            $data = Appointment::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('doctor_full_name',function(Appointment $appointment){
+                    return $appointment->doctor->last_name . ' ' . $appointment->doctor->first_name;
+                })
+                ->addColumn('patient_full_name',function(Appointment $appointment){
+                    return $appointment->patient->last_name . ' ' . $appointment->patient->first_name;
+                })
+                ->addColumn('action', function($row){
+                    $actionBtn =
+                            '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a>
+                            <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+    //End Ajax
 
     /**
      * Show the form for editing the specified resource.
