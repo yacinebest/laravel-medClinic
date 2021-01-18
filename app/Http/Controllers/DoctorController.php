@@ -19,10 +19,7 @@ class DoctorController extends Controller
 
     public function __construct() {
         $this->middleware('doctor.auth');
-        $this->middleware('admin.auth', ['except' => ['home','profile','show'
-                                                    ,'getAllOrientationLetters','getOrientationLetters'
-                                                    ,'getAllPrescriptions','getPrescriptions'
-                                                    ,'getAllAppointments','getAppointments']]);
+        $this->middleware('admin.auth', ['except' => ['home','profile','show']]);
     }
 
     /**
