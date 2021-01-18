@@ -58,6 +58,13 @@
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
                         <li class="dropdown-item">
                             <a
+                                href="{{ route('doctor.show', ['doctor' =>$doctor->id]) }}">
+                                <i class="mdi mdi-account-details mr-1"></i>
+                                Voir
+                            </a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a
                                 href="{{ route('doctor.edit', ['doctor' =>$doctor->id]) }}">
                                 <i class="mdi mdi-square-edit-outline mr-1"></i>
                                 Modifier

@@ -4,18 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Doctor\DoctorStoreRequest;
 use App\Http\Requests\Doctor\DoctorUpdateRequest;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\OrientationLetter;
+use App\Models\Prescription;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Comment\Doc;
 
 class DoctorController extends Controller
 {
 
     public function __construct() {
         $this->middleware('doctor.auth');
-        $this->middleware('admin.auth', ['except' => ['home','profile','show']]);
+        $this->middleware('admin.auth', ['except' => ['home','profile','show'
+                                                    ,'getAllOrientationLetters','getOrientationLetters'
+                                                    ,'getAllPrescriptions','getPrescriptions'
+                                                    ,'getAllAppointments','getAppointments']]);
     }
 
     /**
@@ -73,7 +80,8 @@ class DoctorController extends Controller
      */
     public function show($id)
     {
-        //
+        $doctor = Doctor::find($id);
+        return view('doctor.show',['doctor'=>$doctor]);
     }
 
     /**
