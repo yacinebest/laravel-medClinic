@@ -1,5 +1,9 @@
 @extends('layouts.templates.show',['name_entity'=>'Docteur'])
 
+@php
+    $table_id = 'DataTable_Appointments';
+@endphp
+
 @section('entity_data')
 
     <div class="col-lg-6">
@@ -53,28 +57,14 @@
 
 
 @section('entities_master_details')
-<div class="col-lg-12">
-    <div class="card card-default text-dark">
-        <div class="card-header">
-            <h2>Liste des Rendez-vous :</h2>
-        </div>
-        <div class="py-4">
-            <table id="DataTable_Appointments" class="table table-bordered data-table" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Date</th>
-                        <th>Start At</th>
-                        <th>End At</th>
-                        <th>Patient</th>
-                        <th>Doctor</th>
-                        <th width="100px">Action</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-</div>
+
+@include('layouts.includes.tables.datatable',[
+            'list_name'=>'Liste des Rendez-vous :',
+            'action'=>true,
+            'table_id'=>$table_id,
+            'table_columns_name'=>['ID','Date','StartAt','EndAt','Patient','Doctor']
+        ])
+
 @endsection
 
 
@@ -82,7 +72,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // $.fn.dataTable.ext.errMode = 'throw'; if we want to disable error alert for datatable
-        var table = $('#DataTable_Appointments').DataTable({
+        var table = $('#{{ $table_id }}').DataTable({
             responsive: true,
             processing: true,
             serverSide: true,
