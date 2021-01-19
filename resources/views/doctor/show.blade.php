@@ -1,9 +1,5 @@
 @extends('layouts.templates.show',['name_entity'=>'Docteur'])
 
-@php
-    $table_id = 'DataTable_Appointments';
-@endphp
-
 @section('entity_data')
 
     <div class="col-lg-6">
@@ -61,10 +57,29 @@
 @include('layouts.includes.tables.datatable',[
             'list_name'=>'Liste des Rendez-vous :',
             'action'=>true,
-            'table_id'=>$table_id,
-            'table_columns_name'=>['ID','Date','StartAt','EndAt','Patient','Doctor']
+            'table_id'=>'DataTable_Appointments',
+            'table_columns_name'=>['ID','Date','StartAt','EndAt','Patient'],
+            // 'add_route'=>'',
+            // 'add_btn_text'=>'',
         ])
 
+@include('layouts.includes.tables.datatable',[
+            'list_name'=>'Liste des Prescriptions :',
+            'action'=>true,
+            'table_id'=>'DataTable_Prescriptions',
+            'table_columns_name'=>['ID','Date','Patient'],
+            // 'add_route'=>'',
+            // 'add_btn_text'=>'',
+        ])
+
+@include('layouts.includes.tables.datatable',[
+            'list_name'=>'Liste des Lettres d\'Orientation :',
+            'action'=>true,
+            'table_id'=>'DataTable_OrientationLetters',
+            'table_columns_name'=>['ID','Date','Content','Patient'],
+            // 'add_route'=>'',
+            // 'add_btn_text'=>'',
+        ])
 @endsection
 
 
@@ -72,12 +87,15 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // $.fn.dataTable.ext.errMode = 'throw'; if we want to disable error alert for datatable
-        var table = $('#{{ $table_id }}').DataTable({
+        var table_Appointments = $('#DataTable_Appointments').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            },
             responsive: true,
             processing: true,
             serverSide: true,
             ajax: {
-                url:"{{ route('doctor.ajax.getAllAppointments') }}",
+                url:"{{ route('doctor.ajax.getAppointmentsForDoctor') }}",
                 type: 'GET',
                 data: function ( d ) {
                     d._token = "{{ csrf_token() }}";
@@ -89,7 +107,51 @@
                 {data: 'start_at', name: 'start_at'},
                 {data: 'end_at', name: 'end_at'},
                 {data: 'patient_full_name', name: 'patient_full_name'},
-                {data: 'doctor_full_name', name: 'doctor_full_name'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+
+        var table_Prescriptions = $('#DataTable_Prescriptions').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            },
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url:"{{ route('doctor.ajax.getPrescriptionsForDoctor') }}",
+                type: 'GET',
+                data: function ( d ) {
+                    d._token = "{{ csrf_token() }}";
+                },
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'date', name: 'date'},
+                {data: 'patient_full_name', name: 'patient_full_name'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+
+        var table_OrientationLetters = $('#DataTable_OrientationLetters').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            },
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url:"{{ route('doctor.ajax.getOrientationLettersForDoctor') }}",
+                type: 'GET',
+                data: function ( d ) {
+                    d._token = "{{ csrf_token() }}";
+                },
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'date', name: 'date'},
+                {data: 'content_preview', name: 'content_preview'},
+                {data: 'patient_full_name', name: 'patient_full_name'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });

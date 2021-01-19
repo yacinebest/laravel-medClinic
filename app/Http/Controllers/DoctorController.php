@@ -12,6 +12,7 @@ use App\Models\Prescription;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use PhpParser\Comment\Doc;
 use Yajra\Datatables\DataTables;
 
@@ -21,7 +22,9 @@ class DoctorController extends Controller
     public function __construct() {
         $this->middleware('doctor.auth');
         $this->middleware('admin.auth', ['except' => ['home','profile','show'
-                                                    ,'getAllAppointments']]);
+                                                    ,'getAppointmentsForDoctor'
+                                                    ,'getPrescriptionsForDoctor'
+                                                    ,'getOrientationLettersForDoctor']]);
     }
 
     /**
@@ -83,24 +86,62 @@ class DoctorController extends Controller
         return view('doctor.show',['doctor'=>$doctor]);
     }
     //Ajax
-    public function getAllAppointments(Request $request){
+    public function getAppointmentsForDoctor(Request $request){
         if ($request->ajax()) {
             $data = Appointment::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('doctor_full_name',function(Appointment $appointment){
-                    return $appointment->doctor->last_name . ' ' . $appointment->doctor->first_name;
-                })
                 ->addColumn('patient_full_name',function(Appointment $appointment){
-                    return $appointment->patient->last_name . ' ' . $appointment->patient->first_name;
+                    return "<a href=\"" .'#' . "\">".
+                            $appointment->patient->last_name . ' ' . $appointment->patient->first_name .
+                            '</a>';
                 })
-                ->addColumn('action', function($row){
-                    $actionBtn =
-                            '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a>
-                            <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    return $actionBtn;
+                ->addColumn('action',function(Appointment $appointment)
+                {
+                    return $this->actions($appointment->id,'appointment');
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','patient_full_name'])
+                ->make(true);
+        }
+    }
+    public function getPrescriptionsForDoctor(Request $request)
+    {
+          if ($request->ajax()) {
+            $data = Prescription::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('patient_full_name',function(Prescription $prescription){
+                    return "<a href=\"" .'#' . "\">".
+                            $prescription->patient->last_name . ' ' . $prescription->patient->first_name .
+                            '</a>';
+                })
+                ->addColumn('action',function(Prescription $prescription)
+                {
+                    return $this->actions($prescription->id,'prescription');
+                })
+                ->rawColumns(['action','patient_full_name'])
+                ->make(true);
+        }
+    }
+    public function getOrientationLettersForDoctor(Request $request)
+    {
+          if ($request->ajax()) {
+            $data = OrientationLetter::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('content_preview',function(OrientationLetter $orientationLetter){
+                    return Str::limit($orientationLetter->content, 50, '...');
+                })
+                ->addColumn('patient_full_name',function(OrientationLetter $orientationLetter){
+                    return "<a href=\"" .'#' . "\">".
+                            $orientationLetter->patient->last_name . ' ' . $orientationLetter->patient->first_name .
+                            '</a>';
+                })
+                ->addColumn('action',function(OrientationLetter $orientationLetter)
+                {
+                    return $this->actions($orientationLetter->id,'orientationLetter');
+                })
+                ->rawColumns(['action','patient_full_name'])
                 ->make(true);
         }
     }
