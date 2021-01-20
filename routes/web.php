@@ -40,6 +40,8 @@ Route::resource('management/doctor', 'DoctorController');
 Route::get('/ajax/doctor/getAppointmentsForDoctor','DoctorController@getAppointmentsForDoctor')->name('doctor.ajax.getAppointmentsForDoctor');
 Route::get('/ajax/doctor/getPrescriptionsForDoctor','DoctorController@getPrescriptionsForDoctor')->name('doctor.ajax.getPrescriptionsForDoctor');
 Route::get('/ajax/doctor/getOrientationLettersForDoctor','DoctorController@getOrientationLettersForDoctor')->name('doctor.ajax.getOrientationLettersForDoctor');
+Route::get('/ajax/doctor/getAllDoctor','DoctorController@getAllDoctor')->name('doctor.ajax.getAllDoctor');
+
 
 Route::resource('management/secretary', 'SecretaryController');
 // Route::resource('patient', 'PatientController');

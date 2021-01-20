@@ -44,12 +44,31 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = Doctor::orderBy('last_name', 'Asc')
-                        ->orderBy('first_name', 'Asc')
-                        ->paginate(10);
-        return view('doctor.index',['doctors'=>$doctors]);
+        return view('doctor.index');
     }
-
+    //Ajax
+    public function getAllDoctor(Request $request){
+        if ($request->ajax()) {
+            $data = Doctor::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action',function(Doctor $doctor)
+                {
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                        ['id'=>$doctor->id,'name_id'=>'doctor',
+                            'route_delete'=>'doctor.destroy',
+                            'route_edit'=>'doctor.edit',
+                            'route_show'=>'doctor.show',])->render();
+                })
+                ->addColumn('role_name',function(Doctor $doctor)
+                {
+                    return view('doctor.includes.datatable.role_spans',['doctor'=>$doctor,])->render();
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+    }
+    //End Ajax
     /**
      * Show the form for creating a new resource.
      *
@@ -92,15 +111,18 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Appointment $appointment){
-                    return "<a href=\"" .'#' . "\">".
-                            $appointment->patient->last_name . ' ' . $appointment->patient->first_name .
-                            '</a>';
+                    return view('patient.includes.datatable.full_name',['patient'=>$appointment->patient])->render();
                 })
                 ->addColumn('action',function(Appointment $appointment)
                 {
-                    return $this->actions($appointment->id,'appointment');
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                        ['id'=>$appointment->id,'name_id'=>'appointment',
+                        // 'route_delete'=>'appointment.destroy',
+                        // 'route_edit'=>'appointment.edit',
+                        // 'route_show'=>'appointment.show',
+                        ])->render();
                 })
-                ->rawColumns(['action','patient_full_name'])
+                ->escapeColumns([])
                 ->make(true);
         }
     }
@@ -111,15 +133,18 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Prescription $prescription){
-                    return "<a href=\"" .'#' . "\">".
-                            $prescription->patient->last_name . ' ' . $prescription->patient->first_name .
-                            '</a>';
+                    return view('patient.includes.datatable.full_name',['patient'=>$prescription->patient])->render();
                 })
                 ->addColumn('action',function(Prescription $prescription)
                 {
-                    return $this->actions($prescription->id,'prescription');
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                    ['id'=>$prescription->id,'name_id'=>'prescription',
+                        // 'route_delete'=>'prescription.destroy',
+                        // 'route_edit'=>'prescription.edit',
+                        // 'route_show'=>'prescription.show',
+                        ])->render();
                 })
-                ->rawColumns(['action','patient_full_name'])
+                ->escapeColumns([])
                 ->make(true);
         }
     }
@@ -133,15 +158,18 @@ class DoctorController extends Controller
                     return Str::limit($orientationLetter->content, 50, '...');
                 })
                 ->addColumn('patient_full_name',function(OrientationLetter $orientationLetter){
-                    return "<a href=\"" .'#' . "\">".
-                            $orientationLetter->patient->last_name . ' ' . $orientationLetter->patient->first_name .
-                            '</a>';
+                    return view('patient.includes.datatable.full_name',['patient'=>$orientationLetter->patient])->render();
                 })
                 ->addColumn('action',function(OrientationLetter $orientationLetter)
                 {
-                    return $this->actions($orientationLetter->id,'orientationLetter');
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                            ['id'=>$orientationLetter->id,'name_id'=>'orientationLetter',
+                                // 'route_delete'=>'orientationLetter.destroy',
+                                // 'route_edit'=>'orientationLetter.edit',
+                                // 'route_show'=>'orientationLetter.show',
+                            ])->render();
                 })
-                ->rawColumns(['action','patient_full_name'])
+                ->escapeColumns([])
                 ->make(true);
         }
     }

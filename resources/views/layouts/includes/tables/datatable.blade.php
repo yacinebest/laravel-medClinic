@@ -5,7 +5,7 @@
     $action (not required)
 
     //
-    we need to pass this two varibale to have access to add butyon
+    we need to pass this two varibale to have access to add button
     $add_route
     $add_btn_text
 --}}
@@ -21,20 +21,12 @@
                 </a>
             @endif
         </div>
-        <div class="py-4">
-            <table id="{{ $table_id }}" class="table table-bordered data-table" style="width:100%">
-                <thead>
-                    <tr>
-                        @foreach($table_columns_name as $name)
-                            <th>{{ $name }}</th>
-                        @endforeach
-                        @if(isset($action) && $action)
-                            <th width="30px"></th>
-                            {{-- <th width="100px">Action</th> --}}
-                        @endif
-                    </tr>
-                </thead>
-            </table>
+        <div class="card-body">
+            @include('layouts.includes.tables.only_datatable',[
+                'table_id'=>$table_id,
+                'table_columns_name'=>$table_columns_name,
+                'action'=>$action,
+                ])
         </div>
     </div>
 </div>

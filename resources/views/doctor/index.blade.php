@@ -1,5 +1,8 @@
 @extends('layouts.templates.index',[
-'list_name'=>'Liste des médecins','name_create_route'=>'doctor.create','entities'=>$doctors]
+    'list_name'=>'Liste Des Médecins :','name_create_route'=>'doctor.create',
+    'table_id'=>'DataTable_Doctors',
+    'table_columns_name'=>['ID','Nom','Prénom','Username','Email','Specialité','Role'],
+    'action'=>true]
 )
 
 @section('IndexSessionChangesDisplay')
@@ -14,81 +17,34 @@
     @endif
 @endsection
 
-@section('TableColumnsName_th')
-    <th>ID</th>
-    <th>Nom</th>
-    <th>Prénom</th>
-    <th>Username</th>
-    <th>Email</th>
-    <th>Specialité</th>
-    <th>Role</th>
-    <th></th>
-@endsection
-
-@section('TableBodyList_tr')
-    @foreach($doctors as $doctor)
-        <tr>
-            <td>{{ $doctor->id }}</td>
-            <td>
-                <p class="text-dark">{{ $doctor->last_name }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $doctor->first_name }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $doctor->username }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $doctor->email }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $doctor->specialty }}</p>
-            </td>
-            <td>
-                @if($doctor->is_admin)
-                    <span class="badge badge-success">Admin</span>
-                @else
-                    <span class="badge badge-secondary">Docteur</span>
-                @endif
-            </td>
-            <td class="text-right">
-                <div class="dropdown show d-inline-block widget-dropdown">
-                    <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
-                        <li class="dropdown-item">
-                            <a
-                                href="{{ route('doctor.show', ['doctor' =>$doctor->id]) }}">
-                                <i class="mdi mdi-account-details mr-1"></i>
-                                Voir
-                            </a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a
-                                href="{{ route('doctor.edit', ['doctor' =>$doctor->id]) }}">
-                                <i class="mdi mdi-square-edit-outline mr-1"></i>
-                                Modifier
-                            </a>
-                        </li>
-                        <li class="dropdown-item">
-                            @if( Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id!=$doctor->id)
-                                <a href="#"
-                                    {{-- entityid and .a-delete-entity are used for popup alert --}}
-                                    data-entityid="{{ $doctor->id }}" class="a-delete-entity">
-                                    <i class="mdi mdi-delete mr-1"></i>
-                                    Supprimer
-                                </a>
-                                <form id="{{ 'destroy-form-'.$doctor->id }}"
-                                    action="{{ route('doctor.destroy',['doctor'=>$doctor->id]) }}"
-                                    method="POST" class="d-none">
-                                    @method('DELETE')
-                                    @csrf
-                                </form>
-                            @endif
-                        </li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    @endforeach
+@section('scripts_continue')
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table_Doctors = $('#DataTable_Doctors').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            },
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url:"{{ route('doctor.ajax.getAllDoctor') }}",
+                type: 'GET',
+                data: function ( d ) {
+                    d._token = "{{ csrf_token() }}";
+                },
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'last_name', name: 'last_name'},
+                {data: 'first_name', name: 'first_name'},
+                {data: 'username', name: 'username'},
+                {data: 'email', name: 'email'},
+                {data: 'specialty', name: 'specialty'},
+                {data: 'role_name', name: 'role_name'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+    });
+</script>
 @endsection

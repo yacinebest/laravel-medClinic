@@ -2,45 +2,40 @@
 {{--
     $list_name
     $name_create_route
-    $entities
+
+    $table_id
+    $table_columns_name
+    $action
 
     @yield('IndexSessionChangesDisplay')
-    @yield('TableColumnsName_th')
-    @yield('TableBodyList_tr')
 --}}
+
+@section('styles')
+@include('layouts.includes.tables.styles_datatable')
+@endsection
+
 @section('mainContent')
 <div class="content-wrapper">
     <div class="content">
         <div class="row">
-            <div class="col-12">
-                <!-- List Entities -->
-                <div class="card card-table-border-none">
+
+            <div class="col-lg-12">
+                <div class="card card-default text-dark">
                     <div class="card-header justify-content-between">
                         <h2>{{ $list_name }}</h2>
-                        <a role="button" class="btn btn-lg btn-info" href="{{ route($name_create_route) }}">
-                            <i class="mdi mdi-account-plus mr-1">
-                            </i>
-                            Ajouter
-                        </a>
-                        {{-- <div class="date-range-report ">
-                            <span></span>
-                        </div> --}}
+                            <a role="button" class="btn btn-lg btn-info" href="{{ route($name_create_route) }}">
+                                <i class="fa fa-plus mr-1" aria-hidden="true">
+                                </i>
+                                Ajouter
+                            </a>
                     </div>
-                    <div class="card-body pt-0 pb-5">
-
+                    <div class="card-body">
                         @yield('IndexSessionChangesDisplay')
-
-                        <table class="table card-table table-responsive table-responsive-large" style="width:100%">
-                            <thead>
-                                <tr>
-                                    @yield('TableColumnsName_th')
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @yield('TableBodyList_tr')
-                            </tbody>
-                        </table>
-                        {{ $entities->links() }}
+                        @include('layouts.includes.tables.only_datatable',[
+                            'table_id'=>$table_id,
+                            'table_columns_name'=>$table_columns_name,
+                            'action'=>$action,
+                            ])
                     </div>
                 </div>
             </div>
@@ -51,7 +46,7 @@
 
 @section('scripts')
 <script type="text/javascript">
-$(".a-delete-entity").on("click", function(){
+$('body').on('click', '.a-delete-entity', function () {
     event.preventDefault();
     swal({
         title: "Êtes-vous sûr de vouloir faire ça?",
@@ -67,4 +62,5 @@ $(".a-delete-entity").on("click", function(){
     });
 });
 </script>
+@yield('scripts_continue')
 @endsection

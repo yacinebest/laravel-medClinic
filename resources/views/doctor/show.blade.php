@@ -155,6 +155,8 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
+
+        //TODO : later add script for delete btn
     });
 </script>
 @endsection
