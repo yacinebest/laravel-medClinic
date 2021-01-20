@@ -9,10 +9,15 @@ use App\Models\Secretary;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\DataTables;
 
 class SecretaryController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('secretary.auth',['only'=>['home','profile']]);
+        $this->middleware('admin.auth',['except'=>['home','profile'] ]);
+    }
     /**
      * Display a dome page
      *
@@ -30,11 +35,26 @@ class SecretaryController extends Controller
      */
     public function index()
     {
-        $secretaries = Secretary::orderBy('last_name','Asc')
-                                ->orderBy('first_name','Asc')
-                                ->paginate(10);
-        return view('secretary.index',['secretaries'=>$secretaries]);
+        return view('secretary.index');
     }
+    //Ajax
+    public function getAllSecretary(Request $request){
+        if ($request->ajax()) {
+            $data = Secretary::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action',function(Secretary $secretary)
+                {
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                            ['id'=>$secretary->id,'name_id'=>'secretary',
+                            'route_delete'=>'secretary.destroy',
+                            'route_edit'=>'secretary.edit'])->render();
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+    }
+    //End Ajax
 
     /**
      * Show the form for creating a new resource.
@@ -60,16 +80,6 @@ class SecretaryController extends Controller
         return redirect(route('secretary.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

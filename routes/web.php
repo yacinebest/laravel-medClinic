@@ -43,7 +43,9 @@ Route::get('/ajax/doctor/getOrientationLettersForDoctor','DoctorController@getOr
 Route::get('/ajax/doctor/getAllDoctor','DoctorController@getAllDoctor')->name('doctor.ajax.getAllDoctor');
 
 
-Route::resource('management/secretary', 'SecretaryController');
+Route::resource('management/secretary', 'SecretaryController', ['except' => ['show'] ] );
+Route::get('/ajax/secretary/getAllSecretary','SecretaryController@getAllSecretary')->name('secretary.ajax.getAllSecretary');
+
 // Route::resource('patient', 'PatientController');
 // Route::resource('appointment', 'AppointmentController');
 // Route::resource('prescription', 'PrescriptionController');
