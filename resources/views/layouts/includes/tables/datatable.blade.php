@@ -14,7 +14,7 @@
         <div class="card-header justify-content-between">
             <h2>{{ $list_name }}</h2>
             @if(isset($add_route) && isset($add_btn_text) )
-                <a role="button" class="btn btn-lg btn-info" href="{{ $add_route }}">
+                <a role="button" class="btn btn-lg btn-info" href="{{ route($add_route) }}">
                     <i class="fa fa-plus mr-1" aria-hidden="true">
                     </i>
                     {{ $add_btn_text }}
@@ -22,11 +22,23 @@
             @endif
         </div>
         <div class="card-body">
-            @include('layouts.includes.tables.only_datatable',[
-                'table_id'=>$table_id,
-                'table_columns_name'=>$table_columns_name,
-                'action'=>$action,
-                ])
+
+            @yield(isset($yield_session_name) ? $yield_session_name : 'IndexSessionChangesDisplay' )
+
+            <table id="{{ $table_id }}" class="table table-bordered data-table" style="width:100%">
+                <thead>
+                    <tr>
+                        @foreach($table_columns_name as $name)
+                            <th>{{ $name }}</th>
+                        @endforeach
+                        @if(isset($action) && $action)
+                            <th width="30px"></th>
+                            {{-- <th width="100px">Action</th> --}}
+                        @endif
+                    </tr>
+                </thead>
+            </table>
+
         </div>
     </div>
 </div>

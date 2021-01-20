@@ -2,7 +2,7 @@
     'list_name'=>'Liste Des Médecins :','name_create_route'=>'doctor.create',
     'table_id'=>'DataTable_Doctors',
     'table_columns_name'=>['ID','Nom','Prénom','Username','Email','Specialité','Role'],
-    'action'=>true]
+    'action'=>true,'add_btn_text'=>'Ajouter Médecin']
 )
 
 @section('IndexSessionChangesDisplay')
@@ -17,7 +17,7 @@
     @endif
 @endsection
 
-@section('scripts_continue')
+@section('scripts')
 <script type="text/javascript">
     $(document).ready(function() {
         var table_Doctors = $('#DataTable_Doctors').DataTable({

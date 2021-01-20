@@ -27,11 +27,11 @@
         @isset($route_delete)
             <li class="dropdown-item">
             <a
-                data-entityid="{{ $id }}" class="{{ isset($btn_delete_class) ? $class_btn_delete : 'a-delete-entity' }}">
+                data-entityid="{{ $id }}" data-entityname="{{ $name_id }}" class="a-delete-entity">
                 <i class="mdi mdi-delete mr-1"></i>
                 Supprimer
             </a>
-            <form id="{{isset($form_delete_id) ? $form_delete_id.$id : 'destroy-form-'. $id  }}"
+            <form id="{{'destroy-form-'.$name_id.'-'. $id  }}"
                     action="{{ route($route_delete,[$name_id=>$id] )  }}" method="POST" class="d-none">
                 @method('DELETE')
                 @csrf

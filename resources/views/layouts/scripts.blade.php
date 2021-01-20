@@ -19,4 +19,6 @@
 {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 {{-- For Alert And Confirmation Modal Check https://sweetalert.js.org/ --}}
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{{-- MedClinic Custom js --}}
+<script src="{{ asset('js/custom/delete_entity.js') }}"></script>
 @yield('scripts')

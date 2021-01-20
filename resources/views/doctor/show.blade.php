@@ -54,29 +54,39 @@
 
 @section('entities_master_details')
 
+@section('IndexSessionChangesDisplay_Appointment')
+@endsection
 @include('layouts.includes.tables.datatable',[
             'list_name'=>'Liste des Rendez-vous :',
             'action'=>true,
             'table_id'=>'DataTable_Appointments',
             'table_columns_name'=>['ID','Date','StartAt','EndAt','Patient'],
+            'yield_session_name'=>'IndexSessionChangesDisplay_Appointment'
             // 'add_route'=>'',
             // 'add_btn_text'=>'',
         ])
 
+
+@section('IndexSessionChangesDisplay_Prescription')
+@endsection
 @include('layouts.includes.tables.datatable',[
             'list_name'=>'Liste des Prescriptions :',
             'action'=>true,
             'table_id'=>'DataTable_Prescriptions',
             'table_columns_name'=>['ID','Date','Patient'],
+            'yield_session_name'=>'IndexSessionChangesDisplay_Prescription'
             // 'add_route'=>'',
             // 'add_btn_text'=>'',
         ])
 
+@section('IndexSessionChangesDisplay_OrientationLetter')
+@endsection
 @include('layouts.includes.tables.datatable',[
             'list_name'=>'Liste des Lettres d\'Orientation :',
             'action'=>true,
             'table_id'=>'DataTable_OrientationLetters',
             'table_columns_name'=>['ID','Date','Content','Patient'],
+            'yield_session_name'=>'IndexSessionChangesDisplay_OrientationLetter'
             // 'add_route'=>'',
             // 'add_btn_text'=>'',
         ])
@@ -155,8 +165,6 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-
-        //TODO : later add script for delete btn
     });
 </script>
 @endsection
