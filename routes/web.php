@@ -34,11 +34,13 @@ Route::group(['prefix'=>'secretary'], function () {
 
 Route::get('/management/doctor/profile', 'DoctorController@profile')->name('doctor.profile');
 Route::get('/management/secretary/profile', 'SecretaryController@profile')->name('secretary.profile');
+Route::get('/management/patient/profile','PatientController@profile')->name('patient.profile');
+
 //
 // Route::resource('clinic', 'ClinicController');
 Route::resource('management/doctor', 'DoctorController');
 Route::resource('management/secretary', 'SecretaryController');
-// Route::resource('patient', 'PatientController');
+Route::resource('management/patient', 'PatientController');
 // Route::resource('appointment', 'AppointmentController');
 // Route::resource('prescription', 'PrescriptionController');
 // Route::resource('prescriptionline', 'PrescriptionLineController');
