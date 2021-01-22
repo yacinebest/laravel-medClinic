@@ -48,7 +48,7 @@ class PatientStoreRequest extends FormRequest
             'birth_date.required' => 'La date de naissance est obligatoire.',
             'address.required' => 'address est obligatoire.',
             'phone_number.required' => 'Le numero de telephone est obligatoire.',
-            'phone_number.min' => 'Le numero de telephone est invalide.',
+            'phone_number.min' => 'Le numero de télephone est invalide.',
             'email.required' => 'L\'Adresse E-mail est obligatoire.',
             'email.unique' => 'Cette Adresse E-mail est déjà utilisée!',
             'email.email' => 'L`\'Adresse E-mail n\'est pas valide.',

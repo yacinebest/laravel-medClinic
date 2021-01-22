@@ -12,19 +12,10 @@ use App\Models\Prescription;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-//use PhpParser\Comment\Doc;
+use PhpParser\Comment\Doc;
 
 class PatientController extends Controller
 {
-    /**
-     * Display a dome page
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function home()
-    {
-        return view('patient.home');
-    }
 
     /**
      * Display a listing of the resource.
