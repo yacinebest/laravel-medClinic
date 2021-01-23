@@ -103,13 +103,13 @@
                             $("#sel_doctor").append(option);
                         }
                         $('#sel_doctor').selectpicker('refresh');
-                        $("#sel_doctor").val("").trigger('change');
+                        var id = "{{ Auth::guard('doctor')->check() ? Auth::guard('doctor')->user()->id : '' }}";
+                        $("#sel_doctor").val(id).trigger('change');
                     }
 
                 }
             });
         }
-
 
         $.ajax({
                 url: "{{ route('patient.ajax.getAllPatientForDropdown') }}",
