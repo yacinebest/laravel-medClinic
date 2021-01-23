@@ -6,7 +6,7 @@ use App\Models\Base\BaseModel;
 
 class Prescription extends BaseModel
 {
-
+    public $fillable=['date','patient_id','doctor_id'];
     public function prescriptionLines()
     {
         return $this->hasMany('App\Models\PrescriptionLine');

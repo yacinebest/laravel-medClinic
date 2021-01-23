@@ -59,7 +59,7 @@
                             </li>
                             @if(Auth::guard('doctor')->check())
                                 <li>
-                                    <a class="sidenav-item-link" href="#">
+                                    <a class="sidenav-item-link" href="{{ route('prescription.index') }}">
                                         <span class="nav-text">Prescriptions</span>
 
                                     </a>
