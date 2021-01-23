@@ -11,7 +11,7 @@ $factory->define(Appointment::class, function (Faker $faker) {
         'date'=>Carbon::now()->addDay()->format('Y-m-d'),
         'reason'=>'',
         // $faker->dateTime()->format('Y-m-d H:i:s')
-        'start_at'=>Carbon::now()->addDay()->format('Y-m-d H:i:s'),
-        'end_at'=>Carbon::now()->addDay()->format('Y-m-d H:i:s'),
+        'start_at'=>Carbon::now()->addDay()->format('H:i'),
+        'end_at'=>Carbon::now()->addDay()->format('H:i'),
     ];
 });

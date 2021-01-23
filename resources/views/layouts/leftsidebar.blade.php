@@ -52,7 +52,7 @@
                                 Documents
                             </li>
                             <li>
-                                <a class="sidenav-item-link" href="#">
+                                <a class="sidenav-item-link" href="{{ route('appointment.index') }}">
                                     <span class="nav-text">Rendez-vous</span>
 
                                 </a>

@@ -41,13 +41,16 @@ Route::get('/ajax/doctor/getAppointmentsForDoctor','DoctorController@getAppointm
 Route::get('/ajax/doctor/getPrescriptionsForDoctor','DoctorController@getPrescriptionsForDoctor')->name('doctor.ajax.getPrescriptionsForDoctor');
 Route::get('/ajax/doctor/getOrientationLettersForDoctor','DoctorController@getOrientationLettersForDoctor')->name('doctor.ajax.getOrientationLettersForDoctor');
 Route::get('/ajax/doctor/getAllDoctor','DoctorController@getAllDoctor')->name('doctor.ajax.getAllDoctor');
-
+Route::get('/ajax/doctor/getAllDoctorForDropdown','DoctorController@getAllDoctorForDropdown')->name('doctor.ajax.getAllDoctorForDropdown');
 
 Route::resource('management/secretary', 'SecretaryController', ['except' => ['show'] ] );
 Route::get('/ajax/secretary/getAllSecretary','SecretaryController@getAllSecretary')->name('secretary.ajax.getAllSecretary');
 
 // Route::resource('patient', 'PatientController');
-// Route::resource('appointment', 'AppointmentController');
+Route::get('/ajax/patient/getAllPatientForDropdown','PatientController@getAllPatientForDropdown')->name('patient.ajax.getAllPatientForDropdown');
+Route::resource('management/appointment', 'AppointmentController', ['except' => ['show'] ] );
+Route::get('/ajax/appointment/getAllAppointment','AppointmentController@getAllAppointment')->name('appointment.ajax.getAllAppointment');
+
 // Route::resource('prescription', 'PrescriptionController');
 // Route::resource('prescriptionline', 'PrescriptionLineController');
 // Route::resource('orientationletter', 'OrientationLetterController');

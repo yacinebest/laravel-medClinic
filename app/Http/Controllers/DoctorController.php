@@ -111,7 +111,7 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Appointment $appointment){
-                    return view('patient.includes.datatable.full_name',['patient'=>$appointment->patient])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->patient])->render();
                 })
                 ->addColumn('action',function(Appointment $appointment)
                 {
@@ -133,7 +133,7 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Prescription $prescription){
-                    return view('patient.includes.datatable.full_name',['patient'=>$prescription->patient])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$prescription->patient])->render();
                 })
                 ->addColumn('action',function(Prescription $prescription)
                 {
@@ -158,7 +158,7 @@ class DoctorController extends Controller
                     return Str::limit($orientationLetter->content, 50, '...');
                 })
                 ->addColumn('patient_full_name',function(OrientationLetter $orientationLetter){
-                    return view('patient.includes.datatable.full_name',['patient'=>$orientationLetter->patient])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$orientationLetter->patient])->render();
                 })
                 ->addColumn('action',function(OrientationLetter $orientationLetter)
                 {
@@ -270,4 +270,15 @@ class DoctorController extends Controller
 
         return $request->except($array_except);
     }
+
+    //Ajax Request for other Controller to use
+    public function getAllDoctorForDropdown(){
+        $array_doctors['doctors'] = Doctor::orderby("last_name","asc")
+            ->orderby("first_name","asc")
+            ->select('id','last_name','first_name')
+            ->get();
+
+        return response()->json($array_doctors);
+    }
+    //
 }

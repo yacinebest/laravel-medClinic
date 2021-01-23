@@ -19,6 +19,17 @@
 {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 {{-- For Alert And Confirmation Modal Check https://sweetalert.js.org/ --}}
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $(function () {
+        //to have only 6 item display at a time
+        $('select').selectpicker({
+            size: '6'
+        });
+    });
+</script>
+
 {{-- MedClinic Custom js --}}
 <script src="{{ asset('js/custom/delete_entity.js') }}"></script>
 @yield('scripts')

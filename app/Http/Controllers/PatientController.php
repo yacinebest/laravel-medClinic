@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
+    //Ajax Request for other Controller to use
+    public function getAllPatientForDropdown(){
+        $array_patients['patients'] = Patient::orderby("last_name","asc")
+            ->orderby("first_name","asc")
+            ->select('id','last_name','first_name')
+            ->get();
+
+        return response()->json($array_patients);
+    }
+    //
+
     /**
      * Display a listing of the resource.
      *

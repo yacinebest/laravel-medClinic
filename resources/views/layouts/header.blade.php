@@ -38,5 +38,7 @@
     <link href="{{ asset('assets/img/favicon.png')}}" rel="shortcut icon" />
     <script src="{{ asset('assets/plugins/nprogress/nprogress.js')}}"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
     @yield('styles')
 </head>
