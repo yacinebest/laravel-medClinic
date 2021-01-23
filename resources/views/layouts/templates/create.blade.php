@@ -46,7 +46,8 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
+{{-- script to display alert when store button is clicked --}}
+{{-- <script type="text/javascript">
 $("#store-button").on("click", function(){
     event.preventDefault();
     swal({
@@ -62,5 +63,5 @@ $("#store-button").on("click", function(){
         }
     });
 });
-</script>
+</script> --}}
 @endsection

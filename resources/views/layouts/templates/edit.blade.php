@@ -50,7 +50,8 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
+{{-- script to display alert when update button is clicked --}}
+{{-- <script type="text/javascript">
 $("#update-button").on("click", function(){
     event.preventDefault();
     swal({
@@ -66,5 +67,5 @@ $("#update-button").on("click", function(){
         }
     });
 });
-</script>
+</script> --}}
 @endsection
