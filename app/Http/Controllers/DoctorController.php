@@ -20,11 +20,13 @@ class DoctorController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('doctor.auth');
+        $this->middleware('doctor_or_secretary.auth',['only'=>['getAllDoctorForDropdown']]);
+        $this->middleware('doctor.auth',['except'=>['getAllDoctorForDropdown']]);
         $this->middleware('admin.auth', ['except' => ['home','profile','show'
                                                     ,'getAppointmentsForDoctor'
                                                     ,'getPrescriptionsForDoctor'
-                                                    ,'getOrientationLettersForDoctor']]);
+                                                    ,'getOrientationLettersForDoctor'
+                                                    ,'getAllDoctorForDropdown']]);
     }
 
     /**

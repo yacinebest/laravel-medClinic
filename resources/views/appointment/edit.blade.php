@@ -47,7 +47,7 @@
 <div class="col-md-12">
     <div class="form-group">
         <label>Docteur :</label>
-        <select id="sel_doctor" class="form-control select-class" name="doctor_id" data-live-search="true" title="Selectionner Un Doctor...">
+        <select id="sel_doctor" class="form-control select-class" name="doctor_id" data-live-search="true" title="Selectionner Un Docteur...">
         </select>
     </div>
     @error('doctor_id')

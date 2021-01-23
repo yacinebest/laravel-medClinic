@@ -51,7 +51,7 @@
                 <input type="text" class="form-control" value="{{ Auth::guard('doctor')->user()->last_name . ' ' . Auth::guard('doctor')->user()->first_name }}" readonly>
                 <input type="hidden" name="doctor_id" value="{{ Auth::guard('doctor')->user()->id }}">
             @else
-                <select id="sel_doctor" class="form-control select-class" name="doctor_id" data-live-search="true" title="Selectionner Un Doctor...">
+                <select id="sel_doctor" class="form-control select-class" name="doctor_id" data-live-search="true" title="Selectionner Un Docteur...">
                 </select>
             @endif
         </div>
@@ -78,7 +78,8 @@
 <script type='text/javascript'>
     $(document).ready(function(){
         var load_doctors = "{{ Auth::guard('doctor')->check() && !Auth::guard('doctor')->user()->is_admin }}";
-        if(!load_doctors){
+        var is_login_secretary = "{{ Auth::guard('secretary')->check() }}";
+        if(!load_doctors || is_login_secretary){
             $.ajax({
                 url: "{{ route('doctor.ajax.getAllDoctorForDropdown') }}",
                 type: 'GET',
@@ -102,7 +103,7 @@
                             $("#sel_doctor").append(option);
                         }
                         $('#sel_doctor').selectpicker('refresh');
-                        $("#sel_doctor").val('').trigger('change');
+                        $("#sel_doctor").val("").trigger('change');
                     }
 
                 }
