@@ -42,6 +42,7 @@
                             </div>
                         </div>
                     </form>
+                    @yield('form_extends')
                 </div>
             </div>
         </div>

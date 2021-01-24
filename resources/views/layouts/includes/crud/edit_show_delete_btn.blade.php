@@ -26,17 +26,8 @@
 
         @isset($route_delete)
             <li class="dropdown-item">
-            <a
-                data-entityid="{{ $id }}" data-entityname="{{ $name_id }}" class="a-delete-entity">
-                <i class="mdi mdi-delete mr-1"></i>
-                Supprimer
-            </a>
-            <form id="{{'destroy-form-'.$name_id.'-'. $id  }}"
-                    action="{{ route($route_delete,[$name_id=>$id] )  }}" method="POST" class="d-none">
-                @method('DELETE')
-                @csrf
-            </form>
-        </li>
+                @include('layouts.includes.crud.delete_btn',['id'=>$id,'name_id'=>$name_id,'route_delete'=>$route_delete])
+            </li>
         @endisset
     </ul>
 </div>

@@ -56,29 +56,7 @@ Route::resource('management/appointment', 'AppointmentController', ['except' => 
 Route::get('/ajax/appointment/getAllAppointment','AppointmentController@getAllAppointment')->name('appointment.ajax.getAllAppointment');
 
 Route::resource('management/prescription', 'PrescriptionController', ['except' => ['index','show'] ] );
+Route::delete('management/prescriptionline/{prescriptionline}','PrescriptionController@destroyPrescriptionLine')->name('prescriptionline.destroy');
 
-Route::resource('management/prescriptionline', 'PrescriptionLineController');
 Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index'] ] );
 Route::resource('management/imagery', 'ImageryController', ['except' => ['index'] ] );
-
-
-//generating when using Auth::routes() but don't needed instead i just define the needed route
-//for registration
-// Route::get('register','Auth\RegisterController@showRegistrationForm')->name('register');
-// Route::post('register','Auth\RegisterController@register');
-//for login
-// Route::get('login','Auth\LoginController@showLoginForm')->name('login');
-// Route::post('login','Auth\LoginController@login');
-// Route::post('logout','Auth\LoginController@logout')->name('logout');
-//GET|HEAD|login                 |login           |Auth\LoginController@showLoginForm
-//POST    |login                 |                |Auth\LoginController@login
-//POST    |logout                |logout          |Auth\LoginController@logout
-//GET|HEAD|password/confirm      |password.confirm|Auth\ConfirmPasswordController@showConfirmForm
-//POST    |password/confirm      |                |Auth\ConfirmPasswordController@confirm
-//POST    |password/email        |password.email  |Auth\ForgotPasswordController@sendResetLinkEmail
-//GET|HEAD|password/reset        |password.request|Auth\ForgotPasswordController@showLinkRequestForm
-//POST    |password/reset        |password.update |Auth\ResetPasswordController@reset
-//GET|HEAD|password/reset/{token}|password.reset  |Auth\ResetPasswordController@showResetForm
-//GET|HEAD|register              |register        |Auth\RegisterController@showRegistrationForm
-//POST    |register              |                |Auth\RegisterController@register
-//Auth::routes();

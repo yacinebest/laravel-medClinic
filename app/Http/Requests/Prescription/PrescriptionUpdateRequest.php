@@ -24,7 +24,23 @@ class PrescriptionUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'date'=>'required',
+            'patient_id'=>'required',
+            'doctor_id' => 'required',
+        ];
+    }
+
+     /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'date.required' => 'La Date est obligatoire.',
+            'patient_id.required' => 'Le Patient conserné est obligatoire.',
+            'doctor_id.required' => 'Le Docteur responsble est obligatoire.',
         ];
     }
 }

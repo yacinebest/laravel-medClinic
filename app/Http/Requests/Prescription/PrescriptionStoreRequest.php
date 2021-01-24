@@ -27,6 +27,11 @@ class PrescriptionStoreRequest extends FormRequest
             'date'=>'required',
             'patient_id'=>'required',
             'doctor_id' => 'required',
+
+            "medicine"  => "required|array",
+            "dose"  => "required|array",
+            "time_taken"  => "required|array",
+            "duration"  => "required|array",
         ];
     }
 
@@ -41,6 +46,11 @@ class PrescriptionStoreRequest extends FormRequest
             'date.required' => 'La Date est obligatoire.',
             'patient_id.required' => 'Le Patient conserné est obligatoire.',
             'doctor_id.required' => 'Le Docteur responsble est obligatoire.',
+
+            "medicine.required"  => "Vous devez passer la liste des Médicament.",
+            "dose.required"  => "Vous devez passer la liste des Dose de chaque Médicament.",
+            "time_taken.required"  => "Vous devez passer la liste des Moment de prise de chaque Médicament.",
+            "duration.required"  => "Vous devez passer la liste des durée de traitement de chaque Médicament.",
         ];
     }
 }
