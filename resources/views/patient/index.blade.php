@@ -18,15 +18,11 @@
     <th>ID</th>
     <th>Nom</th>
     <th>Prénom</th>
-    <th>Numero de sécurite sociale</th>
+    <th>SSN</th>
     <th>Date de naissance</th>
     <th>Nuero de télephone</th>
     <th>Addresse</th>
     <th>Email</th>
-    <th>Maladies chroniques</th>
-    <th>Allergies</th>
-    <th>Antécédants</th>
-    <th>Commentaires</th>
     <th></th>
 @endsection
 
@@ -50,22 +46,10 @@
                 <p class="text-dark">{{ $patient->phone_number }}</p>
             </td>
             <td>
-                <p class="text-dark">{{ $patient->address }}</p>
+                <p class="text-dark">{{ Str::limit($patient->address,15) }}</p>
             </td>
             <td>
                 <p class="text-dark">{{ $patient->email }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->chronic_diseases }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->allergies }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->antecedents }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->comments }}</p>
             </td>
             <td class="text-right">
                 <div class="dropdown show d-inline-block widget-dropdown">

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Request\Patient\PatientStoreRequest;
-use App\Http\Request\Patient\PatientUpdateeRequest;
+use App\Http\Requests\Patient\PatientStoreRequest;
+use App\Http\Requests\Patient\PatientUpdateeRequest;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Models\Patient;
@@ -135,7 +135,16 @@ class PatientController extends Controller
     {
         $request['password'] = Hash::make($request->input('password'));
         $array_except= ['_token'];
-
+        if($request['social_security_number']==null)
+            array_push($array_except,'social_security_number');
+        /*if($request['chronic_diseases']==null)
+            array_push($array_except,'chronic_diseases');
+        if($request['allergies']==null)
+            array_push($array_except,'allergies');
+        if($request['antecedents']==null)
+            array_push($array_except,'antecedents');
+        if($request['comments']==null)
+            array_push($array_except,'comments');*/
         return $request->except($array_except);
     }
 
