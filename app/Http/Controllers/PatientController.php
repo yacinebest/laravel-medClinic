@@ -133,18 +133,9 @@ class PatientController extends Controller
      */
     public function processStoreRequest(PatientStoreRequest $request)
     {
-        $request['password'] = Hash::make($request->input('password'));
         $array_except= ['_token'];
         if($request['social_security_number']==null)
             array_push($array_except,'social_security_number');
-        /*if($request['chronic_diseases']==null)
-            array_push($array_except,'chronic_diseases');
-        if($request['allergies']==null)
-            array_push($array_except,'allergies');
-        if($request['antecedents']==null)
-            array_push($array_except,'antecedents');
-        if($request['comments']==null)
-            array_push($array_except,'comments');*/
         return $request->except($array_except);
     }
 
@@ -156,8 +147,10 @@ class PatientController extends Controller
      */
     public function processUpdateRequest(PatientUpdateRequest $request)
     {
-        $array_except= ['_token'];
 
+        $array_except= ['_token'];
+        if($request['social_security_number']==null)
+            $request['social_security_number']='';
         return $request->except($array_except);
     }
 }

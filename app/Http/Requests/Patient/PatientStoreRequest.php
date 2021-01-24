@@ -27,7 +27,7 @@ class PatientStoreRequest extends FormRequest
         return [
             'first_name'=>'required',
             'last_name'=>'required',
-            'birth_date'=>'required',
+            'birth_date'=>'required|date',
             'phone_number'=>'min:10|required',
             'address'=>'required',
             'email'=>'required|email|unique:patients',
@@ -46,6 +46,7 @@ class PatientStoreRequest extends FormRequest
             'first_name.required' => 'Le Prénom est obligatoire.',
             'last_name.required' => 'Le Nom est obligatoire.',
             'birth_date.required' => 'La date de naissance est obligatoire.',
+            'birth_date.date' => 'La date de naissance n\'est pas valide.',
             'address.required' => 'address est obligatoire.',
             'phone_number.required' => 'Le numero de telephone est obligatoire.',
             'phone_number.min' => 'Le numero de télephone est invalide.',

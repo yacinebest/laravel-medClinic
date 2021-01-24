@@ -20,7 +20,7 @@
     <th>Prénom</th>
     <th>SSN</th>
     <th>Date de naissance</th>
-    <th>Nuero de télephone</th>
+    <th>N° (+213)</th>
     <th>Addresse</th>
     <th>Email</th>
     <th></th>
@@ -49,7 +49,7 @@
                 <p class="text-dark">{{ Str::limit($patient->address,15) }}</p>
             </td>
             <td>
-                <p class="text-dark">{{ $patient->email }}</p>
+                <p class="text-dark">{{ Str::limit($patient->email,15) }}</p>
             </td>
             <td class="text-right">
                 <div class="dropdown show d-inline-block widget-dropdown">

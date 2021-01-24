@@ -59,10 +59,9 @@
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
         @enderror
     </div>
-    <div class="col-md-12">
+    {{-- <div class="col-md-12">
         <div class="form-group">
             <textarea name="chronic_diseases" rows="3" class="form-control @error('chronic_diseases') is-invalid @enderror" value="{{ $patient->chronic_diseases }}" placeholder="Maladies Chroniques"></textarea>
-            {{-- <input name="chronic_diseases" type="text" class="form-control @error('chronic_diseases') is-invalid @enderror" value="{{ old('chronic_diseases') }}" placeholder="Maladies Chroniques"> --}}
         </div>
         @error('chronic_diseases')
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
@@ -71,7 +70,6 @@
     <div class="col-md-12">
         <div class="form-group">
             <textarea name="allergies" rows="3" class="form-control @error('allergies') is-invalid @enderror" value="{{ $patient->allergies }}" placeholder="Allergies"></textarea>
-            {{-- <input name="allergies" type="text" class="form-control @error('allergies') is-invalid @enderror" value="{{ old('allergies') }}" placeholder="Allergies"> --}}
         </div>
         @error('allergies')
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
@@ -80,7 +78,6 @@
     <div class="col-md-12">
         <div class="form-group">
         <textarea name="antecedents" rows="3" class="form-control @error('antecedents') is-invalid @enderror" value="{{ $patient->antecedents }}" placeholder="Antécédents"></textarea>
-            {{-- <input name="antecedents" type="text" class="form-control @error('antecedents') is-invalid @enderror" value="{{ old('antecedents') }}" placeholder="Antécédents"> --}}
         </div>
         @error('antecedents')
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
@@ -89,10 +86,9 @@
     <div class="col-md-12">
         <div class="form-group">
         <textarea name="comments" rows="3" class="form-control @error('comments') is-invalid @enderror" value="{{ $patient->comments }}" placeholder="Commentaires"></textarea>
-            {{-- <input name="comments" type="text" class="form-control @error('comments') is-invalid @enderror" value="{{ old('comments') }}" placeholder="Commentaires"> --}}
         </div>
         @error('comments')
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
         @enderror
-    </div>
+    </div> --}}
 @endsection

@@ -26,10 +26,10 @@ class PatientUpdateRequest extends FormRequest
         return [
             'first_name'=>'required',
             'last_name'=>'required',
-            'birth_date'=>'required',
-            'phone_number'=>'min:10|required',
+            'birth_date'=>'required|date',
+            'phone_number'=>'required|min:10',
             'address'=>'required',
-            'email'=>'required|email|unique:patients',
+            'email'=>'required|email',
         ];
     }
 
@@ -45,11 +45,11 @@ class PatientUpdateRequest extends FormRequest
             'first_name.required' => 'Le Prénom est obligatoire.',
             'last_name.required' => 'Le Nom est obligatoire.',
             'birth_date.required' => 'La date de naissance est obligatoire.',
+            'birth_date.date' => 'La date de naissance n\'est pas valide.',
             'address.required' => 'address est obligatoire.',
             'phone_number.required' => 'Le numero de telephone est obligatoire.',
             'phone_number.min' => 'Le numero de telephone est invalide.',
             'email.required' => 'L\'Adresse E-mail est obligatoire.',
-            'email.unique' => 'Cette Adresse E-mail est déjà utilisée!',
             'email.email' => 'L`\'Adresse E-mail n\'est pas valide.',
         ];
     }
