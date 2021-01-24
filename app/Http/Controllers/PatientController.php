@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Patient\PatientStoreRequest;
-use App\Http\Requests\Patient\PatientUpdateeRequest;
+use App\Http\Requests\Patient\PatientUpdateRequest;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Models\Patient;
