@@ -51,15 +51,15 @@ Route::get('/ajax/secretary/getAllSecretary','SecretaryController@getAllSecretar
 Route::resource('management/patient', 'PatientController');
 
 Route::get('/ajax/patient/getAllPatientForDropdown','PatientController@getAllPatientForDropdown')->name('patient.ajax.getAllPatientForDropdown');
+
 Route::resource('management/appointment', 'AppointmentController', ['except' => ['show'] ] );
 Route::get('/ajax/appointment/getAllAppointment','AppointmentController@getAllAppointment')->name('appointment.ajax.getAllAppointment');
 
-Route::resource('management/prescription', 'PrescriptionController');
-Route::get('/ajax/prescription/getAllPrescription','PrescriptionController@getAllPrescription')->name('prescription.ajax.getAllPrescription');
+Route::resource('management/prescription', 'PrescriptionController', ['except' => ['index','show'] ] );
 
 Route::resource('management/prescriptionline', 'PrescriptionLineController');
-Route::resource('management/orientationletter', 'OrientationLetterController');
-Route::resource('management/imagery', 'ImageryController');
+Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index'] ] );
+Route::resource('management/imagery', 'ImageryController', ['except' => ['index'] ] );
 
 
 //generating when using Auth::routes() but don't needed instead i just define the needed route

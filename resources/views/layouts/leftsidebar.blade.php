@@ -58,12 +58,6 @@
                                 </a>
                             </li>
                             @if(Auth::guard('doctor')->check())
-                                <li>
-                                    <a class="sidenav-item-link" href="{{ route('prescription.index') }}">
-                                        <span class="nav-text">Prescriptions</span>
-
-                                    </a>
-                                </li>
                                 @if(Auth::guard('doctor')->user()->is_admin)
                                     <li class="section-title">
                                         Autre
