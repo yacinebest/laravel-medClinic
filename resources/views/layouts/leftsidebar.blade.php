@@ -42,7 +42,7 @@
                                 @endif
                             @endif
                             <li>
-                                <a class="sidenav-item-link" href="#">
+                                <a class="sidenav-item-link" href="{{ route('patient.index') }}">
                                     <span class="nav-text">Patients</span>
 
                                 </a>

@@ -22,10 +22,10 @@ class CreatePatientsTable extends Migration {
 			$table->string('phone_number');
 			$table->string('address');
 			$table->string('email');
-			$table->text('chronic_diseases');
-			$table->text('allergies');
-			$table->text('antecedents');
-            $table->text('comments');
+			$table->text('chronic_diseases')->nullable();
+			$table->text('allergies')->nullable();
+			$table->text('antecedents')->nullable();
+            $table->text('comments')->nullable();
             $table->timestamps();
 		});
 	}

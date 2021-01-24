@@ -6,7 +6,7 @@ use App\Models\Base\BaseModel;
 
 class Patient extends BaseModel
 {
-
+    public $fillable=['last_name','first_name','social_security_number','birth_date','phone_number','address', 'email', 'chronic_diseases', 'allergies', 'antecedents', 'comments'];
     public function appointments()
     {
         return $this->hasMany('App\Models\Appointment');

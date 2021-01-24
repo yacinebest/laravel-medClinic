@@ -34,6 +34,8 @@ Route::group(['prefix'=>'secretary'], function () {
 
 Route::get('/management/doctor/profile', 'DoctorController@profile')->name('doctor.profile');
 Route::get('/management/secretary/profile', 'SecretaryController@profile')->name('secretary.profile');
+Route::get('/management/patient/profile','PatientController@profile')->name('patient.profile');
+
 //
 // Route::resource('clinic', 'ClinicController');
 Route::resource('management/doctor', 'DoctorController');
@@ -46,7 +48,8 @@ Route::get('/ajax/doctor/getAllDoctorForDropdown','DoctorController@getAllDoctor
 Route::resource('management/secretary', 'SecretaryController', ['except' => ['show'] ] );
 Route::get('/ajax/secretary/getAllSecretary','SecretaryController@getAllSecretary')->name('secretary.ajax.getAllSecretary');
 
-// Route::resource('patient', 'PatientController');
+Route::resource('management/patient', 'PatientController');
+
 Route::get('/ajax/patient/getAllPatientForDropdown','PatientController@getAllPatientForDropdown')->name('patient.ajax.getAllPatientForDropdown');
 Route::resource('management/appointment', 'AppointmentController', ['except' => ['show'] ] );
 Route::get('/ajax/appointment/getAllAppointment','AppointmentController@getAllAppointment')->name('appointment.ajax.getAllAppointment');
@@ -57,7 +60,7 @@ Route::get('/ajax/prescription/getAllPrescription','PrescriptionController@getAl
 Route::resource('management/prescriptionline', 'PrescriptionLineController');
 Route::resource('management/orientationletter', 'OrientationLetterController');
 Route::resource('management/imagery', 'ImageryController');
-//
+
 
 //generating when using Auth::routes() but don't needed instead i just define the needed route
 //for registration
