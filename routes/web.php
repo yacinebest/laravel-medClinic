@@ -49,6 +49,7 @@ Route::resource('management/secretary', 'SecretaryController', ['except' => ['sh
 Route::get('/ajax/secretary/getAllSecretary','SecretaryController@getAllSecretary')->name('secretary.ajax.getAllSecretary');
 
 Route::resource('management/patient', 'PatientController');
+Route::get('/ajax/patient/getAllPatient','PatientController@getAllPatient')->name('patient.ajax.getAllPatient');
 
 Route::get('/ajax/patient/getAllPatientForDropdown','PatientController@getAllPatientForDropdown')->name('patient.ajax.getAllPatientForDropdown');
 Route::resource('management/appointment', 'AppointmentController', ['except' => ['show'] ] );
