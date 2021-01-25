@@ -28,6 +28,9 @@
             <table id="{{ $table_id }}" class="table table-bordered data-table" style="width:100%">
                 <thead>
                     <tr>
+                        @if(isset($details_btn) && $details_btn)
+                            <th></th>
+                        @endif
                         @foreach($table_columns_name as $name)
                             <th>{{ $name }}</th>
                         @endforeach

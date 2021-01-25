@@ -152,6 +152,9 @@ class DoctorController extends Controller
                                     'route_delete'=>'prescription.destroy',
                                     'route_edit'=>'prescription.edit',])->render();
                 })
+                ->addColumn('details_url', function(Prescription $prescription) {
+                    return route('prescription.ajax.getPrescriptionLines', ['prescription'=>$prescription->id]);
+                })
                 ->escapeColumns([])
                 ->make(true);
         }

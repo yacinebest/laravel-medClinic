@@ -13,7 +13,8 @@ class PrescriptionController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('doctor.auth');
+        $this->middleware('doctor_or_secretary.auth',['only'=>['getPrescriptionLines'] ] );
+        $this->middleware('doctor.auth',['except'=>['getPrescriptionLines'] ] );
     }
 
     /**
@@ -157,6 +158,15 @@ class PrescriptionController extends Controller
         }
     }
 
+    //Ajax
+    public function getPrescriptionLines($id)
+    {
+        $prescription = Prescription::findOrFail($id);
+        $p_lines = $prescription->prescriptionLines()->latest()->get();
+
+        return Datatables::of($p_lines)->make(true);
+    }
+    //
 
      /*
     |---------------------------------------------------------------------------|
