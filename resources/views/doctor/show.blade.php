@@ -68,7 +68,7 @@
             'list_name'=>'Liste des Rendez-vous :',
             'action'=>((Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id) || Auth::guard('secretary')->check() ? true : false),
             'table_id'=>'DataTable_Appointments',
-            'table_columns_name'=>['ID','Date','StartAt','EndAt','Patient'],
+            'table_columns_name'=>['ID','Date','Debute A','Fini A','Patient'],
             'yield_session_name'=>'IndexSessionChangesDisplay_Appointment'
             // 'add_route'=>'',
             // 'add_btn_text'=>'',
@@ -89,7 +89,7 @@
     'list_name'=>'Liste des Prescriptions :',
     'action'=>( (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id) ? true : false),
     'table_id'=>'DataTable_Prescriptions',
-    'table_columns_name'=>['ID','Date','Patient'],
+    'table_columns_name'=>['ID','Date','Patient','Crée A','Modifie A'],
     'yield_session_name'=>'IndexSessionChangesDisplay_Prescription'
     // 'add_route'=>'',
     // 'add_btn_text'=>'',
@@ -110,7 +110,7 @@
             'list_name'=>'Liste des Lettres d\'Orientation :',
             'action'=>true,
             'table_id'=>'DataTable_OrientationLetters',
-            'table_columns_name'=>['ID','Date','Content','Patient'],
+            'table_columns_name'=>['ID','Date','Contenu','Patient','Crée A','Modifie A'],
             'yield_session_name'=>'IndexSessionChangesDisplay_OrientationLetter'
             // 'add_route'=>'',
             // 'add_btn_text'=>'',
@@ -205,6 +205,8 @@
                     {data: 'id', name: 'id'},
                     {data: 'date', name: 'date'},
                     {data: 'patient_full_name', name: 'patient_full_name'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'updated_at', name: 'updated_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ];
             }
@@ -213,6 +215,8 @@
                     {data: 'id', name: 'id'},
                     {data: 'date', name: 'date'},
                     {data: 'patient_full_name', name: 'patient_full_name'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'updated_at', name: 'updated_at'},
                 ];
             }
             return columns_Prescriptions;
@@ -224,6 +228,8 @@
                     {data: 'date', name: 'date'},
                     {data: 'content_preview', name: 'content_preview'},
                     {data: 'patient_full_name', name: 'patient_full_name'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'updated_at', name: 'updated_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ];
             }
@@ -233,6 +239,8 @@
                     {data: 'date', name: 'date'},
                     {data: 'content_preview', name: 'content_preview'},
                     {data: 'patient_full_name', name: 'patient_full_name'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'updated_at', name: 'updated_at'},
                 ];
             }
             return columns_OrientationLetters;

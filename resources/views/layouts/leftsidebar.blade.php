@@ -47,7 +47,13 @@
 
                                 </a>
                             </li>
-
+                            @if(Auth::guard('doctor')->check())
+                                <li>
+                                    <a class="sidenav-item-link" href="{{ route('doctor.show',['doctor'=>Auth::guard('doctor')->user()->id]) }}">
+                                        <span class="nav-text">Master Details</span>
+                                    </a>
+                                </li>
+                            @endif
                             <li class="section-title">
                                 Documents
                             </li>

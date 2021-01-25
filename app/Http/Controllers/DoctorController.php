@@ -164,7 +164,7 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('content_preview',function(OrientationLetter $orientationLetter){
-                    return Str::limit($orientationLetter->content, 50, '...');
+                    return Str::limit($orientationLetter->content, 30, '...');
                 })
                 ->addColumn('patient_full_name',function(OrientationLetter $orientationLetter){
                     return view('layouts.includes.tables.datatable.full_name',['entity'=>$orientationLetter->patient])->render();
