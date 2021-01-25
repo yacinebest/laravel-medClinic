@@ -175,9 +175,9 @@ class DoctorController extends Controller
                 ->addColumn('action',function(OrientationLetter $orientationLetter)
                 {
                     return view('layouts.includes.crud.edit_show_delete_btn',
-                            ['id'=>$orientationLetter->id,'name_id'=>'orientationLetter',
-                                // 'route_delete'=>'orientationletter.destroy',
-                                // 'route_edit'=>'orientationletter.edit',
+                            ['id'=>$orientationLetter->id,'name_id'=>'orientationletter',
+                                'route_delete'=>'orientationletter.destroy',
+                                'route_edit'=>'orientationletter.edit',
                                 // 'route_show'=>'orientationletter.show',
                             ])->render();
                 })
