@@ -74,7 +74,6 @@
             </table>
         </div>
     </div>
-
 @endsection
 
 
@@ -99,13 +98,14 @@
                             var id = response['patients'][i].id;
                             var first_name = response['patients'][i].first_name;
                             var last_name = response['patients'][i].last_name;
+                            var birth_date = response['patients'][i].birth_date;
 
-                            var option = "<option value='"+id+"'>"+last_name + " " + first_name+"</option>";
+                            var option = "<option value='"+id+"'>"+last_name + " " + first_name+ "  " + birth_date +"</option>";
 
                             $("#sel_patient").append(option);
                         }
                         $('#sel_patient').selectpicker('refresh');
-                        $("#sel_patient").val('').trigger('change');
+                        $("#sel_patient").val('{{ isset($patient) ? $patient->id : '' }}').trigger('change');
                     }
 
                 }
@@ -121,7 +121,13 @@
             html = '<tr>';
             html += '<td><input type="text" name="medicine[]" class="form-control" /></td>';
             html += '<td><input type="text" name="dose[]" class="form-control" /></td>';
-            html += '<td><input type="text" name="time_taken[]" class="form-control" /></td>';
+            html += "<td>"+
+                    '<select name="time_taken[]" class="form-control">'+
+                    '@foreach($time_taken_const as $key => $value)'+
+                        '<option value="{{ $key }}">{{ $value }}</option>'+
+                    '@endforeach'+
+                    '</select>'+
+                    "</td>";
             html += '<td><input type="text" name="duration[]" class="form-control" /></td>';
             if(number > 1)
             {

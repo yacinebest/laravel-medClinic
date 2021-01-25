@@ -20,7 +20,8 @@ class PatientController extends Controller
     public function getAllPatientForDropdown(){
         $array_patients['patients'] = Patient::orderby("last_name","asc")
             ->orderby("first_name","asc")
-            ->select('id','last_name','first_name')
+            ->orderby("birth_date","asc")
+            ->select('id','last_name','first_name',"birth_date")
             ->get();
 
         return response()->json($array_patients);

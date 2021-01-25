@@ -47,7 +47,17 @@
                     <tr>
                         <td><input type="text" name="pmedicine[]" class="form-control" value="{{ $p_line->medicine }}" /></td>
                         <td><input type="text" name="pdose[]" class="form-control" value="{{ $p_line->dose }}" /></td>
-                        <td><input type="text" name="ptime_taken[]" class="form-control" value="{{ $p_line->time_taken }}" /></td>
+                        <td>
+                            <select name="ptime_taken[]" class="form-control">
+                                @foreach($time_taken_const as $key => $value)
+                                    @if($p_line->time_taken==$key)
+                                        <option value="{{ $key }}" selected>{{ $value }}</option>
+                                    @else
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
                         <td><input type="text" name="pduration[]" class="form-control" value="{{ $p_line->duration }}" /></td>
                         <td>
                             @include('layouts.includes.crud.delete.remove_btn',['id'=>$p_line->id,'name_id'=>'prescriptionline','simple_btn_remove'=>true])
@@ -103,7 +113,13 @@
             html = '<tr>';
             html += '<td><input type="text" name="medicine[]" class="form-control" /></td>';
             html += '<td><input type="text" name="dose[]" class="form-control" /></td>';
-            html += '<td><input type="text" name="time_taken[]" class="form-control" /></td>';
+            html += "<td>"+
+                    '<select name="time_taken[]" class="form-control">'+
+                    '@foreach($time_taken_const as $key => $value)'+
+                            '<option value="{{ $key }}">{{ $value }}</option>'+
+                    '@endforeach'+
+                    '</select>'+
+                    "</td>";
             html += '<td><input type="text" name="duration[]" class="form-control" /></td>';
 
             html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove-dynamic"><i class="fas fa-minus"></i></button></td></tr>';

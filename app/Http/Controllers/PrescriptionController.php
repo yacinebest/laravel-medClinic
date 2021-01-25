@@ -11,14 +11,22 @@ use Yajra\Datatables\DataTables;
 
 class PrescriptionController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('doctor.auth');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('prescription.create');
+        if($request->has('patient'))
+            return view('prescription.create',['patient'=>$request['patient'],'time_taken_const'=>PrescriptionLine::getTimeTakenConst() ]  );
+        else
+            return view('prescription.create',['time_taken_const'=>PrescriptionLine::getTimeTakenConst() ]);
     }
 
     /**
@@ -63,7 +71,7 @@ class PrescriptionController extends Controller
     public function edit($id)
     {
         $prescription = Prescription::findOrFail($id);
-        return view('prescription.edit',['prescription'=>$prescription]);
+        return view('prescription.edit',['prescription'=>$prescription,'time_taken_const'=>PrescriptionLine::getTimeTakenConst()]);
     }
 
     /**
