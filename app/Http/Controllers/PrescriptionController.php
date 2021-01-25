@@ -164,7 +164,15 @@ class PrescriptionController extends Controller
         $prescription = Prescription::findOrFail($id);
         $p_lines = $prescription->prescriptionLines()->latest()->get();
 
-        return Datatables::of($p_lines)->make(true);
+        return Datatables::of($p_lines)
+            ->editColumn('time_taken',function(PrescriptionLine $prescriptionLine){
+                foreach (PrescriptionLine::getTimeTakenConst() as $key => $value) {
+                    if($key==$prescriptionLine->time_taken)
+                        return $value;
+                }
+                return $prescriptionLine->time_taken;
+            })
+            ->make(true);
     }
     //
 
