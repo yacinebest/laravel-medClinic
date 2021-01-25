@@ -131,7 +131,9 @@ class PrescriptionController extends Controller
      */
     public function destroy($id)
     {
-        Prescription::findOrFail($id)->delete();
+        $p =Prescription::findOrFail($id);
+        $p->prescriptionLines()->delete();
+        $p->delete();
         session()->flash('destroy_prescription','Une Prescription a été supprimer.');
         return redirect()->back();
     }

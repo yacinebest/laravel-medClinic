@@ -20,8 +20,16 @@ class DoctorController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('doctor_or_secretary.auth',['only'=>['getAllDoctorForDropdown']]);
-        $this->middleware('doctor.auth',['except'=>['getAllDoctorForDropdown']]);
+        $this->middleware('doctor_or_secretary.auth',['only'=>['show'
+                                                    ,'getAppointmentsForDoctor'
+                                                    ,'getPrescriptionsForDoctor'
+                                                    ,'getOrientationLettersForDoctor'
+                                                    ,'getAllDoctorForDropdown']]);
+        $this->middleware('doctor.auth',['except'=>['show'
+                                                    ,'getAppointmentsForDoctor'
+                                                    ,'getPrescriptionsForDoctor'
+                                                    ,'getOrientationLettersForDoctor'
+                                                    ,'getAllDoctorForDropdown']]);
         $this->middleware('admin.auth', ['except' => ['home','profile','show'
                                                     ,'getAppointmentsForDoctor'
                                                     ,'getPrescriptionsForDoctor'
@@ -108,8 +116,9 @@ class DoctorController extends Controller
     }
     //Ajax
     public function getAppointmentsForDoctor(Request $request){
-        if ($request->ajax()) {
-            $data = Appointment::latest()->get();
+        if ($request->ajax() && $request->has('doctor_id')) {
+            $doctor = Doctor::find($request['doctor_id']);
+            $data =  $doctor->appointments()->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Appointment $appointment){
@@ -119,10 +128,8 @@ class DoctorController extends Controller
                 {
                     return view('layouts.includes.crud.edit_show_delete_btn',
                         ['id'=>$appointment->id,'name_id'=>'appointment',
-                        // 'route_delete'=>'appointment.destroy',
-                        // 'route_edit'=>'appointment.edit',
-                        // 'route_show'=>'appointment.show',
-                        ])->render();
+                        'route_delete'=>'appointment.destroy',
+                        'route_edit'=>'appointment.edit',])->render();
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -130,8 +137,9 @@ class DoctorController extends Controller
     }
     public function getPrescriptionsForDoctor(Request $request)
     {
-          if ($request->ajax()) {
-            $data = Prescription::latest()->get();
+          if ($request->ajax() && $request->has('doctor_id')) {
+            $doctor = Doctor::find($request['doctor_id']);
+            $data =  $doctor->prescriptions()->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Prescription $prescription){
@@ -140,11 +148,9 @@ class DoctorController extends Controller
                 ->addColumn('action',function(Prescription $prescription)
                 {
                     return view('layouts.includes.crud.edit_show_delete_btn',
-                    ['id'=>$prescription->id,'name_id'=>'prescription',
-                        // 'route_delete'=>'prescription.destroy',
-                        // 'route_edit'=>'prescription.edit',
-                        // 'route_show'=>'prescription.show',
-                        ])->render();
+                                    ['id'=>$prescription->id,'name_id'=>'prescription',
+                                    'route_delete'=>'prescription.destroy',
+                                    'route_edit'=>'prescription.edit',])->render();
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -153,7 +159,8 @@ class DoctorController extends Controller
     public function getOrientationLettersForDoctor(Request $request)
     {
           if ($request->ajax()) {
-            $data = OrientationLetter::latest()->get();
+            $doctor = Doctor::find($request['doctor_id']);
+            $data =  $doctor->orientationLetters()->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('content_preview',function(OrientationLetter $orientationLetter){
@@ -166,9 +173,9 @@ class DoctorController extends Controller
                 {
                     return view('layouts.includes.crud.edit_show_delete_btn',
                             ['id'=>$orientationLetter->id,'name_id'=>'orientationLetter',
-                                // 'route_delete'=>'orientationLetter.destroy',
-                                // 'route_edit'=>'orientationLetter.edit',
-                                // 'route_show'=>'orientationLetter.show',
+                                // 'route_delete'=>'orientationletter.destroy',
+                                // 'route_edit'=>'orientationletter.edit',
+                                // 'route_show'=>'orientationletter.show',
                             ])->render();
                 })
                 ->escapeColumns([])
