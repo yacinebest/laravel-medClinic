@@ -13,6 +13,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Comment\Doc;
+use Yajra\Datatables\DataTables;
 
 class PatientController extends Controller
 {
@@ -35,11 +36,37 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = Patient::orderBy('last_name', 'Asc')
-                        ->orderBy('first_name', 'Asc')
-                        ->paginate(10);
-        return view('patient.index',['patients'=>$patients]);
+        return view('patient.index');
     }
+    //Ajax
+    public function getAllPatient(Request $request){
+        if ($request->ajax()) {
+            $data = Patient::latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action',function(Patient $patient)
+                {
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                        ['id'=>$patient->id,'name_id'=>'patient',
+                            'route_delete'=>'patient.destroy',
+                            'route_edit'=>'patient.edit',
+                            'route_show'=>'patient.show',])->render();
+                })
+                ->addColumn('email_limit',function(Patient $patient)
+                {
+                    return view('layouts.includes.tables.datatable.string_limit',
+                        ['str'=>$patient->email])->render();
+                })
+                ->addColumn('address_limit',function(Patient $patient)
+                {
+                    return view('layouts.includes.tables.datatable.string_limit',
+                        ['str'=>$patient->address])->render();
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+    }
+    //End Ajax
 
     /**
      * Show the form for creating a new resource.
@@ -128,6 +155,7 @@ class PatientController extends Controller
     {
         return view('patient.profile');
     }
+
 
 
     /*

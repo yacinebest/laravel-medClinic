@@ -1,5 +1,8 @@
 @extends('layouts.templates.index',[
-'list_name'=>'Liste des patients','name_create_route'=>'patient.create','entities'=>$patients]
+    'list_name'=>'Liste Des Patients :','name_create_route'=>'patient.create',
+    'table_id'=>'DataTable_Patients',
+    'table_columns_name'=>['ID','Nom','Prénom','Date de naissance','N° (+213)','Addresse','Email'],
+    'action'=>true,'add_btn_text'=>'Ajouter Patient']
 )
 
 @section('IndexSessionChangesDisplay')
@@ -14,79 +17,35 @@
     @endif
 @endsection
 
-@section('TableColumnsName_th')
-    <th>ID</th>
-    <th>Nom</th>
-    <th>Prénom</th>
-    <th>SSN</th>
-    <th>Date de naissance</th>
-    <th>N° (+213)</th>
-    <th>Addresse</th>
-    <th>Email</th>
-    <th></th>
-@endsection
-
-@section('TableBodyList_tr')
-    @foreach($patients as $patient)
-        <tr>
-            <td>{{ $patient->id }}</td>
-            <td>
-                <p class="text-dark">{{ $patient->last_name }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->first_name }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->social_security_number }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->birth_date }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ $patient->phone_number }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ Str::limit($patient->address,15) }}</p>
-            </td>
-            <td>
-                <p class="text-dark">{{ Str::limit($patient->email,15) }}</p>
-            </td>
-            <td class="text-right">
-                <div class="dropdown show d-inline-block widget-dropdown">
-                    <a class="dropdown-toggle icon-burger-mini" href="" role="button" id="dropdown-recent-order1"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-recent-order1">
-                        <li class="dropdown-item">
-                            <a
-                                href="{{ route('patient.show', ['patient' =>$patient->id]) }}">
-                                <i class="mdi mdi-account-details mr-1"></i>
-                                Voir
-                            </a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a
-                                href="{{ route('patient.edit', ['patient' =>$patient->id]) }}">
-                                <i class="mdi mdi-square-edit-outline mr-1"></i>
-                                Modifier
-                            </a>
-                        </li>
-                        <li class="dropdown-item">
-                                <a href="#"
-                                    {{-- entityid and .a-delete-entity are used for popup alert --}}
-                                    data-entityid="{{ $patient->id }}" class="a-delete-entity">
-                                    <i class="mdi mdi-delete mr-1"></i>
-                                    Supprimer
-                                </a>
-                                <form id="{{ 'destroy-form-'.$patient->id }}"
-                                    action="{{ route('patient.destroy',['patient'=>$patient->id]) }}"
-                                    method="POST" class="d-none">
-                                    @method('DELETE')
-                                    @csrf
-                                </form>
-                        </li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    @endforeach
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table_Patients = $('#DataTable_Patients').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            },
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url:"{{ route('patient.ajax.getAllPatient') }}",
+                type: 'GET',
+                data: function ( d ) {
+                    d._token = "{{ csrf_token() }}";
+                },
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'last_name', name: 'last_name'},
+                {data: 'first_name', name: 'first_name'},
+                //{data: 'social_security_number', name: 'social_security_number'},
+                {data: 'birth_date', name: 'birth_date'},
+                {data: 'phone_number', name: 'phone_number'},
+                {data: 'address_limit', name: 'address_limit'},
+                {data: 'email_limit', name: 'email_limit'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+    });
+</script>
 @endsection
