@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\OrientationLetter;
 use App\Models\Prescription;
+use App\Models\Imagery;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Comment\Doc;
 use Yajra\Datatables\DataTables;
+use Illuminate\Support\Str;
 
 class PatientController extends Controller
 {
@@ -100,8 +102,102 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        //
+        $patient = Patient::find($id);
+        return view('patient.show',['patient'=>$patient]);
     }
+
+    //Ajax
+    public function getAppointmentsForPatient(Request $request){
+        if ($request->ajax() && $request->has('patient_id')) {
+            $patient = Patient::find($request['patient_id']);
+            $data =  $patient->appointments()->latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('doctor_full_name',function(Appointment $appointment){
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->doctor])->render();
+                })
+                ->addColumn('action',function(Appointment $appointment)
+                {
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                        ['id'=>$appointment->id,'name_id'=>'appointment',
+                        'route_delete'=>'appointment.destroy',
+                        'route_edit'=>'appointment.edit',])->render();
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+    }
+    public function getPrescriptionsForPatient(Request $request)
+    {
+          if ($request->ajax() && $request->has('patient_id')) {
+            $patient = Patient::find($request['patient_id']);
+            $data =  $patient->prescriptions()->latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('doctor_full_name',function(Prescription $prescription){
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$prescription->doctor])->render();
+                })
+                ->addColumn('action',function(Prescription $prescription)
+                {
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                                    ['id'=>$prescription->id,'name_id'=>'prescription',
+                                    'route_delete'=>'prescription.destroy',
+                                    'route_edit'=>'prescription.edit',])->render();
+                })
+                ->addColumn('details_url', function(Prescription $prescription) {
+                    return route('prescription.ajax.getPrescriptionLines', ['prescription'=>$prescription->id]);
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+    }
+    public function getOrientationLettersForPatient(Request $request)
+    {
+          if ($request->ajax()) {
+            $patient = Patient::find($request['patient_id']);
+            $data =  $patient->orientationLetters()->latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('content_preview',function(OrientationLetter $orientationLetter){
+                    return Str::limit($orientationLetter->content, 30, '...');
+                })
+                ->addColumn('doctor_full_name',function(OrientationLetter $orientationLetter){
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$orientationLetter->doctor])->render();
+                })
+                ->addColumn('action',function(OrientationLetter $orientationLetter)
+                {
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                            ['id'=>$orientationLetter->id,'name_id'=>'orientationletter',
+                                'route_delete'=>'orientationletter.destroy',
+                                'route_edit'=>'orientationletter.edit',
+                                // 'route_show'=>'orientationletter.show',
+                            ])->render();
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+    }
+
+    public function getImageriesForPatient(Request $request){
+        if ($request->ajax() && $request->has('patient_id')) {
+            $patient = Patient::find($request['patient_id']);
+            $data =  $patient->imageries()->latest()->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('file_path',function(Imagery $image){
+                    return view('layouts.includes.tables.datatable.image',['path'=>asset('imageries/' . $image->file)])->render();
+                })
+                ->addColumn('action',function(Imagery $imagery)
+                {
+                    return view('layouts.includes.crud.edit_show_delete_btn',
+                        ['id'=>$imagery->id,'name_id'=>'imagery',
+                        'route_delete'=>'imagery.destroy',])->render();
+                })
+                ->escapeColumns([])
+                ->make(true);
+        }
+    }
+    //End Ajax
 
     /**
      * Show the form for editing the specified resource.

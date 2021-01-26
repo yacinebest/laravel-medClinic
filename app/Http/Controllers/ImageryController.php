@@ -46,7 +46,7 @@ class ImageryController extends Controller
          }
 
          # And save the image to the database
-         $image = Imagery::create(['file'=>$filename,'patient_id'=>$request['patient_id']]);
+        $image = Imagery::create(['file'=>$filename,'patient_id'=>$request['patient_id']]);
 
          return $image;
     }

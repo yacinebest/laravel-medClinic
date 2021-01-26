@@ -52,6 +52,10 @@ Route::resource('management/patient', 'PatientController');
 Route::get('/ajax/patient/getAllPatient','PatientController@getAllPatient')->name('patient.ajax.getAllPatient');
 
 Route::get('/ajax/patient/getAllPatientForDropdown','PatientController@getAllPatientForDropdown')->name('patient.ajax.getAllPatientForDropdown');
+Route::get('/ajax/patient/getAppointmentsForPatient','PatientController@getAppointmentsForPatient')->name('patient.ajax.getAppointmentsForPatient');
+Route::get('/ajax/patient/getPrescriptionsForPatient','PatientController@getPrescriptionsForPatient')->name('patient.ajax.getPrescriptionsForPatient');
+Route::get('/ajax/patient/getOrientationLettersForPatient','PatientController@getOrientationLettersForPatient')->name('patient.ajax.getOrientationLettersForPatient');
+Route::get('/ajax/patient/getImageriesForPatient','PatientController@getImageriesForPatient')->name('patient.ajax.getImageriesForPatient');
 
 Route::resource('management/appointment', 'AppointmentController', ['except' => ['show'] ] );
 Route::get('/ajax/appointment/getAllAppointment','AppointmentController@getAllAppointment')->name('appointment.ajax.getAllAppointment');
