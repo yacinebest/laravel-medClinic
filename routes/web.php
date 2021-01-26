@@ -60,4 +60,4 @@ Route::delete('management/prescriptionline/{prescriptionline}','PrescriptionCont
 Route::get('/ajax/prescription/getPrescriptionLines/{prescription}','PrescriptionController@getPrescriptionLines')->name('prescription.ajax.getPrescriptionLines');
 
 Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index'] ] );
-Route::resource('management/imagery', 'ImageryController', ['except' => ['index'] ] );
+Route::resource('management/imagery', 'ImageryController', ['except' => ['index','show','edit','update'] ] );

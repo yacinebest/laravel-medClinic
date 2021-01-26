@@ -27,16 +27,20 @@
                 </div>
                 <div class="card-body p-5">
                     {{-- <h4 class="text-dark mb-5"></h4> --}}
-                    <form method="POST" action="{{ route($store_route_name) }}" id="store-form">
-                    @csrf
-                        <div class="row">
-                            @yield('CreateFormElements')
+                    @if(isset($extend_form) && $extend_form)
+                        @yield('extend_form')
+                    @else
+                        <form method="POST" action="{{ route($store_route_name) }}" id="store-form">
+                        @csrf
+                            <div class="row">
+                                @yield('CreateFormElements')
 
-                            <div class="col-md-12">
-                                <button id="store-button" type="submit" class="btn btn-lg btn-primary btn-block mb-4">{{ $action_name }}</button>
+                                <div class="col-md-12">
+                                    <button id="store-button" type="submit" class="btn btn-lg btn-primary btn-block mb-4">{{ $action_name }}</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    @endif
 
                 </div>
             </div>
