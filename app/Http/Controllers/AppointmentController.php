@@ -12,6 +12,14 @@ use Yajra\Datatables\DataTables;
 
 class AppointmentController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('admin_or_secretary.auth',['only'=>['index','getAllAppointment']]);
+        $this->middleware('doctor_or_secretary.auth',['only'=>['create','store'
+                                                                ,'edit'
+                                                                ,'update'
+                                                                ,'destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -64,5 +64,5 @@ Route::resource('management/prescription', 'PrescriptionController', ['except' =
 Route::delete('management/prescriptionline/{prescriptionline}','PrescriptionController@destroyPrescriptionLine')->name('prescriptionline.destroy');
 Route::get('/ajax/prescription/getPrescriptionLines/{prescription}','PrescriptionController@getPrescriptionLines')->name('prescription.ajax.getPrescriptionLines');
 
-Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index'] ] );
+Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index','show'] ] );
 Route::resource('management/imagery', 'ImageryController', ['except' => ['index','show','edit','update'] ] );
