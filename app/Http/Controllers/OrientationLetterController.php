@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 class OrientationLetterController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('doctor.auth');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -34,17 +38,6 @@ class OrientationLetterController extends Controller
             'La Lettre d\'Orientation pour Le Patient '
             . $orientationLetter->patient->last_name . ' ' . $orientationLetter->patient->first_name .'A était cree.');
         return redirect(route('patient.show',['patient'=>$orientationLetter->patient->id]));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

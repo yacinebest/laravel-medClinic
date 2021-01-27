@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'doctor.auth' => \App\Http\Middleware\Custom\DoctorAuth::class,
         'secretary.auth' => \App\Http\Middleware\Custom\SecretaryAuth::class,
         'doctor_or_secretary.auth' => \App\Http\Middleware\Custom\DoctorOrSecretaryAuth::class,
+        'admin_or_secretary.auth' => \App\Http\Middleware\Custom\AdminOrSecretaryAuth::class,
     ];
 }

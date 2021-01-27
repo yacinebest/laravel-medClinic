@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class ClinicController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('admin.auth');
+    }
+
     /**
      * Display a listing of the resource.
      *

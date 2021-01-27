@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 class ImageryController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('doctor.auth');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
