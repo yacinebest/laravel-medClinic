@@ -9,16 +9,13 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Yajra\Datatables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('admin_or_secretary.auth',['only'=>['index','getAllAppointment']]);
-        $this->middleware('doctor_or_secretary.auth',['only'=>['create','store'
-                                                                ,'edit'
-                                                                ,'update'
-                                                                ,'destroy']]);
+        $this->middleware('doctor_or_secretary.auth');
     }
     /**
      * Display a listing of the resource.
@@ -36,7 +33,8 @@ class AppointmentController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Appointment $appointment){
-                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->patient])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->patient
+                                                                            ,'route_show'=>'patient.show'])->render();
                 })
                 ->addColumn('doctor_full_name',function(Appointment $appointment){
                     return view('layouts.includes.tables.datatable.full_name',[
@@ -45,10 +43,15 @@ class AppointmentController extends Controller
                 })
                 ->addColumn('action',function(Appointment $appointment)
                 {
-                    return view('layouts.includes.crud.edit_show_delete_btn',
-                            ['id'=>$appointment->id,'name_id'=>'appointment',
-                            'route_delete'=>'appointment.destroy',
-                            'route_edit'=>'appointment.edit'])->render();
+                    if ( (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$appointment->doctor->id)
+                    || Auth::guard('secretary')->check() ){
+                        return view('layouts.includes.crud.edit_show_delete_btn',
+                                    ['id'=>$appointment->id,'name_id'=>'appointment',
+                                    'route_delete'=>'appointment.destroy',
+                                    'route_edit'=>'appointment.edit',])->render();
+                    }else{
+                        return ;
+                    }
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -95,8 +98,16 @@ class AppointmentController extends Controller
     public function edit($id)
     {
         $appointment = Appointment::findOrFail($id);
-        if($appointment)
-            return view('appointment.edit',['appointment'=>$appointment]);
+        if($appointment){
+            if(  (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$appointment->doctor->id)
+                || Auth::guard('secretary')->check() ){
+
+                return view('appointment.edit',['appointment'=>$appointment]);
+            }
+            else{
+                return redirect(route('appointment.index'));
+            }
+        }
         else
             return redirect(route('appointment.index'));
     }

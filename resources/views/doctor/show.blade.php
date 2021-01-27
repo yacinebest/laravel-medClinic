@@ -66,7 +66,7 @@
 @endif
 @include('layouts.includes.tables.datatable',[
             'list_name'=>'Liste des Rendez-vous :',
-            'action'=>((Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id) || Auth::guard('secretary')->check() ? true : false),
+            'action'=>( (  (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id) || Auth::guard('secretary')->check() ) ? true : false),
             'table_id'=>'DataTable_Appointments',
             'table_columns_name'=>['ID','Date','Debute A','Fini A','Patient'],
             'yield_session_name'=>'IndexSessionChangesDisplay_Appointment'
@@ -75,39 +75,41 @@
         ])
 
 
-@if(Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id )
-    @section('IndexSessionChangesDisplay_Prescription')
-        @if(Session::has('destroy_prescription'))
-        @include('layouts.includes.form.alert.alert_warning',['msg'=>Session::get('destroy_prescription')])
-        @endif
-        @if(Session::has('update_prescription'))
-        @include('layouts.includes.form.alert.alert_primary',['msg'=>Session::get('update_prescription')])
-        @endif
-    @endsection
-@endif
-@include('layouts.includes.tables.datatable',[
-    'list_name'=>'Liste des Prescriptions :',
-    'action'=>( (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id) ? true : false),
-    'table_id'=>'DataTable_Prescriptions',
-    'table_columns_name'=>['ID','Date','Patient','Crée A','Modifie A'],
-    'yield_session_name'=>'IndexSessionChangesDisplay_Prescription',
-    'details_btn'=>true,
-    // 'add_route'=>'',
-    // 'add_btn_text'=>'',
-])
+@if(Auth::guard('doctor')->check())
+    @if(Auth::guard('doctor')->user()->id==$doctor->id)
+        @section('IndexSessionChangesDisplay_Prescription')
+            @if(Session::has('destroy_prescription'))
+            @include('layouts.includes.form.alert.alert_warning',['msg'=>Session::get('destroy_prescription')])
+            @endif
+            @if(Session::has('update_prescription'))
+            @include('layouts.includes.form.alert.alert_primary',['msg'=>Session::get('update_prescription')])
+            @endif
+        @endsection
+    @endif
+
+    @include('layouts.includes.tables.datatable',[
+        'list_name'=>'Liste des Prescriptions :',
+        'action'=>( (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id) ? true : false),
+        'table_id'=>'DataTable_Prescriptions',
+        'table_columns_name'=>['ID','Date','Patient','Crée A','Modifie A'],
+        'yield_session_name'=>'IndexSessionChangesDisplay_Prescription',
+        'details_btn'=>true,
+        // 'add_route'=>'',
+        // 'add_btn_text'=>'',
+    ])
 
 
-@if(Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id )
-    @section('IndexSessionChangesDisplay_OrientationLetter')
-        @if(Session::has('destroy_orientationLetter'))
-            @include('layouts.includes.form.alert.alert_warning',['msg'=>Session::get('destroy_orientationLetter')])
-        @endif
-        @if(Session::has('update_orientationLetter'))
-            @include('layouts.includes.form.alert.alert_primary',['msg'=>Session::get('update_orientationLetter')])
-        @endif
-    @endsection
-@endif
-@include('layouts.includes.tables.datatable',[
+    @if(Auth::guard('doctor')->user()->id==$doctor->id )
+        @section('IndexSessionChangesDisplay_OrientationLetter')
+            @if(Session::has('destroy_orientationLetter'))
+                @include('layouts.includes.form.alert.alert_warning',['msg'=>Session::get('destroy_orientationLetter')])
+            @endif
+            @if(Session::has('update_orientationLetter'))
+                @include('layouts.includes.form.alert.alert_primary',['msg'=>Session::get('update_orientationLetter')])
+            @endif
+        @endsection
+    @endif
+    @include('layouts.includes.tables.datatable',[
             'list_name'=>'Liste des Lettres d\'Orientation :',
             'action'=>true,
             'table_id'=>'DataTable_OrientationLetters',
@@ -116,8 +118,10 @@
             // 'add_route'=>'',
             // 'add_btn_text'=>'',
         ])
-@endsection
 
+@endif
+
+@endsection
 
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
@@ -145,6 +149,7 @@
         // $.fn.dataTable.ext.errMode = 'throw'; if we want to disable error alert for datatable
         var prop_doctor = "{{ (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$doctor->id)}}";
         var connect_secretary = "{{ Auth::guard('secretary')->check() }}";
+        var connect_doctor = "{{ Auth::guard('doctor')->check() }}";
 
         var table_Appointments = $('#DataTable_Appointments').DataTable({
             language: {
@@ -163,41 +168,65 @@
             columns:getColumnsForAppointments(prop_doctor,connect_secretary)
         });
 
-        var table_Prescriptions = $('#DataTable_Prescriptions').DataTable({
-            language: {
-                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
-            },
-            responsive: true,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url:"{{ route('doctor.ajax.getPrescriptionsForDoctor',['doctor_id'=>$doctor->id]) }}",
-                type: 'GET',
-                data: function ( d ) {
-                    d._token = "{{ csrf_token() }}";
-                },
-            },
-            columns:getColumnsForPrescriptions(prop_doctor),
-            "order": [[2, 'asc']]
-        });
+        if(connect_doctor){
 
-        var table_OrientationLetters = $('#DataTable_OrientationLetters').DataTable({
-            language: {
-                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
-            },
-            responsive: true,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url:"{{ route('doctor.ajax.getOrientationLettersForDoctor',['doctor_id'=>$doctor->id]) }}",
-                type: 'GET',
-                data: function ( d ) {
-                    d._token = "{{ csrf_token() }}";
+            var table_Prescriptions = $('#DataTable_Prescriptions').DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
                 },
-            },
-            columns:getColumnsForOrientationLetters(prop_doctor)
-        });
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url:"{{ route('doctor.ajax.getPrescriptionsForDoctor',['doctor_id'=>$doctor->id]) }}",
+                    type: 'GET',
+                    data: function ( d ) {
+                        d._token = "{{ csrf_token() }}";
+                    },
+                },
+                columns:getColumnsForPrescriptions(prop_doctor),
+                "order": [[2, 'asc']]
+            });
 
+            var table_OrientationLetters = $('#DataTable_OrientationLetters').DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                },
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url:"{{ route('doctor.ajax.getOrientationLettersForDoctor',['doctor_id'=>$doctor->id]) }}",
+                    type: 'GET',
+                    data: function ( d ) {
+                        d._token = "{{ csrf_token() }}";
+                    },
+                },
+                columns:getColumnsForOrientationLetters(prop_doctor)
+            });
+
+            $('#DataTable_Prescriptions tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table_Prescriptions.row(tr);
+                var tableId = 'prescription-' + row.data().id;
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass( 'details' );
+                    // tr.removeClass('shown');
+
+                } else {
+                    // Open this row
+                    row.child(template(row.data())).show();
+                    initTable(tableId, row.data());
+
+                    // tr.addClass('shown');
+                    tr.addClass('details');
+                    tr.next().find('td').addClass('no-padding bg-gray');
+                }
+            });
+
+        }
 
         function getColumnsForAppointments(prop_doctor,connect_secretary) {
             if (prop_doctor || connect_secretary) {
@@ -307,26 +336,7 @@
             });
         }
 
-        $('#DataTable_Prescriptions tbody').on('click', 'td.details-control', function () {
-            var tr = $(this).closest('tr');
-            var row = table_Prescriptions.row(tr);
-            var tableId = 'prescription-' + row.data().id;
-            if (row.child.isShown()) {
-                // This row is already open - close it
-                row.child.hide();
-                tr.removeClass( 'details' );
-                // tr.removeClass('shown');
 
-            } else {
-                // Open this row
-                row.child(template(row.data())).show();
-                initTable(tableId, row.data());
-
-                // tr.addClass('shown');
-                tr.addClass('details');
-                tr.next().find('td').addClass('no-padding bg-gray');
-            }
-        });
 
     });
 </script>

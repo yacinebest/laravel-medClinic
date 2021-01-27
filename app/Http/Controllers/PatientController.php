@@ -22,7 +22,13 @@ class PatientController extends Controller
 
 
     public function __construct() {
-        $this->middleware('doctor_or_secretary.auth');
+        $this->middleware('doctor_or_secretary.auth',['except'=>['getPrescriptionsForPatient',
+                                                                'getOrientationLettersForPatient',
+                                                                'getImageriesForPatient',]]);
+
+        $this->middleware('doctor.auth',['only'=>['getPrescriptionsForPatient',
+                                                'getOrientationLettersForPatient',
+                                                'getImageriesForPatient',]]);
     }
 
     //Ajax Request for other Controller to use
@@ -124,10 +130,15 @@ class PatientController extends Controller
                 })
                 ->addColumn('action',function(Appointment $appointment)
                 {
-                    return view('layouts.includes.crud.edit_show_delete_btn',
-                        ['id'=>$appointment->id,'name_id'=>'appointment',
-                        'route_delete'=>'appointment.destroy',
-                        'route_edit'=>'appointment.edit',])->render();
+                    if ( (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$appointment->doctor->id)
+                        || Auth::guard('secretary')->check() ){
+                            return view('layouts.includes.crud.edit_show_delete_btn',
+                                        ['id'=>$appointment->id,'name_id'=>'appointment',
+                                        'route_delete'=>'appointment.destroy',
+                                        'route_edit'=>'appointment.edit',])->render();
+                    }else{
+                        return ;
+                    }
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -145,10 +156,14 @@ class PatientController extends Controller
                 })
                 ->addColumn('action',function(Prescription $prescription)
                 {
-                    return view('layouts.includes.crud.edit_show_delete_btn',
+                    if ( (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$prescription->doctor->id)){
+                        return view('layouts.includes.crud.edit_show_delete_btn',
                                     ['id'=>$prescription->id,'name_id'=>'prescription',
                                     'route_delete'=>'prescription.destroy',
                                     'route_edit'=>'prescription.edit',])->render();
+                    }else{
+                        return ;
+                    }
                 })
                 ->addColumn('details_url', function(Prescription $prescription) {
                     return route('prescription.ajax.getPrescriptionLines', ['prescription'=>$prescription->id]);
@@ -172,12 +187,14 @@ class PatientController extends Controller
                 })
                 ->addColumn('action',function(OrientationLetter $orientationLetter)
                 {
-                    return view('layouts.includes.crud.edit_show_delete_btn',
-                            ['id'=>$orientationLetter->id,'name_id'=>'orientationletter',
-                                'route_delete'=>'orientationletter.destroy',
-                                'route_edit'=>'orientationletter.edit',
-                                // 'route_show'=>'orientationletter.show',
-                            ])->render();
+                    if ( (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$orientationLetter->doctor->id)){
+                        return view('layouts.includes.crud.edit_show_delete_btn',
+                                    ['id'=>$orientationLetter->id,'name_id'=>'orientationletter',
+                                    'route_delete'=>'orientationletter.destroy',
+                                    'route_edit'=>'orientationletter.edit',])->render();
+                    }else{
+                        return ;
+                    }
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -195,9 +212,13 @@ class PatientController extends Controller
                 })
                 ->addColumn('action',function(Imagery $imagery)
                 {
-                    return view('layouts.includes.crud.edit_show_delete_btn',
-                        ['id'=>$imagery->id,'name_id'=>'imagery',
-                        'route_delete'=>'imagery.destroy',])->render();
+                    if ( (Auth::guard('doctor')->check())){
+                        return view('layouts.includes.crud.edit_show_delete_btn',
+                                ['id'=>$imagery->id,'name_id'=>'imagery',
+                                'route_delete'=>'imagery.destroy',])->render();
+                    }else{
+                        return ;
+                    }
                 })
                 ->escapeColumns([])
                 ->make(true);

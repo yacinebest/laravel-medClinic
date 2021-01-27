@@ -9,6 +9,7 @@ use App\Models\Prescription;
 use App\Models\PrescriptionLine;
 use Illuminate\Http\Request;
 use Yajra\Datatables\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class PrescriptionController extends Controller
 {
@@ -74,7 +75,18 @@ class PrescriptionController extends Controller
     public function edit($id)
     {
         $prescription = Prescription::findOrFail($id);
-        return view('prescription.edit',['prescription'=>$prescription,'time_taken_const'=>PrescriptionLine::getTimeTakenConst()]);
+        if($prescription){
+            if(  (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$prescription->doctor->id)
+                || Auth::guard('secretary')->check() ){
+
+                return view('prescription.edit',['prescription'=>$prescription,'time_taken_const'=>PrescriptionLine::getTimeTakenConst()]);
+            }
+            else{
+                return redirect(route('patient.show',['patient'=>$prescription->patient->id]));
+            }
+        }
+        else
+            return abort(404);
     }
 
     /**

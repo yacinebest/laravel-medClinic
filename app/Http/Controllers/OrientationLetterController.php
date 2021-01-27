@@ -7,6 +7,7 @@ use App\Http\Requests\OrientationLetter\OrientationLetterUpdateRequest;
 use App\Models\OrientationLetter;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrientationLetterController extends Controller
 {
@@ -54,10 +55,18 @@ class OrientationLetterController extends Controller
     public function edit($id)
     {
         $orientationLetter = OrientationLetter::findOrFail($id);
-        if($orientationLetter)
-            return view('orientationletter.edit',['orientationLetter'=>$orientationLetter]);
+        if($orientationLetter){
+            if(  (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->id==$orientationLetter->doctor->id)
+                || Auth::guard('secretary')->check() ){
+
+                return view('orientationletter.edit',['orientationLetter'=>$orientationLetter]);
+            }
+            else{
+                return redirect(route('patient.show',['patient'=>$orientationLetter->patient->id]));
+            }
+        }
         else
-            return redirect()->back();
+            return abort(404);
     }
 
     /**

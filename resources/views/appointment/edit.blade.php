@@ -47,8 +47,8 @@
 <div class="col-md-12">
     <div class="form-group">
         <label>Docteur :</label>
-        <select id="sel_doctor" class="form-control select-class" name="doctor_id" data-live-search="true" title="Selectionner Un Docteur...">
-        </select>
+        <input type="text" class="form-control" value="{{ $appointment->doctor->last_name . ' ' . $appointment->doctor->first_name . ' ' . $appointment->doctor->birth_date}}" readonly>
+        <input type="hidden" name="doctor_id" value="{{ $appointment->doctor->id }}">
     </div>
     @error('doctor_id')
         <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
@@ -65,45 +65,4 @@
         <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
     @enderror
 </div>
-@endsection
-
-
-
-@section('scripts')
-<script type='text/javascript'>
-    $(document).ready(function(){
-
-        $.ajax({
-            url: "{{ route('doctor.ajax.getAllDoctorForDropdown') }}",
-            type: 'GET',
-            dataType: 'json',
-            success: function(response){
-
-                var len = 0;
-                if(response['doctors'] != null){
-                    len = response['doctors'].length;
-                }
-                if(len > 0){
-                    // Read doctors and create <option >
-                    for(var i=0; i<len; i++){
-
-                        var id = response['doctors'][i].id;
-                        var first_name = response['doctors'][i].first_name;
-                        var last_name = response['doctors'][i].last_name;
-
-
-                        var option = "<option value='"+id+"'>"+last_name + " " + first_name+"</option>";
-
-                        $("#sel_doctor").append(option);
-                    }
-                    $('#sel_doctor').selectpicker('refresh');
-                    $("#sel_doctor").val("{{ $appointment->doctor_id }}").trigger('change');
-                }
-
-            }
-        });
-
-    });
-</script>
-
 @endsection

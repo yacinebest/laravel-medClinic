@@ -27,19 +27,20 @@
                             <li class="section-title">
                                 Utilisateur
                             </li>
-                            @if(Auth::guard('doctor')->check())
-                                @if(Auth::guard('doctor')->user()->is_admin)
+                            @if((Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->is_admin)
+                                || Auth::guard('secretary')->check())
                                     <li>
                                         <a class="sidenav-item-link" href="{{ route('doctor.index') }}">
                                             <span class="nav-text">Médcins</span>
                                         </a>
                                     </li>
+                            @endif
+                            @if(Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->is_admin)
                                     <li>
                                         <a class="sidenav-item-link" href="{{ route('secretary.index') }}">
                                             <span class="nav-text">Secretaire</span>
                                         </a>
                                     </li>
-                                @endif
                             @endif
                             <li>
                                 <a class="sidenav-item-link" href="{{ route('patient.index') }}">

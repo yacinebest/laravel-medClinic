@@ -1,8 +1,8 @@
 @extends('layouts.templates.index',[
-    'list_name'=>'Liste des Rendez-Vous :','name_create_route'=>'appointment.create',
+    'list_name'=>'Liste des Rendez-Vous :',
     'table_id'=>'DataTable_Appointments',
     'table_columns_name'=>['ID','Raison','Date','Commence A','Fini A','Patient','Docteur'],
-    'action'=>true,'add_btn_text'=>'Ajouter Rendez-Vous']
+    'action'=>true]
 )
 
 @section('IndexSessionChangesDisplay')

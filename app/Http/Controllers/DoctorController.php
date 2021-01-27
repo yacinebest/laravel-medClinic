@@ -23,20 +23,22 @@ class DoctorController extends Controller
         $this->middleware('doctor_or_secretary.auth',['only'=>[
                                                     'show'
                                                     ,'getAppointmentsForDoctor'
-                                                    ,'getPrescriptionsForDoctor'
-                                                    ,'getOrientationLettersForDoctor'
-                                                    ,'getAllDoctorForDropdown']]);
+                                                    ,'getAllDoctorForDropdown'
+                                                    ,'index'
+                                                    ,'getAllDoctor']]);
         $this->middleware('doctor.auth',['except'=>['show'
                                                     ,'getAppointmentsForDoctor'
-                                                    ,'getPrescriptionsForDoctor'
-                                                    ,'getOrientationLettersForDoctor'
-                                                    ,'getAllDoctorForDropdown']]);
+                                                    ,'getAllDoctorForDropdown'
+                                                    ,'index'
+                                                    ,'getAllDoctor']]);
         $this->middleware('admin.auth', ['except' => ['home','profile'
                                                     ,'show'
                                                     ,'getAppointmentsForDoctor'
                                                     ,'getPrescriptionsForDoctor'
                                                     ,'getOrientationLettersForDoctor'
-                                                    ,'getAllDoctorForDropdown']]);
+                                                    ,'getAllDoctorForDropdown'
+                                                    ,'index'
+                                                    ,'getAllDoctor']]);
     }
 
     /**
@@ -66,11 +68,16 @@ class DoctorController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action',function(Doctor $doctor)
                 {
-                    return view('layouts.includes.crud.edit_show_delete_btn',
-                        ['id'=>$doctor->id,'name_id'=>'doctor',
-                            'route_delete'=>'doctor.destroy',
-                            'route_edit'=>'doctor.edit',
-                            'route_show'=>'doctor.show',])->render();
+                    $crud_fun=[];
+                    if (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->is_admin) {
+                        $crud_fun =  ['id'=>$doctor->id,'name_id'=>'doctor',
+                        'route_delete'=>'doctor.destroy',
+                        'route_edit'=>'doctor.edit',
+                        'route_show'=>'doctor.show'];
+                    } else if(Auth::guard('secretary')->check()) {
+                        $crud_fun =  ['id'=>$doctor->id,'name_id'=>'doctor','route_show'=>'doctor.show'];
+                    }
+                    return view('layouts.includes.crud.edit_show_delete_btn',$crud_fun)->render();
                 })
                 ->addColumn('role_name',function(Doctor $doctor)
                 {
@@ -124,7 +131,7 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Appointment $appointment){
-                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->patient])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->patient,'route_show'=>'patient.show'])->render();
                 })
                 ->addColumn('action',function(Appointment $appointment)
                 {
@@ -145,7 +152,7 @@ class DoctorController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('patient_full_name',function(Prescription $prescription){
-                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$prescription->patient])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$prescription->patient,'route_show'=>'patient.show'])->render();
                 })
                 ->addColumn('action',function(Prescription $prescription)
                 {
@@ -172,7 +179,7 @@ class DoctorController extends Controller
                     return Str::limit($orientationLetter->content, 30, '...');
                 })
                 ->addColumn('patient_full_name',function(OrientationLetter $orientationLetter){
-                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$orientationLetter->patient])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$orientationLetter->patient,'route_show'=>'patient.show'])->render();
                 })
                 ->addColumn('action',function(OrientationLetter $orientationLetter)
                 {
