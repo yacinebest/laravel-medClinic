@@ -52,7 +52,41 @@
         </div>
     </div>
 
+    <div class="card-body">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-chronic-diseases-tab" data-toggle="pill" href="#pills-chronic-diseases" role="tab" aria-controls="pills-chronic-diseases"
+                 aria-selected="true">Maladies Chroniques</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-allergies-tab" data-toggle="pill" href="#pills-allergies" role="tab" aria-controls="pills-allergies"
+                 aria-selected="false">Allergies</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-antecedents-tab" data-toggle="pill" href="#pills-antecedents" role="tab" aria-controls="pills-antecedents"
+                 aria-selected="false">Antécédents</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-comments-tab" data-toggle="pill" href="#pills-comments" role="tab" aria-controls="pills-comments"
+                 aria-selected="false">Commentaires</a>
+            </li>
+        </ul>
 
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-chronic-diseases" role="tabpanel" aria-labelledby="pills-chronic-diseases-tab">
+               {{ $patient->chronic_diseases }}
+            </div>
+            <div class="tab-pane fade" id="pills-allergies" role="tabpanel" aria-labelledby="pills-allergies-tab">
+               {{ $patient->allergies }}
+            </div>
+            <div class="tab-pane fade" id="pills-antecedents" role="tabpanel" aria-labelledby="pills-antecedents-tab">
+                {{ $patient->antecedents }}
+            </div>
+            <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab">
+                {{ $patient->comments }}
+            </div>
+        </div>
+    </div>
 @endsection
 
 
