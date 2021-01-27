@@ -19,6 +19,12 @@ use Illuminate\Support\Str;
 
 class PatientController extends Controller
 {
+
+
+    public function __construct() {
+        $this->middleware('doctor_or_secretary.auth');
+    }
+
     //Ajax Request for other Controller to use
     public function getAllPatientForDropdown(){
         $array_patients['patients'] = Patient::orderby("last_name","asc")
@@ -241,18 +247,6 @@ class PatientController extends Controller
         session()->flash('destroy_patient','Un Patient a été supprimer.');
         return redirect(route('patient.index'));
     }
-
-    /**
-     * Show the Profile Of Auth Patient.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function profile()
-    {
-        return view('patient.profile');
-    }
-
-
 
     /*
     |---------------------------------------------------------------------------|

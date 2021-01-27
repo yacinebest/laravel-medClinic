@@ -34,10 +34,11 @@ Route::group(['prefix'=>'secretary'], function () {
 
 Route::get('/management/doctor/profile', 'DoctorController@profile')->name('doctor.profile');
 Route::get('/management/secretary/profile', 'SecretaryController@profile')->name('secretary.profile');
-Route::get('/management/patient/profile','PatientController@profile')->name('patient.profile');
 
 //
 // Route::resource('clinic', 'ClinicController');
+
+
 Route::resource('management/doctor', 'DoctorController');
 Route::get('/ajax/doctor/getAppointmentsForDoctor','DoctorController@getAppointmentsForDoctor')->name('doctor.ajax.getAppointmentsForDoctor');
 Route::get('/ajax/doctor/getPrescriptionsForDoctor','DoctorController@getPrescriptionsForDoctor')->name('doctor.ajax.getPrescriptionsForDoctor');
