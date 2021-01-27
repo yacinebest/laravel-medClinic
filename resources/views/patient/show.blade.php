@@ -75,10 +75,11 @@
             'list_name'=>'Liste des Rendez-vous :',
             'action'=>((Auth::guard('doctor')->check()) || Auth::guard('secretary')->check() ? true : false),
             'table_id'=>'DataTable_Appointments',
-            'table_columns_name'=>['ID','Date','Debute A','Fini A','Docteur'],
+            'table_columns_name'=>['ID','Date','Docteur','Debute A','Fini A'],
             'yield_session_name'=>'IndexSessionChangesDisplay_Appointment',
             'add_route'=>'appointment.create',
             'add_btn_text'=>'Ajouter rendez-vous',
+            'add_parameter'=>['patient'=>$patient->id]
         ])
 
 
@@ -104,6 +105,7 @@
     'details_btn'=>true,
     'add_route'=>'prescription.create',
     'add_btn_text'=>'Ajouter prescriptions',
+    'add_parameter'=>['patient'=>$patient->id]
 ])
 
 
@@ -128,6 +130,7 @@
             'yield_session_name'=>'IndexSessionChangesDisplay_OrientationLetter',
             'add_route'=>'orientationletter.create',
             'add_btn_text'=>'Ajouter lettre d\'Orientation',
+            'add_parameter'=>['patient'=>$patient->id]
         ])
 
 @if(Auth::guard('doctor')->check())
@@ -151,6 +154,7 @@
             'yield_session_name'=>'IndexSessionChangesDisplay_Imagery',
             'add_route'=>'imagery.create',
             'add_btn_text'=>'Ajouter le fichier imagerie',
+            'add_parameter'=>['patient'=>$patient->id]
         ])
 @endsection
 
@@ -256,9 +260,9 @@
                 columns_Appointments= [
                     {data: 'id', name: 'id'},
                     {data: 'date', name: 'date'},
+                    {data: 'doctor_full_name', name: 'doctor_full_name'},
                     {data: 'start_at', name: 'start_at'},
                     {data: 'end_at', name: 'end_at'},
-                    {data: 'doctor_full_name', name: 'doctor_full_name'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ];
             }
@@ -266,9 +270,9 @@
                 columns_Appointments= [
                     {data: 'id', name: 'id'},
                     {data: 'date', name: 'date'},
+                    {data: 'doctor_full_name', name: 'doctor_full_name'},
                     {data: 'start_at', name: 'start_at'},
                     {data: 'end_at', name: 'end_at'},
-                    {data: 'doctor_full_name', name: 'doctor_full_name'},
                 ];
             }
             return columns_Appointments;

@@ -14,11 +14,19 @@
         <div class="card-header justify-content-between">
             <h2>{{ $list_name }}</h2>
             @if(isset($add_route) && isset($add_btn_text) )
-                <a role="button" class="btn btn-lg btn-info" href="{{ route($add_route) }}">
-                    <i class="fa fa-plus mr-1" aria-hidden="true">
-                    </i>
-                    {{ $add_btn_text }}
-                </a>
+                @if(isset($add_parameter))
+                    <a role="button" class="btn btn-lg btn-info" href="{{ route($add_route,$add_parameter) }}">
+                        <i class="fa fa-plus mr-1" aria-hidden="true">
+                        </i>
+                        {{ $add_btn_text }}
+                    </a>
+                @else
+                    <a role="button" class="btn btn-lg btn-info" href="{{ route($add_route) }}">
+                        <i class="fa fa-plus mr-1" aria-hidden="true">
+                        </i>
+                        {{ $add_btn_text }}
+                    </a>
+                @endif
             @endif
         </div>
         <div class="card-body">
@@ -32,7 +40,11 @@
                             <th></th>
                         @endif
                         @foreach($table_columns_name as $name)
-                            <th>{{ $name }}</th>
+                            @if($name=='Fichier')
+                                <th class="w-50">{{ $name }}</th>
+                            @else
+                                <th>{{ $name }}</th>
+                            @endif
                         @endforeach
                         @if(isset($action) && $action)
                             <th width="30px"></th>

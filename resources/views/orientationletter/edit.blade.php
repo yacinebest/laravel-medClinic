@@ -28,7 +28,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>Patient :</label>
-            <input type="text" class="form-control" value="{{ $orientationLetter->patient->last_name . ' ' . $orientationLetter->patient->first_name }}" readonly>
+            <input type="text" class="form-control" value="{{ $orientationLetter->patient->last_name . ' ' . $orientationLetter->patient->first_name . ' ' . $orientationLetter->patient->birth_date }}" readonly>
             <input type="hidden" name="patient_id" value="{{ $orientationLetter->patient->id }}">
         </div>
         @error('patient_id')

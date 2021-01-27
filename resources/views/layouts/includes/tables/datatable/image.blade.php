@@ -1,2 +1,3 @@
-<img src="{{ $path }}" class="img-thumbnail">
-{{-- <p>{{ $path }}</p> --}}
+<a href="{{ $path }}" >
+    <img src="{{ $path }}" class="img-thumbnail">
+</a>

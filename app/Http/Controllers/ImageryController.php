@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Imagery;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class ImageryController extends Controller
@@ -17,9 +18,13 @@ class ImageryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($patient_id)
     {
-        return view('imagery.create');
+        $patient = Patient::findOrFail($patient_id);
+        if($patient!=null)
+            return view('imagery.create',['patient'=>$patient]);
+        else
+            return abort(404);
     }
 
     /**
@@ -44,15 +49,10 @@ class ImageryController extends Controller
          # Move the file to correct location
          $file->move('imageries', $filename);
 
-         # Check for the folder
-         if (!file_exists('imageries/thumbs')) {
-             mkdir('imageries/thumbs', 0777, true);
-         }
-
          # And save the image to the database
         $image = Imagery::create(['file'=>$filename,'patient_id'=>$request['patient_id']]);
 
-         return $image;
+        return $image;
     }
 
     /**
@@ -64,11 +64,12 @@ class ImageryController extends Controller
     public function destroy($id)
     {
         $image = Imagery::find($id);
+        $patient_id = $image->patient_id;
         $path = public_path() . '/images/' . $image->file;
         if (file_exists($path)) {
             unlink($path);
         }
         $image->delete();
-        return redirect()->back();
+        return redirect(route('patient.show',['patient'=>$patient_id]));
     }
 }

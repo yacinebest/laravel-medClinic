@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrientationLetter\OrientationLetterStoreRequest;
 use App\Http\Requests\OrientationLetter\OrientationLetterUpdateRequest;
 use App\Models\OrientationLetter;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class OrientationLetterController extends Controller
@@ -19,9 +20,13 @@ class OrientationLetterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($patient_id)
     {
-        return view('orientationletter.create');
+        $patient = Patient::findOrFail($patient_id);
+        if($patient!=null)
+            return view('orientationletter.create',['patient'=>$patient]);
+        else
+            return abort(404);
     }
 
     /**
@@ -84,9 +89,11 @@ class OrientationLetterController extends Controller
      */
     public function destroy($id)
     {
-        OrientationLetter::findOrFail($id)->delete();
+        $orientationLetter = OrientationLetter::find($id);
+        $patient_id = $orientationLetter->patient->id;
+        $orientationLetter->delete();
         session()->flash('destroy_orientationLetter','Une Lettre d\'Orientation a été supprimer.');
-        return redirect()->back();
+        return redirect(route('patient.show',['patient'=>$patient_id]));
     }
 
 

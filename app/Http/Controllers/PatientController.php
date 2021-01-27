@@ -120,7 +120,7 @@ class PatientController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('doctor_full_name',function(Appointment $appointment){
-                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->doctor])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$appointment->doctor,'route_show'=>'doctor.show'])->render();
                 })
                 ->addColumn('action',function(Appointment $appointment)
                 {
@@ -141,7 +141,7 @@ class PatientController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('doctor_full_name',function(Prescription $prescription){
-                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$prescription->doctor])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$prescription->doctor,'route_show'=>'doctor.show'])->render();
                 })
                 ->addColumn('action',function(Prescription $prescription)
                 {
@@ -168,7 +168,7 @@ class PatientController extends Controller
                     return Str::limit($orientationLetter->content, 30, '...');
                 })
                 ->addColumn('doctor_full_name',function(OrientationLetter $orientationLetter){
-                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$orientationLetter->doctor])->render();
+                    return view('layouts.includes.tables.datatable.full_name',['entity'=>$orientationLetter->doctor,'route_show'=>'doctor.show'])->render();
                 })
                 ->addColumn('action',function(OrientationLetter $orientationLetter)
                 {

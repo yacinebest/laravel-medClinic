@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Prescription\PrescriptionStoreRequest;
 use App\Http\Requests\Prescription\PrescriptionUpdateRequest;
+use App\Models\Patient;
 use App\Models\Prescription;
 use App\Models\PrescriptionLine;
 use Illuminate\Http\Request;
@@ -22,12 +23,13 @@ class PrescriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create($patient_id)
     {
-        if($request->has('patient'))
-            return view('prescription.create',['patient'=>$request['patient'],'time_taken_const'=>PrescriptionLine::getTimeTakenConst() ]  );
+        $patient = Patient::findOrFail($patient_id);
+        if($patient!=null)
+            return view('prescription.create',['patient'=>$patient,'time_taken_const'=>PrescriptionLine::getTimeTakenConst()]);
         else
-            return view('prescription.create',['time_taken_const'=>PrescriptionLine::getTimeTakenConst() ]);
+            return abort(404);
     }
 
     /**
@@ -55,7 +57,7 @@ class PrescriptionController extends Controller
 
             $request->session()->flash('store_prescription','Vous avez crée une prescription pour Le Patient '
                 .$prescription->patient->last_name . ' ' .$prescription->patient->first_name . '.');
-            return redirect(route('patient.show',$prescription->patient->id));
+            return redirect(route('patient.show',['patient'=>$prescription->patient->id]));
         }
         else{
             return redirect(route('prescription.create'))->withErrors(["prescriptionLines"=>
@@ -118,6 +120,8 @@ class PrescriptionController extends Controller
             $request->session()->flash('update_prescription',
             'Vous avez Mis A jour une prescription pour Le Patient '
             .$prescription->patient->last_name . ' ' .$prescription->patient->first_name . '.');
+
+            return redirect(route('patient.show',['patient'=>$prescription->patient->id]));
         }else{
             return redirect(route('prescription.edit',['prescription'=>$prescription]))->withErrors(["prescriptionLines"=>
             "Veuillez remplir tous les champs pour les Lignes de Prescription."]);
@@ -133,10 +137,11 @@ class PrescriptionController extends Controller
     public function destroy($id)
     {
         $p =Prescription::findOrFail($id);
+        $patient_id = $p->patient->id;
         $p->prescriptionLines()->delete();
         $p->delete();
         session()->flash('destroy_prescription','Une Prescription a été supprimer.');
-        return redirect()->back();
+        return redirect(route('patient.show',['patient'=>$patient_id]));
     }
      /**
      * Remove the specified resource from storage.
@@ -151,7 +156,7 @@ class PrescriptionController extends Controller
         if($p->prescriptionLines->count()>1){
             $p_line->delete();
             session()->flash('destroy_prescriptionLine','Une Ligne de Cette Prescription a été supprimer.');
-            return redirect()->back();
+            return redirect(route('prescription.edit',['prescription'=>$p_line->prescription->id]));
         }else{
             return redirect()->back()->withErrors(["prescriptionLines_atleast"=>
             "La Prescription doit avoir au moins 1 ligne."]);

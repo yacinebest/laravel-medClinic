@@ -60,9 +60,13 @@ class AppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($patient_id)
     {
-        return view('appointment.create');
+        $patient = Patient::findOrFail($patient_id);
+        if($patient!=null)
+            return view('appointment.create',['patient'=>$patient]);
+        else
+            return view('appointment.index');
     }
 
     /**
@@ -79,7 +83,7 @@ class AppointmentController extends Controller
             'Le Patient "' . $appointment->patient->last_name . ' ' . $appointment->patient->first_name .'"
              a un Rendez-vous avec Le Docteur "' . $appointment->doctor->last_name . ' ' . $appointment->doctor->first_name .
             '" Le ' . $appointment->date . ' a ' . $appointment->start_at . '.');
-        return redirect(route('appointment.index'));
+        return redirect(route('patient.show',['patient'=>$appointment->patient->id]));
     }
 
     /**
@@ -111,9 +115,9 @@ class AppointmentController extends Controller
             $array_request = $this->processUpdateRequest($request);
             $appointment->update($array_request);
 
-            $request->session()->flash('update_appointment','Le Rendez-vous '.$appointment->id. ' a été Mise a Jour.');
+            $request->session()->flash('update_appointment','Un Rendez-vous a été Mise a Jour.');
         }
-        return redirect(route('appointment.index'));
+        return redirect(route('patient.show',['patient'=>$appointment->patient->id]));
     }
 
     /**
@@ -124,9 +128,11 @@ class AppointmentController extends Controller
      */
     public function destroy($id)
     {
-        Appointment::findOrFail($id)->delete();
+        $appointment = Appointment::findOrFail($id);
+        $patient_id=$appointment->patient->id;
+        $appointment->delete();
         session()->flash('destroy_appointment','Un Rendez-vous a été supprimer.');
-        return redirect(route('appointment.index'));
+        return redirect(route('patient.show',['patient'=>$patient_id]));
     }
 
 

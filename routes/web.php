@@ -58,12 +58,17 @@ Route::get('/ajax/patient/getPrescriptionsForPatient','PatientController@getPres
 Route::get('/ajax/patient/getOrientationLettersForPatient','PatientController@getOrientationLettersForPatient')->name('patient.ajax.getOrientationLettersForPatient');
 Route::get('/ajax/patient/getImageriesForPatient','PatientController@getImageriesForPatient')->name('patient.ajax.getImageriesForPatient');
 
-Route::resource('management/appointment', 'AppointmentController', ['except' => ['show'] ] );
+Route::resource('management/appointment', 'AppointmentController', ['except' => ['show','create'] ] );
+Route::get('management/appointment/create/{patient}','AppointmentController@create')->name('appointment.create');;
 Route::get('/ajax/appointment/getAllAppointment','AppointmentController@getAllAppointment')->name('appointment.ajax.getAllAppointment');
 
-Route::resource('management/prescription', 'PrescriptionController', ['except' => ['index','show'] ] );
+Route::resource('management/prescription', 'PrescriptionController', ['except' => ['index','show','create'] ] );
+Route::get('management/prescription/create/{patient}','PrescriptionController@create')->name('prescription.create');;
 Route::delete('management/prescriptionline/{prescriptionline}','PrescriptionController@destroyPrescriptionLine')->name('prescriptionline.destroy');
 Route::get('/ajax/prescription/getPrescriptionLines/{prescription}','PrescriptionController@getPrescriptionLines')->name('prescription.ajax.getPrescriptionLines');
 
-Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index','show'] ] );
-Route::resource('management/imagery', 'ImageryController', ['except' => ['index','show','edit','update'] ] );
+Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index','show','create'] ] );
+Route::get('management/orientationletter/create/{patient}','OrientationLetterController@create')->name('orientationletter.create');;
+
+Route::resource('management/imagery', 'ImageryController', ['except' => ['index','show','edit','update','create'] ] );
+Route::get('management/imagery/create/{patient}','ImageryController@create')->name('imagery.create');;
