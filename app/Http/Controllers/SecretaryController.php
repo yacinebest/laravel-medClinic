@@ -25,7 +25,7 @@ class SecretaryController extends Controller
      */
     public function home()
     {
-        return view('secretary.home');
+        return redirect(route('appointment.index'));
     }
 
     /**

@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use PhpParser\Comment\Doc;
 use Yajra\Datatables\DataTables;
+use App\Charts\SimpleCharts;
+use App\Helpers\ColorHelper;
+use App\Models\Patient;
+use App\Models\Secretary;
 
 class DoctorController extends Controller
 {
@@ -48,7 +52,58 @@ class DoctorController extends Controller
      */
     public function home()
     {
-        return view('doctor.home');
+
+        $doctor = Doctor::find(Auth::guard('doctor')->user()->id);
+        $count_my_prescription = $doctor->prescriptions()->count();
+        $count_my_prescription_today = $doctor->prescriptions()->where('date',now()->format('Y-m-d'))->count();
+        $count_my_appointment = $doctor->appointments()->count();
+        $count_my_appointment_today = $doctor->appointments()->where('date',now()->format('Y-m-d'))->count();
+
+        $parameter_route=[
+            'count_my_prescription'=>$count_my_prescription,
+            'count_my_prescription_today'=>$count_my_prescription_today,
+            'count_my_appointment'=>$count_my_appointment,
+            'count_my_appointment_today'=>$count_my_appointment_today,
+        ];
+
+        $appointment_prescription_charts = null;
+        $count_appointment = null;
+        $count_prescription = null;
+        $appointment_doctor_charts = null;
+        if (Auth::guard('doctor')->user()->is_admin) {
+
+            $appointment_prescription_charts = SimpleCharts::appointmentPrescriptionCharts();
+            $count_appointment = Appointment::whereYear('date',now()->format('Y'))->count();
+            $count_prescription = Prescription::whereYear('date',now()->format('Y'))->count();
+            $appointment_doctor_charts = SimpleCharts::appointmentDoctorCharts();
+
+            $count_patient = Patient::count();
+            $count_doctor = Doctor::count();
+            $count_secretary = Secretary::count();
+            $count_admin = Doctor::where('is_admin',true)->count();
+
+            $parameter_route = array_merge($parameter_route,[
+                                        'count_patient'=>$count_patient,
+                                        'count_doctor'=>$count_doctor,
+                                        'count_secretary'=>$count_secretary,
+                                        'count_admin'=>$count_admin,
+
+                                        'appointment_doctor_charts'=>$appointment_doctor_charts
+                                        ]);
+
+        } else {
+
+            $appointment_prescription_charts = SimpleCharts::appointmentPrescriptionForDoctorCharts($doctor);
+            $count_appointment = $doctor->appointments()->whereYear('date',now()->format('Y'))->count();
+            $count_prescription = $doctor->prescriptions()->whereYear('date',now()->format('Y'))->count();
+        }
+
+        $parameter_route = array_merge($parameter_route,[
+            'appointment_prescription_charts'=>$appointment_prescription_charts,
+            'count_appointment'=>$count_appointment,
+            'count_prescription'=>$count_prescription,]);
+
+        return view('doctor.home',$parameter_route);
     }
 
     /**

@@ -3,7 +3,7 @@
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/slimscrollbar/jquery.slimscroll.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/charts/Chart.min.js') }}"></script>
+{{--  --}}<script src="{{ asset('assets/plugins/charts/Chart.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/ladda/spin.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/ladda/ladda.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/jquery-mask-input/jquery.mask.min.js') }}"></script>
@@ -12,7 +12,7 @@
 <script src="{{ asset('assets/plugins/jvectormap/jquery-jvectormap-world-mill.js') }}"></script>
 <script src="{{ asset('assets/plugins/daterangepicker/moment.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script>
-{{-- Does Not Exist <script src="{{ asset('assets/js/chart.js') }}"></script> --}}
+{{-- <script src="{{ asset('assets/js/chart.js') }}"></script> --}}
 <script src="{{ asset('assets/js/date-range.js') }}"></script>
 <script src="{{ asset('assets/js/map.js') }}"></script>
 {{-- For Later --}}
