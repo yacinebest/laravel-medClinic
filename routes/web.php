@@ -33,6 +33,9 @@ Route::group(['prefix'=>'secretary'], function () {
 });
 
 Route::get('/management/doctor/profile', 'DoctorController@profile')->name('doctor.profile');
+Route::post('/management/doctor/profile', 'DoctorController@updateProfile')->name('doctor.updateprofile');
+Route::post('/management/doctor/profile/password', 'DoctorController@updatePassword')->name('doctor.updatepassword');
+
 Route::get('/management/secretary/profile', 'SecretaryController@profile')->name('secretary.profile');
 Route::get('/management/patient/profile','PatientController@profile')->name('patient.profile');
 
