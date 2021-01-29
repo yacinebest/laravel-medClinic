@@ -19,6 +19,8 @@ use App\Charts\SimpleCharts;
 use App\Helpers\ColorHelper;
 use App\Models\Patient;
 use App\Models\Secretary;
+use App\Http\Requests\Doctor\DoctorUpdateProfileRequest;
+use App\Http\Requests\Doctor\DoctorUpdatePasswordRequest;
 
 class DoctorController extends Controller
 {
@@ -42,7 +44,9 @@ class DoctorController extends Controller
                                                     ,'getOrientationLettersForDoctor'
                                                     ,'getAllDoctorForDropdown'
                                                     ,'index'
-                                                    ,'getAllDoctor']]);
+                                                    ,'getAllDoctor'
+                                                    ,'updateprofile'
+                                                    ,'updatepassword']]);
     }
 
     /**
@@ -321,6 +325,27 @@ class DoctorController extends Controller
         return view('doctor.profile');
     }
 
+
+    public function updateprofile(DoctorUpdateProfileRequest $request)
+    {
+        $doctor = Doctor::find(Auth::guard('doctor')->user()->id);
+
+        $array_request = $this->processUpdateProfileRequest($request);
+        $doctor->update($array_request);
+        $request->session()->flash('update_doctor','Vos Cordonnées ont été Mise a Jour.');
+        return redirect(route('doctor.profile'));
+    }
+
+    public function updatepassword(DoctorUpdatePasswordRequest $request)
+    {
+        $doctor = Doctor::find(Auth::guard('doctor')->user()->id);
+
+        $array_request = $this->processUpdatePasswordRequest($request);
+        $doctor->update($array_request);
+        $request->session()->flash('update_doctor','Votre mot de passe a été Mise a Jour.');
+        return redirect(route('doctor.profile'));
+    }
+
     /*
     |---------------------------------------------------------------------------|
     | CUSTOM FUNCTION                                                           |
@@ -355,6 +380,28 @@ class DoctorController extends Controller
         if($request['specialty']==null)
             array_push($array_except,'specialty');
 
+        return $request->except($array_except);
+    }
+
+    /**
+     * Process the Update Request
+     *
+     * @param  mixed $request
+     * @return array
+     */
+    public function processUpdateProfileRequest(DoctorUpdateProfileRequest $request)
+    {
+        $array_except= ['_token'];
+        if($request['specialty']==null)
+            array_push($array_except,'specialty');
+
+        return $request->except($array_except);
+    }
+
+    public function processUpdatePasswordRequest(DoctorUpdatePasswordRequest $request)
+    {
+        $request['password'] = Hash::make($request->input('password'));
+        $array_except= ['_token'];
         return $request->except($array_except);
     }
 

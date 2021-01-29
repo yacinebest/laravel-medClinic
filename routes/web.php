@@ -33,10 +33,16 @@ Route::group(['prefix'=>'secretary'], function () {
 });
 
 Route::get('/management/doctor/profile', 'DoctorController@profile')->name('doctor.profile');
+Route::post('/management/doctor/profile', 'DoctorController@updateProfile')->name('doctor.updateprofile');
+Route::post('/management/doctor/profile/password', 'DoctorController@updatePassword')->name('doctor.updatepassword');
+
 Route::get('/management/secretary/profile', 'SecretaryController@profile')->name('secretary.profile');
+Route::post('/management/secretary/profile', 'SecretaryController@updateProfile')->name('secretary.updateprofile');
+Route::post('/management/secretary/profile/password', 'SecretaryController@updatePassword')->name('secretary.updatepassword');
 
 //
-// Route::resource('clinic', 'ClinicController');
+Route::resource('/management/clinic', 'ClinicController');
+Route::get('/ajax/clinic/getTheClinic','ClinicController@getTheClinic')->name('clinic.ajax.getTheClinic');
 
 
 Route::resource('management/doctor', 'DoctorController');

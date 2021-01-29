@@ -70,7 +70,7 @@
                                         Autre
                                     </li>
                                     <li>
-                                        <a class="sidenav-item-link" href="#">
+                                        <a class="sidenav-item-link" href="{{ route('clinic.index') }}">
                                             <span class="nav-text">Clinique</span>
                                         </a>
                                     </li>

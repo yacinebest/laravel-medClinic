@@ -10,13 +10,22 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\DataTables;
+use App\Http\Requests\Secretary\SecretaryUpdateProfileRequest;
+use App\Http\Requests\Secretary\SecretaryUpdatePasswordRequest;
+
 
 class SecretaryController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('secretary.auth',['only'=>['home','profile']]);
-        $this->middleware('admin.auth',['except'=>['home','profile'] ]);
+        $this->middleware('secretary.auth',['only'=>['home',
+                                                    'profile',
+                                                    'updateProfile',
+                                                    'updatePassword']]);
+        $this->middleware('admin.auth',['except'=>['home',
+                                                    'profile',
+                                                    'updateProfile',
+                                                    'updatePassword']]);
     }
     /**
      * Display a dome page
@@ -136,6 +145,26 @@ class SecretaryController extends Controller
         return view('secretary.profile');
     }
 
+
+    public function updateProfile(SecretaryUpdateProfileRequest $request)
+    {
+        $secretary = Secretary::find(Auth::guard('secretary')->user()->id);
+
+        $array_request = $this->processUpdateProfileRequest($request);
+        $secretary->update($array_request);
+        $request->session()->flash('update_secretary','Vos Cordonnées ont été Mise a Jour.');
+        return redirect(route('secretary.profile'));
+    }
+
+    public function updatePassword(SecretaryUpdatePasswordRequest $request)
+    {
+        $secretary = Secretary::find(Auth::guard('secretary')->user()->id);
+
+        $array_request = $this->processUpdatePasswordRequest($request);
+        $secretary->update($array_request);
+        $request->session()->flash('update_secretary','Votre mot de passe a été Mise a Jour.');
+        return redirect(route('secretary.profile'));
+    }
     /*
     |---------------------------------------------------------------------------|
     | CUSTOM FUNCTION                                                           |
@@ -166,6 +195,25 @@ class SecretaryController extends Controller
     {
         $array_except= ['_token'];
 
+        return $request->except($array_except);
+    }
+
+     /**
+     * Process the Update Request
+     *
+     * @param  mixed $request
+     * @return array
+     */
+    public function processUpdateProfileRequest(SecretaryUpdateProfileRequest $request)
+    {
+        $array_except= ['_token'];
+        return $request->except($array_except);
+    }
+
+    public function processUpdatePasswordRequest(SecretaryUpdatePasswordRequest $request)
+    {
+        $request['password'] = Hash::make($request->input('password'));
+        $array_except= ['_token'];
         return $request->except($array_except);
     }
 }

@@ -116,9 +116,17 @@
                                     </li>
 
                                     <li>
-                                        <a href="#">
+                                    @if(Auth::guard('doctor')->check())
+                                        <a href="{{ route('doctor.profile') }}">
                                             <i class="mdi mdi-account"></i> My Profile
                                         </a>
+                                    @endif
+                                    @if(Auth::guard('secretary')->check())
+                                        <a href="{{ route('secretary.profile') }}">
+                                            <i class="mdi mdi-account"></i> My Profile
+                                        </a>
+                                    @endif
+
                                     </li>
 
                                     <li class="dropdown-footer">
