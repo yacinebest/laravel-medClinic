@@ -24,7 +24,7 @@ class PrescriptionUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'date'=>'required',
+            'date'=>'required|date',
             'patient_id'=>'required',
             'doctor_id' => 'required',
         ];
@@ -39,6 +39,7 @@ class PrescriptionUpdateRequest extends FormRequest
     {
         return [
             'date.required' => 'La Date est obligatoire.',
+            'date.date' => 'La date n\'est pas valide.',
             'patient_id.required' => 'Le Patient conserné est obligatoire.',
             'doctor_id.required' => 'Le Docteur responsble est obligatoire.',
         ];

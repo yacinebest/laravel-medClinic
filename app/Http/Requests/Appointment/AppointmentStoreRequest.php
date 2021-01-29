@@ -24,9 +24,9 @@ class AppointmentStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'date'=>'required',
-            'start_at'=>'required',
-            'end_at'=>'required',
+            'date'=>'required|date',
+            'start_at'=>'required|date_format:H:i',
+            'end_at'=>'required|date_format:H:i|after:start_at',
             'patient_id'=>'required',
             'doctor_id' => 'required',
         ];
@@ -41,8 +41,15 @@ class AppointmentStoreRequest extends FormRequest
     {
         return [
             'date.required' => 'La Date est obligatoire.',
+            'date.date' => 'La date n\'est pas valide.',
+
             'start_at.required' => 'L\'Heure de début du Rendez-vous  est obligatoire.',
+            'start_at.date_format'=>'Commence A n\'est pas valide.',
+
             'end_at.required' => 'L\'Heure de fin du Rendez-vous  est obligatoire.',
+            'end_at.date_format'=>'Fini A n\'est pas valide.',
+            'end_at.after'=>'Fini A doit être un temp après le Commence à.',
+
             'patient_id.required' => 'Le Patient conserné est obligatoire.',
             'doctor_id.required' => 'Le Docteur responsble est obligatoire.',
         ];

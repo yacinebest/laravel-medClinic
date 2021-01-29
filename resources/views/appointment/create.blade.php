@@ -31,6 +31,9 @@
         @error('start_at')
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
         @enderror
+        @error('appointment_time_taken')
+            <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
+        @enderror
     </div>
 
     <div class="col-md-12">

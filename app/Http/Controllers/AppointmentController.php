@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AppointmentHelper;
+use App\Helpers\TimeHelper;
 use App\Http\Requests\Appointment\AppointmentStoreRequest;
 use App\Http\Requests\Appointment\AppointmentUpdateRequest;
 use App\Models\Appointment;
@@ -80,13 +82,21 @@ class AppointmentController extends Controller
      */
     public function store(AppointmentStoreRequest $request)
     {
-        $array_request = $this->processStoreRequest($request);
-        $appointment = Appointment::create($array_request);
-        $request->session()->flash('store_appointment',
-            'Le Patient "' . $appointment->patient->last_name . ' ' . $appointment->patient->first_name .'"
-             a un Rendez-vous avec Le Docteur "' . $appointment->doctor->last_name . ' ' . $appointment->doctor->first_name .
-            '" Le ' . $appointment->date . ' a ' . $appointment->start_at . '.');
-        return redirect(route('patient.show',['patient'=>$appointment->patient->id]));
+        $overlap_appointment = AppointmentHelper::checkIfTimeIsPossibleForDoctor($request);
+        if($overlap_appointment==null){
+            $array_request = $this->processStoreRequest($request);
+            $appointment = Appointment::create($array_request);
+            $request->session()->flash('store_appointment',
+                'Le Patient "' . $appointment->patient->last_name . ' ' . $appointment->patient->first_name .'"
+                a un Rendez-vous avec Le Docteur "' . $appointment->doctor->last_name . ' ' . $appointment->doctor->first_name .
+                '" Le ' . $appointment->date . ' a ' . $appointment->start_at . '.');
+            return redirect(route('patient.show',['patient'=>$appointment->patient->id]));
+        }else{
+            return redirect()->back()->withErrors(["appointment_time_taken"=>
+            "le medecin conserne a deja un rendez-vous le " . $overlap_appointment->date . " " .
+            $overlap_appointment->start_at . "-" . $overlap_appointment->end_at . " ."]);
+        }
+
     }
 
     /**
