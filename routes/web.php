@@ -44,6 +44,7 @@ Route::get('/management/patient/profile','PatientController@profile')->name('pat
 
 //
 Route::resource('/management/clinic', 'ClinicController');
+Route::get('/ajax/clinic/getTheClinic','ClinicController@getTheClinic')->name('clinic.ajax.getTheClinic');
 
 
 Route::resource('management/doctor', 'DoctorController');

@@ -2,8 +2,9 @@
     'list_name'=>'La clinique :','name_create_route'=>'clinic.create',
     'table_id'=>'DataTable_Clinics',
     'table_columns_name'=>['ID','Nom','Adresse','N° de téléphone'],
-    'action'=>true,'add_btn_text'=>'Ajouter Clinic']
+    'action'=>true,'add_btn_text'=>'Ajouter Clinique','has_add_route'=>$hasclinic]
 )
+
 
 @section('IndexSessionChangesDisplay')
     @if(Session::has('store_clinic'))
