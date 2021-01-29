@@ -264,7 +264,19 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        Patient::findOrFail($id)->delete();
+        $patient =Patient::findOrFail($id);
+
+        $patient->appointments()->delete();
+        $patient->orientationLetters()->delete();
+
+        foreach ($patient->prescriptions as $prescription) {
+            $prescription->prescriptionLines()->delete();
+        }
+        $patient->prescriptions()->delete();
+
+        $patient->imageries()->delete();
+
+        $patient->delete();
         session()->flash('destroy_patient','Un Patient a été supprimer.');
         return redirect(route('patient.index'));
     }

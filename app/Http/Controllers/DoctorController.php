@@ -294,7 +294,18 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
-        Doctor::findOrFail($id)->delete();
+        $doctor =Doctor::findOrFail($id);
+
+        $doctor->appointments()->delete();
+        $doctor->orientationLetters()->delete();
+
+        foreach ($doctor->prescriptions as $prescription) {
+            $prescription->prescriptionLines()->delete();
+        }
+        $doctor->prescriptions()->delete();
+
+        $doctor->delete();
+
         session()->flash('destroy_doctor','Un Docteur a été supprimer.');
         return redirect(route('doctor.index'));
     }
