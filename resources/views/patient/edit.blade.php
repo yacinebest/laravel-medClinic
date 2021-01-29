@@ -62,7 +62,8 @@
     @if(Auth::guard('doctor')->check())
         <div class="col-md-12">
             <div class="form-group">
-                <textarea name="chronic_diseases" rows="3" class="form-control @error('chronic_diseases') is-invalid @enderror" placeholder="Maladies Chroniques">{{ $patient->chronic_diseases }}</textarea>
+                <label>Maladies Chroniques</label>
+                <textarea class="ckeditor form-control @error('chronic_diseases') is-invalid @enderror" name="chronic_diseases" placeholder="Maladies Chroniques">{{  $patient->chronic_diseases }}</textarea>
             </div>
             @error('chronic_diseases')
                 <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
@@ -70,7 +71,8 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <textarea name="allergies" rows="3" class="form-control @error('allergies') is-invalid @enderror" placeholder="Allergies">{{ $patient->allergies }}</textarea>
+                <label>Allergies</label>
+                <textarea class="ckeditor form-control @error('allergies') is-invalid @enderror" name="allergies" placeholder="Allergies">{{  $patient->allergies }}</textarea>
             </div>
             @error('allergies')
                 <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
@@ -78,7 +80,8 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-            <textarea name="antecedents" rows="3" class="form-control @error('antecedents') is-invalid @enderror" placeholder="Antécédents">{{ $patient->antecedents }}</textarea>
+                <label>Antécédents</label>
+                <textarea class="ckeditor form-control @error('antecedents') is-invalid @enderror" name="antecedents" placeholder="Antécédents">{{  $patient->antecedents }}</textarea>
             </div>
             @error('antecedents')
                 <div class="alert alert-danger alert-highlighted">{{ $message }}</div>
@@ -86,7 +89,8 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-            <textarea name="comments" rows="3" class="form-control @error('comments') is-invalid @enderror" placeholder="Commentaires">{{ $patient->comments }}</textarea>
+                <label>Commentaires</label>
+                <textarea class="ckeditor form-control @error('comments') is-invalid @enderror" name="comments" placeholder="Commentaires">{{  $patient->comments }}</textarea>
             </div>
             @error('comments')
                 <div class="alert alert-danger alert-highlighted">{{ $message }}</div>

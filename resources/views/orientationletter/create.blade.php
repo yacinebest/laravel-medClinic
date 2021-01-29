@@ -40,7 +40,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>Contenu :</label>
-            <textarea name="content" rows="3" class="form-control @error('content') is-invalid @enderror" placeholder="Contenu">{{  old('content') }}</textarea>
+            <textarea class="ckeditor form-control @error('content') is-invalid @enderror" name="content" placeholder="Contenu">{{  old('content') }}</textarea>
         </div>
         @error('content')
             <div class="alert alert-danger alert-highlighted">{{ $message }}</div>

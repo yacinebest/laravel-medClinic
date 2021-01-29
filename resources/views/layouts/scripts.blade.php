@@ -30,6 +30,14 @@
     });
 </script>
 
+{{-- ckeditor --}}
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script>
+    // $(document).ready(function () {
+    //     $('.ckeditor').ckeditor();
+    // });
+</script>
+
 {{-- MedClinic Custom js --}}
 <script src="{{ asset('js/custom/delete_entity.js') }}"></script>
 @yield('scripts')
