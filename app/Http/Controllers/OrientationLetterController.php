@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrientationLetter\OrientationLetterStoreRequest;
 use App\Http\Requests\OrientationLetter\OrientationLetterUpdateRequest;
+use App\Models\Clinic;
 use App\Models\OrientationLetter;
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -88,6 +89,19 @@ class OrientationLetterController extends Controller
                 . $orientationLetter->patient->last_name . ' ' . $orientationLetter->patient->first_name .'A était Mise A Jour.');
         }
         return redirect(route('patient.show',['patient'=>$orientationLetter->patient->id]));
+    }
+
+    /**
+     * print the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function print($id)
+    {
+        $orientationLetter = OrientationLetter::find($id);
+        $clinic = Clinic::first();
+        return view('orientationletter.print',['orientationLetter'=>$orientationLetter,'clinic'=>$clinic]);
     }
 
     /**

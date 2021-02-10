@@ -38,6 +38,8 @@
     // });
 </script>
 
+<script src="{{ asset('assets/plugins/jquery-page/jquery.printPage.js') }}"></script>
+
 {{-- MedClinic Custom js --}}
 <script src="{{ asset('js/custom/delete_entity.js') }}"></script>
 @yield('scripts')

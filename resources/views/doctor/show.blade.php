@@ -1,4 +1,4 @@
-@extends('layouts.templates.show',['name_entity'=>'Docteur'])
+@extends('layouts.templates.show',['name_entity'=>'Docteur','entity'=>$doctor])
 
 @section('entity_data')
 

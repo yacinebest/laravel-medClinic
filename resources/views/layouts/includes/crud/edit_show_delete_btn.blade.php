@@ -14,6 +14,20 @@
             </li>
         @endisset
 
+        @isset($route_print)
+            <li class="dropdown-item">
+                <a id="{{'print-' . $name_id .  '-' .$id }}"
+                    href="{{ route($route_print, [$name_id =>$id]) }}"
+                    class="print-btn">
+                    <i class="mdi mdi-account-details mr-1"></i>
+                    Imprimer
+                </a>
+                <script type="text/javascript">
+                    $("#" +"{{'print-' . $name_id .  '-' .$id }}").printPage()
+                </script>
+            </li>
+        @endisset
+
         @isset($route_edit)
             <li class="dropdown-item">
                 <a

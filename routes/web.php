@@ -70,11 +70,13 @@ Route::get('/ajax/appointment/getAllAppointment','AppointmentController@getAllAp
 
 Route::resource('management/prescription', 'PrescriptionController', ['except' => ['index','show','create'] ] );
 Route::get('management/prescription/create/{patient}','PrescriptionController@create')->name('prescription.create');;
+Route::get('management/prescription/print/{prescription}','PrescriptionController@print')->name('prescription.print');;
 Route::delete('management/prescriptionline/{prescriptionline}','PrescriptionController@destroyPrescriptionLine')->name('prescriptionline.destroy');
 Route::get('/ajax/prescription/getPrescriptionLines/{prescription}','PrescriptionController@getPrescriptionLines')->name('prescription.ajax.getPrescriptionLines');
 
 Route::resource('management/orientationletter', 'OrientationLetterController', ['except' => ['index','show','create'] ] );
 Route::get('management/orientationletter/create/{patient}','OrientationLetterController@create')->name('orientationletter.create');;
+Route::get('management/orientationletter/print/{orientationletter}','OrientationLetterController@print')->name('orientationletter.print');
 
 Route::resource('management/imagery', 'ImageryController', ['except' => ['index','show','edit','update','create'] ] );
 Route::get('management/imagery/create/{patient}','ImageryController@create')->name('imagery.create');;

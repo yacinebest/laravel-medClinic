@@ -160,7 +160,10 @@ class PatientController extends Controller
                         return view('layouts.includes.crud.edit_show_delete_btn',
                                     ['id'=>$prescription->id,'name_id'=>'prescription',
                                     'route_delete'=>'prescription.destroy',
-                                    'route_edit'=>'prescription.edit',])->render();
+                                    'route_edit'=>'prescription.edit',
+                                    'route_print'=>'prescription.print',
+                                    'url_print'=>route('prescription.print',['prescription'=>$prescription->id])
+                                    ])->render();
                     }else{
                         return ;
                     }
@@ -191,7 +194,10 @@ class PatientController extends Controller
                         return view('layouts.includes.crud.edit_show_delete_btn',
                                     ['id'=>$orientationLetter->id,'name_id'=>'orientationletter',
                                     'route_delete'=>'orientationletter.destroy',
-                                    'route_edit'=>'orientationletter.edit',])->render();
+                                    'route_edit'=>'orientationletter.edit',
+                                    'route_print'=>'orientationletter.print',
+                                    'url_print'=>route('orientationletter.print',['orientationletter'=>$orientationLetter->id])
+                                    ])->render();
                     }else{
                         return ;
                     }

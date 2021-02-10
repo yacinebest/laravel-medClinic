@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Prescription\PrescriptionStoreRequest;
 use App\Http\Requests\Prescription\PrescriptionUpdateRequest;
+use App\Models\Clinic;
 use App\Models\Patient;
 use App\Models\Prescription;
 use App\Models\PrescriptionLine;
@@ -15,8 +16,8 @@ class PrescriptionController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('doctor_or_secretary.auth',['only'=>['getPrescriptionLines'] ] );
-        $this->middleware('doctor.auth',['except'=>['getPrescriptionLines'] ] );
+        $this->middleware('doctor_or_secretary.auth',['only'=>['getPrescriptionLines','print'] ] );
+        $this->middleware('doctor.auth',['except'=>['getPrescriptionLines','print'] ] );
     }
 
     /**
@@ -140,6 +141,18 @@ class PrescriptionController extends Controller
         }
     }
 
+    /**
+     * print the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function print($id)
+    {
+        $prescription = Prescription::findOrFail($id);
+        $clinic = Clinic::first();
+        return view('prescription.print',['prescription'=>$prescription,'clinic'=>$clinic]);
+    }
     /**
      * Remove the specified resource from storage.
      *
