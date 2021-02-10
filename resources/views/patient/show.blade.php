@@ -74,16 +74,16 @@
 
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-chronic-diseases" role="tabpanel" aria-labelledby="pills-chronic-diseases-tab">
-               {{ $patient->chronic_diseases }}
+               {!! $patient->chronic_diseases !!}
             </div>
             <div class="tab-pane fade" id="pills-allergies" role="tabpanel" aria-labelledby="pills-allergies-tab">
-               {{ $patient->allergies }}
+               {!! $patient->allergies !!}
             </div>
             <div class="tab-pane fade" id="pills-antecedents" role="tabpanel" aria-labelledby="pills-antecedents-tab">
-                {{ $patient->antecedents }}
+                {!! $patient->antecedents !!}
             </div>
             <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab">
-                {{ $patient->comments }}
+                {!! $patient->comments !!}
             </div>
         </div>
         <div class="float-right mt-3">
