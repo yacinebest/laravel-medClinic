@@ -31,7 +31,7 @@
                                 || Auth::guard('secretary')->check())
                                     <li>
                                         <a class="sidenav-item-link" href="{{ route('doctor.index') }}">
-                                            <span class="nav-text">Médcins</span>
+                                            <span class="nav-text">Médecins</span>
                                         </a>
                                     </li>
                             @endif
