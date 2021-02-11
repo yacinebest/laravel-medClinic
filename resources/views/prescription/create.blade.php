@@ -100,7 +100,7 @@
             html += '<td><input type="text" name="duration[]" class="form-control" /></td>';
             if(number > 1)
             {
-                html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove"><i class="fas fa-minus"></i></button></td></tr>';
+                html += '<td><button type="button" name="remove" id="" class="btn bt-danger remove"><i class="fas fa-minus"></i></button></td></tr>';
                 $('tbody').append(html);
             }
             else

@@ -97,7 +97,7 @@
 
 
                                         <div class="col-md-12">
-                                            <button id="update-button" type="submit" class="btn btn-lg btn-primary btn-block mb-4">Soumettre</button>
+                                            <button id="update-button" type="submit" class="btn btn-lg bt-primary btn-block mb-4">Soumettre</button>
                                         </div>
                                     </div>
                                 </form>
@@ -131,7 +131,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <button id="update-button" type="submit" class="btn btn-lg btn-primary btn-block mb-4">Soumettre</button>
+                                            <button id="update-button" type="submit" class="btn btn-lg bt-primary btn-block mb-4">Soumettre</button>
                                         </div>
                                     </div>
                                 </form>

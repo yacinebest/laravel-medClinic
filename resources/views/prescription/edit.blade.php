@@ -122,7 +122,7 @@
                     "</td>";
             html += '<td><input type="text" name="duration[]" class="form-control" /></td>';
 
-            html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove-dynamic"><i class="fas fa-minus"></i></button></td></tr>';
+            html += '<td><button type="button" name="remove" id="" class="btn bt-danger remove-dynamic"><i class="fas fa-minus"></i></button></td></tr>';
             $('tbody').append(html);
 
         }

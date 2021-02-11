@@ -31,7 +31,7 @@
             </div>
 
             <div class="form-group">
-                <a role="button" class="btn btn-block btn-primary mb-4" href="{{ route('patient.show',['patient'=> $patient->id]) }}">
+                <a role="button" class="btn btn-block bt-primary mb-4" href="{{ route('patient.show',['patient'=> $patient->id]) }}">
                     Retour
                 </a>
             </div>

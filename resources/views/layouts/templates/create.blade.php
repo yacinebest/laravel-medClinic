@@ -36,7 +36,7 @@
                                 @yield('CreateFormElements')
 
                                 <div class="col-md-12">
-                                    <button id="store-button" type="submit" class="btn btn-lg btn-primary btn-block mb-4">{{ $action_name }}</button>
+                                    <button id="store-button" type="submit" class="btn btn-lg bt-primary btn-block mb-4">{{ $action_name }}</button>
                                 </div>
                             </div>
                         </form>

@@ -6,7 +6,7 @@
 --}}
 
 @if(isset($simple_btn_remove) && $simple_btn_remove)
-<a data-entityid="{{ $id }}" data-entityname="{{ $name_id }}" class="btn btn-danger remove a-delete-entity">
+<a data-entityid="{{ $id }}" data-entityname="{{ $name_id }}" class="btn bt-danger remove a-delete-entity">
     <i class="fas fa-minus" style="color: white;"></i>
 </a>
 @else

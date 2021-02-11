@@ -55,7 +55,7 @@
                           </div>
                           <p><a class="text-blue" href="#">Forgot Your Password?</a></p>
                         </div> --}}
-                        <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">
+                        <button type="submit" class="btn btn-lg bt-primary btn-block mb-4">
                             {{ __('Se connecter') }}
                         </button>
                         {{-- <p>Don't have an account yet ?

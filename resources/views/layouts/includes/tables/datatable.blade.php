@@ -15,13 +15,13 @@
             <h2>{{ $list_name }}</h2>
             @if(isset($add_route) && isset($add_btn_text) )
                 @if(isset($add_parameter))
-                    <a role="button" class="btn btn-lg btn-info" href="{{ route($add_route,$add_parameter) }}">
+                    <a role="button" class="btn btn-lg bt-info" href="{{ route($add_route,$add_parameter) }}">
                         <i class="fa fa-plus mr-1" aria-hidden="true">
                         </i>
                         {{ $add_btn_text }}
                     </a>
                 @else
-                    <a role="button" class="btn btn-lg btn-info" href="{{ route($add_route) }}">
+                    <a role="button" class="btn btn-lg bt-info" href="{{ route($add_route) }}">
                         <i class="fa fa-plus mr-1" aria-hidden="true">
                         </i>
                         {{ $add_btn_text }}

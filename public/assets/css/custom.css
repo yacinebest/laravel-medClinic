@@ -1,0 +1,17 @@
+.bt-info {
+    color: #ffffff !important;
+    background-color: #13cae1 !important;
+    border-color: #13cae1 !important;
+}
+
+.bt-primary {
+    color: #ffffff !important;
+    background-color: #4c84ff !important;
+    border-color: #4c84ff !important;
+}
+
+.bt-danger {
+    color: #ffffff !important;
+    background-color: #fe5461 !important;
+    border-color: #fe5461 !important;
+}

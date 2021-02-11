@@ -87,12 +87,12 @@
             </div>
         </div>
         <div class="float-right mt-3">
-            <a role="button" class="btn btn-lg btn-info" href="{{ route('patient.edit',['patient'=>$patient->id]) }}">
+            <a role="button" class="btn btn-lg bt-info" href="{{ route('patient.edit',['patient'=>$patient->id]) }}">
                 <i class="fa fa-plus mr-1" aria-hidden="true">
                 </i>
                 Editer
             </a>
-            <a data-entityid="{{ $patient->id}}" data-entityname="patient" class="btn btn-lg btn-danger a-delete-entity text-white">
+            <a data-entityid="{{ $patient->id}}" data-entityname="patient" class="btn btn-lg bt-danger a-delete-entity text-white">
                 <i class="mdi mdi-delete mr-1"></i>
                 Supprimer
             </a>
