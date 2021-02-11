@@ -41,7 +41,9 @@
                 {data: 'address', name: 'address'},
                 {data: 'phone_number', name: 'phone_number'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
+            ],
+            orderMulti: true,
+            order: [[1, 'name']]
         });
     });
 </script>

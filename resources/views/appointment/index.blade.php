@@ -43,7 +43,9 @@
                 {data: 'patient_full_name', name: 'patient_full_name'},
                 {data: 'doctor_full_name', name: 'doctor_full_name'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
+            ],
+            orderMulti: true,
+            order: [[2, 'desc'],[3, 'asc'],[4, 'asc']]
         });
     });
 </script>

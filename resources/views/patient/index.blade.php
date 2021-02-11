@@ -44,7 +44,9 @@
                 {data: 'address_limit', name: 'address_limit'},
                 {data: 'email_limit', name: 'email_limit'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
+            ],
+            orderMulti: true,
+            order: [[1, 'asc'],[2, 'asc'],[3, 'desc']]
         });
     });
 </script>

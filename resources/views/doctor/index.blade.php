@@ -43,7 +43,9 @@
                 {data: 'specialty', name: 'specialty'},
                 {data: 'role_name', name: 'role_name'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
+            ],
+            orderMulti: true,
+            order: [[1, 'asc'],[2, 'asc']]
         });
     });
 </script>

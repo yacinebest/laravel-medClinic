@@ -165,7 +165,9 @@
                     d._token = "{{ csrf_token() }}";
                 },
             },
-            columns:getColumnsForAppointments(prop_doctor,connect_secretary)
+            columns:getColumnsForAppointments(prop_doctor,connect_secretary),
+            orderMulti: true,
+            order: [[1, 'desc'],[2, 'asc'],[3, 'asc']]
         });
 
         if(connect_doctor){
@@ -185,7 +187,8 @@
                     },
                 },
                 columns:getColumnsForPrescriptions(prop_doctor),
-                "order": [[2, 'asc']]
+                orderMulti: true,
+                order: [[1, 'desc'],[3, 'desc'],[4, 'desc']]
             });
 
             var table_OrientationLetters = $('#DataTable_OrientationLetters').DataTable({
@@ -202,7 +205,9 @@
                         d._token = "{{ csrf_token() }}";
                     },
                 },
-                columns:getColumnsForOrientationLetters(prop_doctor)
+                columns:getColumnsForOrientationLetters(prop_doctor),
+                orderMulti: true,
+                order: [[1, 'desc'],[4, 'desc'],[5, 'desc']]
             });
 
             $('#DataTable_Prescriptions tbody').on('click', 'td.details-control', function () {
