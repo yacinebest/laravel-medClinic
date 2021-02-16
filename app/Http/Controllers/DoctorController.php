@@ -129,10 +129,17 @@ class DoctorController extends Controller
                 {
                     $crud_fun=[];
                     if (Auth::guard('doctor')->check() && Auth::guard('doctor')->user()->is_admin) {
-                        $crud_fun =  ['id'=>$doctor->id,'name_id'=>'doctor',
-                        'route_delete'=>'doctor.destroy',
-                        'route_edit'=>'doctor.edit',
-                        'route_show'=>'doctor.show'];
+                        if (Auth::guard('doctor')->user()->id != $doctor->id) {
+                            $crud_fun =  ['id'=>$doctor->id,'name_id'=>'doctor',
+                            'route_delete'=>'doctor.destroy',
+                            'route_edit'=>'doctor.edit',
+                            'route_show'=>'doctor.show'];
+                        }
+                        else {
+                            $crud_fun =  ['id'=>$doctor->id,'name_id'=>'doctor',
+                            'route_edit'=>'doctor.edit',
+                            'route_show'=>'doctor.show'];
+                        }
                     } else if(Auth::guard('secretary')->check()) {
                         $crud_fun =  ['id'=>$doctor->id,'name_id'=>'doctor','route_show'=>'doctor.show'];
                     }

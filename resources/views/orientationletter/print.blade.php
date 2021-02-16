@@ -7,7 +7,7 @@
 <br>
 <br>
 
-<p>{{ $orientationLetter->content }}</p>
+<p>{!! $orientationLetter->content !!}</p>
 
 
 @endsection
