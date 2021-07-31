@@ -7,6 +7,11 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## MedClinic
+
+This is a website for Medical Clinic developed with Laravel for backend and HTML, CSS/Bootstrap, JS/Jquery for frontend.
+This is intended to be used by Doctors and Secretaries of the Clinic.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
